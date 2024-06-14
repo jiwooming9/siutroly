@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lỗi</title>
+</head>
+<body>
+    <h1>ĐÃ CÓ LỖI XẢY RA, TRỞ VỀ TRANG CHỦ SAU 5 GIÂY.</h1>
+    <p>{{ error }}</p> 
+    <script>
+        setTimeout(function(){
+            window.location.href = "{{ url_for('index') }}";
+        }, 5000); // Chuyển về trang chính sau 10 giây
+    </script>
+</body>
+</html>
