@@ -104,10 +104,13 @@ def removeTT(input_str):
     new = input_str
     if "bbangcutru" in input_str:
         new = new.replace("bbangcutru", "")
+        new = new.replace("<br>bbangcutru", "")
     if "bbangcancuoc" in input_str:
         new = new.replace("bbangcancuoc", "")
+        new = new.replace("<br>bbangcancuoc", "")
     if "bbangtt" in input_str:
         new = new.replace("bbangtt", "")
+        new = new.replace("<br>bbangtt", "")
     return new
 
 

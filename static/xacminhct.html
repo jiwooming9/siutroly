@@ -711,7 +711,7 @@
 		$("#messageArea input").prop("disabled",true);
 		alert("Đang in phiếu CT01 cho bạn");
 		document.getElementById('img-div-id').style.visibility = 'visible';
-		var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Hệ thống đang in phiếu CT01 với thông tin bạn đã cung cấp.<span class="msg_time">' + str_time + '</span></div></div>';
+		var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Hệ thống đang in phiếu CT01 với thông tin bạn đã cung cấp<br>Kiểm tra lại thông tin trên phiếu, sau đó ký xác nhận vào mục số (6).<span class="msg_time">' + str_time + '</span></div></div>';
 		$("#messageFormeight").append($.parseHTML(Html));
 		// Send data to Flask backend print
 		fetch('/inCT01', { 
