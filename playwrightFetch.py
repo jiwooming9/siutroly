@@ -1,8 +1,6 @@
 from playwright.sync_api import sync_playwright,Playwright, TimeoutError as PlaywrightTimeoutError
 import playwright
 from tabulate import tabulate
-import theoyc
-import asyncio
 from docxtpl import DocxTemplate
 import time
 
@@ -21,15 +19,13 @@ class VNeIDPage:
         self.log=[]
         self.CT_infor = {}
         self.start = False
-    
-    def khoidong(self, playwright: Playwright):
-        if (self.start == False):
-            self.start = True
-            playwright = sync_playwright().start()
-            self.browser = playwright.firefox.launch(headless=True) #Fullscreen: , args= ["--kiosk"]
+        playwright = sync_playwright().start()
+        self.browser = playwright.firefox.launch(headless=False)
         self.context = self.browser.new_context(ignore_https_errors=True, no_viewport=True)
         self.page = self.context.new_page()
         self.page.set_default_timeout(50000)
+    
+    def khoidong(self, playwright: Playwright):
         self.page.goto("https://dichvucong.bocongan.gov.vn/?home=1")
         self.page.get_by_role("link", name="Đăng nhập").click()
         self.page.locator("xpath=/html/body/div[4]/div/div[1]/div/div[2]/div/div[1]/a/div").click()

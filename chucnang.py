@@ -144,4 +144,3 @@ def delete_gen_py():
             print(f"Error deleting 'gen_py': {e}")
     else:
         print("'gen_py' folder not found.")
-intailieu("CT01.docx")
