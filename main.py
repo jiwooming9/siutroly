@@ -70,7 +70,7 @@ safety_settings=threads_safe,
 generation_config=generation_config,
 )
 chatt = model.start_chat(history=[])
-VneID = VNeIDPage()
+VneID = VNeIDPage(Playwright)
 #aloy = chatt.send_message(prompt.batdau + prompt.prompt_quydinhcancuoc, safety_settings=threads_safe)\
 lmfao = send_messageG(prompt.khoidong)
 def khoitaobien():
@@ -127,7 +127,7 @@ def index():
 def greetings():
     data = {'greetings': "Xin chào tôi là trợ lý ảo dịch vụ công về căn cước và cư trú. Hãy hỏi tôi bất cứ điều gì bạn thắc mắc", 
             'pre_start': "Để thực hiện dịch vụ công, vui lòng đăng nhập quét QR code bằng ứng dụng VNeID hoặc đặng nhập bằng tài khoản ở khung bên cạnh"}
-    VneID.khoidong(Playwright)
+    VneID.khoidong()
     return data
 
 @app.route('/restart')

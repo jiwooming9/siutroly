@@ -9,7 +9,7 @@ tbdangnhapsai = "xpath=//div[contains(string(),'Tài khoản hoặc mật khẩu
 opt="xpath=//div[@class='ant-modal-root']//input[1]"
 
 class VNeIDPage:
-    def __init__(self):
+    def __init__(self, playwright: Playwright):
         self.province = "Quảng Ninh"
         self.district = "Thành phố Hạ Long"
         self.village = "Phường Hà Tu"
@@ -25,7 +25,7 @@ class VNeIDPage:
         self.page = self.context.new_page()
         self.page.set_default_timeout(50000)
     
-    def khoidong(self, playwright: Playwright):
+    def khoidong(self):
         self.page.goto("https://dichvucong.bocongan.gov.vn/?home=1")
         self.page.get_by_role("link", name="Đăng nhập").click()
         self.page.locator("xpath=/html/body/div[4]/div/div[1]/div/div[2]/div/div[1]/a/div").click()
