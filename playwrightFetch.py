@@ -3,10 +3,22 @@ import playwright
 from tabulate import tabulate
 from docxtpl import DocxTemplate
 import time
+import requests
 
 tailaibtn = "xpath=//button[@class='absolute top-1/2 left-1/2 z-10 flex h-9 w-[88px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-md bg-red100 font-bold text-white']//*[name()='svg']//*[name()='g']//*[name()='path'][2]"
-tbdangnhapsai = "xpath=//div[contains(string(),'Tài khoản hoặc mật khẩu không đúng. Vui lòng kiểm tra lại.')]"
+tbdangnhapsai = "xpath=//div[@class='ant-notification-notice-message']"
 opt="xpath=//div[@class='ant-modal-root']//input[1]"
+
+def notify_flask_server(message):
+    url = 'http://127.0.0.1:5000/notify'
+    data = {'message': message}
+    response = requests.post(url, json=data)
+    print(f"Notification sent: {response.status_code}")
+
+def check_page_blank(page):
+    content = page.content()
+    if '<body></body>' in content:
+        notify_flask_server("Page is blank")
 
 class VNeIDPage:
     def __init__(self, playwright: Playwright):
@@ -24,6 +36,15 @@ class VNeIDPage:
         self.context = self.browser.new_context(ignore_https_errors=True, no_viewport=True)
         self.page = self.context.new_page()
         self.page.set_default_timeout(15000)
+        def on_response(response):
+            if response.url == self.page.url:  # Check only the main document
+                check_page_blank(self.page)
+        
+        #self.page.on('response', on_response)
+        
+        
+    
+        
     
     def khoidong(self):
         self.page.goto("https://dichvucong.bocongan.gov.vn/?home=1")
@@ -47,7 +68,7 @@ class VNeIDPage:
                     image_src = qr_locator.get_attribute('src') 
                     return image_src
                 else:
-                    return ""
+                    return "\\static\\templates\\taiQR.gif"
         except playwright._impl._errors.TimeoutError:
             return ""
         except:
@@ -62,7 +83,8 @@ class VNeIDPage:
             elif self.page.locator(opt).count()>0:
                 self.trangthaidn = 'otp'
             elif self.page.locator(tbdangnhapsai).count()>0:
-                self.trangthaidn = 'không lấy được tên' 
+                self.trangthaidn = 'không lấy được tên'
+                notify_flask_server("Sai") 
         except:
             self.closeVN()
             return "lỗi"

