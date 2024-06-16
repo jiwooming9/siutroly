@@ -32,7 +32,7 @@ class VNeIDPage:
         self.CT_infor = {}
         self.start = False
         playwright = sync_playwright().start()
-        self.browser = playwright.firefox.launch(headless=True)
+        self.browser = playwright.firefox.launch(headless=False)
         self.context = self.browser.new_context(ignore_https_errors=True, no_viewport=True)
         self.page = self.context.new_page()
         self.page.set_default_timeout(15000)
@@ -177,7 +177,6 @@ class VNeIDPage:
             for i in range(14):
                 ttlocator = self.page.locator("p#"+giatri[i])
                 ttcontent = ttlocator.inner_text()
-                print(ttcontent)
                 nguoi[thongtin[i]] = ttcontent
             #self.page.locator("#houseHoldDetail").click()
             thongtinchuho = ["Họ và tên chủ hộ", "Số CMND/CCCD/ĐDCN", "Quốc tịch", "Quan hệ với chủ hộ"]
@@ -262,6 +261,7 @@ class VNeIDPage:
             if current_date:
                 self.page.locator("#btnNEXT_TAB_4").click()
                 break 
+        self.page.locator("#btnSEND_CCCD").click()
 
     def Caplai_CCCD_tinh(self):
         try:
@@ -304,6 +304,7 @@ class VNeIDPage:
             search_input.press("Enter")
             self.page.locator("#btnNEXT_TAB_2").click()
             self.confirm_data()
+            self.get_active_day()
             self.set_log("Xác minh số chứng minh nhân dân, căn cước thành công")
             return self.get_log()
         except:
@@ -450,7 +451,7 @@ class VNeIDPage:
             self.closeVN()
             return "lỗi"
     def Xacminh_cutru(self, hoso):
-        try:
+        
             self.page.get_by_text("Xác nhận thông tin về cư trú").click()
             self.page.get_by_role("link", name="Nộp hồ sơ", exact=True).click()
             self.page.reload()
@@ -551,19 +552,22 @@ class VNeIDPage:
             
             
             self.page.locator("#chkRULE").click()
-        except:
-            self.closeVN()
-            return "lỗi"
         
-    def submitinfoXacminh(self):
-        try:
+        
+    def submitinfoXacminh(self, num):
             input_file = self.page.locator("input#fileUpload0")   
             # Upload the file
-            input_file.set_input_files("CT01.pdf")
+            danhsachfile = []
+            for i in range(num):
+                danhsachfile.append("CT01_"+i+".jpg")
+            input_file.set_input_files(danhsachfile)
+            self.page.locator("#select2-cboTYPE_GET_RESULT-container").click()
+            self.page.locator("xpath=/html/body/span/span/span[1]/input").fill("Nhận trực tiếp")
+            self.page.keyboard.press('Enter')
+            self.page.locator("#txtNUMBER_OF_RESULT").fill("1")
             # Còn nút gửi hồ sơ
-        except:
-            self.closeVN()
-            return "lỗi"
+            self.page.locator("#btn_Save_Send").click()
+ 
     #---------TÁCH HỘ-----------    
     def Tachho(self, hoso):
         try:

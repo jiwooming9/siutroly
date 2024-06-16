@@ -211,9 +211,8 @@
                 fetch('/notifications')
                     .then(response => response.json())
                     .then(data => {
-						console.log(data)
                         if (data.notifications === "Page is blank") {
-                            alert("Lỗi khi tải trang. Ứng dụng sẽ tự khởi động lại");
+							alert("Lỗi khi tải trang. Ứng dụng khởi động lại")
 							redirectToRoute();
                         }
 						if (data.notifications === "Sai" && sls === false){
@@ -452,12 +451,36 @@
 											$('#chuho-dk').val(response["Họ và tên chủ hộ"]);
 											$('#qhChuho-dk').val(response["Quan hệ với chủ hộ"]);
 											$('#cccdChuho-dk').val(response["Số CMND/CCCD/ĐDCN"]);
+											$('#add-row').click();
+											for (i=1;i<response["Số thành viên trong hộ"];i++){
+												let thutu = i.toString();
+												let thutung = (i+1).toString();
+												$("#hoten-tb-"+thutu).val(response["Họ, chữ đệm, tên người " + thutung]);
+												$("#cccd-tb-"+thutu).val(response["Số ĐDCN/CMND người " + thutung]);
+												$("#gioitinh-tb-"+thutu).val(response["Giới tính người " + thutung]).change();
+												if (i===response["Số thành viên trong hộ"]-1){
+													break;
+												}
+												print(response["Họ, chữ đệm, tên người " + thutung])
+												print(response["Số ĐDCN/CMND người " + thutung])
+												$('#add-row').click();
+											}
 											const truongHopSelect = document.getElementById("truonghop");
 											if (response["Nơi ở thường trú"].includes(response["Phường xã làm dv"])){
 												truongHopSelect.value = "Cấp cho NK thường trú trên địa bàn quản lý";
 											} else {
 												truongHopSelect.value = "Cấp cho NK thường trú khác địa bàn quản lý";
 											}
+											$('.phuong-xa-chung').change(function() {
+												var phuongxaid = "#phuong-xa-"+phuongXanow;
+												var selectedValue = $(phuongxaid).find("option:selected").text();
+												const truongHopSelect = document.getElementById("truonghop");
+												if (response["Nơi ở thường trú"].includes(selectedValue)){
+													truongHopSelect.value = "Cấp cho NK thường trú trên địa bàn quản lý";
+												} else {
+													truongHopSelect.value = "Cấp cho NK thường trú khác địa bàn quản lý";
+												}
+											});
 										});
 										$("#formcutru").css("visibility","visible");
 										$("#videoct").css("visibility","hidden");
@@ -467,17 +490,7 @@
 										$("#messageArea input").css("opacity","1");
 										$("#messageArea input").prop("disabled",false);
 										}
-										// for (i=1;i<response["Số thành viên trong hộ"];i++){
-										// 	let thutu = i.toString();
-										// 	let thutung = (i+1).toString();
-										// 	$("#hoten-tb-"+thutu).val(response["Họ, chữ đệm, tên người " + thutung]);
-										// 	$("#cccd-tb-"+thutu).val(response["Số ĐDCN/CMND người " + thutung]);
-										// 	$("#gioitinh-tb-"+thutu).val(response["Giới tính người " + thutung]).change();
-										// 	if (i===response["Số thành viên trong hộ"]-1){
-										// 		break;
-										// 	}
-										// 	$('#add-row').click();
-										// }
+										
 										
 										}
 									})

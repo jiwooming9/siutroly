@@ -202,10 +202,9 @@ def get_qr_code():
     global chatt
     global nguoi
     qr_code_src = ''
-    trangthaidn = ''
-    if login_status == False:
+    trangthaidn = VneID.get_trangthaiDN()
+    if login_status == False and trangthaidn != 'otp':
         qr_code_src = VneID.extract_qr_code_src()
-        trangthaidn = VneID.get_trangthaiDN()
     dob = ''
     expdate = ''
     if "thanhcong" in trangthaidn and login_status == False:
@@ -374,7 +373,7 @@ def inCT01():
     global hoso
     msg = request.get_json()
     key = ["Thành phố", "Quận huyện", "Phường xã", "Trường hợp", "Họ tên người khai", "Ngày tháng năm sinh", "Giới tính", "Số căn cước", "Số điện thoại", "Họ và tên chủ hộ", "Quan hệ với chủ hộ","Số định danh chủ hộ", "Số lượng thành viên cùng thay đổi","Dữ liệu bảng" ]
-    hoso = dict(zip(key,msg.split(";")))
+    hoso = dict(zip(key,msg.split(";;")))
     bangthanhvien = hoso["Dữ liệu bảng"].split(",")
     for i in range(int(hoso["Số lượng thành viên cùng thay đổi"])):
         hoso[f"Thành viên {i} họ tên"] = bangthanhvien[(i*5)+0]
@@ -398,13 +397,13 @@ def scantailieu():
     print("Chuẩn bị scan")
     msg = request.get_json()
     time.sleep(5)
-    kq = 'Đã scan'
-    try:
-        kq = chucnang.scanlientuc(msg)
-    except:
-        kq = "lỗi"
-    if kq == "Đã scan":
-        hoso[msg] = "có"
+    kq = 2 #TEST SCAN
+    # try:
+    #     kq = chucnang.scanlientuc(msg)
+    # except:
+    #     kq = 0
+    if kq > 0:
+        hoso[msg] = kq
     result = {
         'message': kq,
     }
@@ -420,7 +419,7 @@ def dvc_xacminhcutru():
         return jsonify(result)
     if (VneID.Xacminh_cutru(hoso)=="lỗi"):
         return jsonify(result)
-    if (VneID.submitinfoXacminh()=="lỗi"):
+    if (VneID.submitinfoXacminh(hoso["CT01"])=="lỗi"):
         return jsonify(result)
     hab = send_messageG("Tôi đã làm xong dịch vụ công Xác minh cư trú. Hãy bắt đầu lại từ đầu, giúp tôi tìm dịch vụ công khác. " + prompt.khoidong)
     result['message'] = 'Đã gửi hồ sơ của bạn lên hệ thống. Mời bạn ra quầy để thực hiện các thủ tục kế tiếp.<br>Nếu không còn câu hỏi gì, hãy bấm nút mũi tên bên trái để thoát tài khoản.<br>Xin cảm ơn!!',

@@ -66,12 +66,19 @@ def save_images_as_pdf(images, output_file):
     c.save()        
 def scanVB_enhanced(tenvb):
     device = prompt_choose_device_and_connect()
-    c = canvas.Canvas(tenvb + ".pdf")
     dem = 0
+    images = []  # Danh sách chứa các ảnh đã scan
+
     while True:
         try:
             pillow_image = scan_side(device=device)
-            dem +=1
+            dem += 1
+
+            # Lưu ảnh dưới dạng JPG
+            image_filename = f"{tenvb}_{dem}.jpg"
+            pillow_image.save(image_filename, 'JPEG')
+            images.append(pillow_image)  # Thêm ảnh vào danh sách
+
         except Exception as e:  # Xử lý lỗi nếu không còn trang để quét
             print(f"Lỗi quét: {e}")
             if dem == 0:
@@ -79,18 +86,7 @@ def scanVB_enhanced(tenvb):
             else:
                 break
 
-        width_inch, height_inch = 8.27, 11.69
-        dpi = 72
-        width_pixel, height_pixel = int(width_inch * dpi), int(height_inch * dpi)
-
-        img_path = "temp_img.jpg"
-        pillow_image.save(img_path, 'JPEG')
-
-        c.drawImage(img_path, 0, 0, width_pixel, height_pixel)
-        c.showPage()
-        os.remove(img_path)
-
-    c.save()
+    return dem  # Trả về số trang và danh sách ảnh
 
 def save_images_as_pdf_old(images, output_file):
     from reportlab.pdfgen import canvas
@@ -124,8 +120,8 @@ def scanlientuc(tenvb):
     dem = 0
     while dem < 40:
         try:
-            scanVB_old(tenvb)
-            return "Đã scan"
+            dem = scanVB_enhanced(tenvb)
+            return dem
         except:
             dem += 1
             time.sleep(3)
