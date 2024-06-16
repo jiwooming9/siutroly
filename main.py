@@ -9,8 +9,6 @@ import prompt
 from datetime import datetime
 import os
 import chucnang
-import sys
-import threading
 #Khai báo cáo biến cho hệ thống
 monkey.patch_all()
 app = Flask(__name__)
