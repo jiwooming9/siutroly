@@ -23,7 +23,7 @@ class VNeIDPage:
         self.browser = playwright.firefox.launch(headless=True)
         self.context = self.browser.new_context(ignore_https_errors=True, no_viewport=True)
         self.page = self.context.new_page()
-        self.page.set_default_timeout(50000)
+        self.page.set_default_timeout(15000)
     
     def khoidong(self):
         self.page.goto("https://dichvucong.bocongan.gov.vn/?home=1")
@@ -84,6 +84,9 @@ class VNeIDPage:
         self.CT_infor = {}
         self.page.close()
         self.context.close()
+        self.context = self.browser.new_context(ignore_https_errors=True, no_viewport=True)
+        self.page = self.context.new_page()
+        self.page.set_default_timeout(15000)
 
     def closeVN(self):
         self.trangthaidn = ''

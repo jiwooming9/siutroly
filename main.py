@@ -74,7 +74,6 @@ VneID = VNeIDPage(Playwright)
 #aloy = chatt.send_message(prompt.batdau + prompt.prompt_quydinhcancuoc, safety_settings=threads_safe)\
 lmfao = send_messageG(prompt.khoidong)
 def khoitaobien():
-    global VneID
     global login_status
     global dichvucong 
     global chitiet
