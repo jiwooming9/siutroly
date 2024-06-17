@@ -4,6 +4,8 @@ from tabulate import tabulate
 from docxtpl import DocxTemplate
 import time
 import requests
+import asyncio
+import os
 
 tailaibtn = "xpath=//button[@class='absolute top-1/2 left-1/2 z-10 flex h-9 w-[88px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-md bg-red100 font-bold text-white']//*[name()='svg']//*[name()='g']//*[name()='path'][2]"
 tbdangnhapsai = "xpath=//div[@class='ant-notification-notice-message']"
@@ -36,9 +38,9 @@ class VNeIDPage:
         self.context = self.browser.new_context(ignore_https_errors=True, no_viewport=True)
         self.page = self.context.new_page()
         self.page.set_default_timeout(15000)
-        def on_response(response):
-            if response.url == self.page.url:  # Check only the main document
-                check_page_blank(self.page)
+        # def on_response(response):
+        #     if response.url == self.page.url:  # Check only the main document
+        #         check_page_blank(self.page)
         
         #self.page.on('response', on_response)
         
@@ -163,11 +165,8 @@ class VNeIDPage:
     def getInf(self, nguoi):
         try:
             self.page.goto("https://dichvucong.dancuquocgia.gov.vn/")
-            try:
-                self.page.locator("#btnLogin").click(timeout=5000)
-                self.page.get_by_role("link", name=" Cổng dịch vụ công Quốc Gia").click()
-            except:
-                print("đã đn")
+            self.page.locator("#btnLogin").click()
+            self.page.get_by_role("link", name=" Cổng dịch vụ công Quốc Gia").click()
             nguoi = {}
             self.page.locator("#userLogin").click()
             self.page.get_by_role("link", name="Tra cứu thông tin công dân").click()
@@ -555,11 +554,17 @@ class VNeIDPage:
         
         
     def submitinfoXacminh(self, num):
-            input_file = self.page.locator("input#fileUpload0")   
-            # Upload the file
+            current_file_path = os.path.abspath(__file__)
+            folderpath = os.path.dirname(current_file_path)
+            
             danhsachfile = []
             for i in range(num):
-                danhsachfile.append("CT01_"+i+".jpg")
+                file_path = f"CT01_{str(i+1)}.jpg"
+                realpath = os.path.join(folderpath, file_path)
+                danhsachfile.append(realpath)
+            print(danhsachfile)
+            input_file = self.page.locator('input[id="fileUpload0"]')   
+            # Upload the fileơ
             input_file.set_input_files(danhsachfile)
             self.page.locator("#select2-cboTYPE_GET_RESULT-container").click()
             self.page.locator("xpath=/html/body/span/span/span[1]/input").fill("Nhận trực tiếp")
