@@ -572,6 +572,13 @@ class VNeIDPage:
             self.page.locator("#txtNUMBER_OF_RESULT").fill("1")
             # Còn nút gửi hồ sơ
             self.page.locator("#btn_Save_Send").click()
+
+    def kiemtrattin(self):
+        kq = "guithanhcong"
+        if self.page.locator("#lblCheck_Du_Thong_Tin").count() > 0:
+            kq = self.page.locator("#lblNAME_CITIZEN").text_content() + " " + self.page.locator("#lblCheck_Du_Thong_Tin").text_content()
+        return kq
+
  
     #---------TÁCH HỘ-----------    
     def Tachho(self, hoso):

@@ -418,8 +418,12 @@ def dvc_xacminhcutru():
         return jsonify(result)
     if (VneID.submitinfoXacminh(hoso["CT01"])=="lỗi"):
         return jsonify(result)
+    time.sleep(3)
+    result["message"] = VneID.kiemtrattin()
+    if (result["message"]!="guithanhcong"):
+        return jsonify(result)
     hab = send_messageG("Tôi đã làm xong dịch vụ công Xác minh cư trú. Hãy bắt đầu lại từ đầu, giúp tôi tìm dịch vụ công khác. " + prompt.khoidong)
-    result['message'] = 'Đã gửi hồ sơ của bạn lên hệ thống. Mời bạn ra quầy để thực hiện các thủ tục kế tiếp.<br>Nếu không còn câu hỏi gì, hãy bấm nút mũi tên bên trái để thoát tài khoản.<br>Xin cảm ơn!!',
+    result['message'] = '',
     return jsonify(result)
 
 @app.route("/dvc_tachho", methods=["GET","POST"])
