@@ -791,7 +791,13 @@
 								scrollToBottom();
 							} else {
 								alert(`${data.message}`)
+								$("#formcutru").css("visibility","visible");
+								$("#videoct").css("visibility","hidden");
+								var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Hãy kiểm tra thật kỹ lại các thông tin của bạn khai tại bảng bên cạnh. Sau khi đã chắc chắn thì ấn nút XÁC NHẬN để tiếp tục." <span class="msg_time">' + str_time + '</span></div></div>';
+								$("#messageFormeight").append($.parseHTML(Html));
 								scrollToBottom();
+								$("#messageArea input").css("opacity","1");
+								$("#messageArea input").prop("disabled",false);
 							}
 
 						})

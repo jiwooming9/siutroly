@@ -4,7 +4,6 @@ from tabulate import tabulate
 from docxtpl import DocxTemplate
 import time
 import requests
-import asyncio
 import os
 
 tailaibtn = "xpath=//button[@class='absolute top-1/2 left-1/2 z-10 flex h-9 w-[88px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-md bg-red100 font-bold text-white']//*[name()='svg']//*[name()='g']//*[name()='path'][2]"
@@ -20,6 +19,7 @@ def notify_flask_server(message):
 def check_page_blank(page):
     content = page.content()
     if '<body></body>' in content:
+        page.reload()
         notify_flask_server("Page is blank")
 
 class VNeIDPage:
@@ -38,11 +38,11 @@ class VNeIDPage:
         self.context = self.browser.new_context(ignore_https_errors=True, no_viewport=True)
         self.page = self.context.new_page()
         self.page.set_default_timeout(15000)
-        # def on_response(response):
-        #     if response.url == self.page.url:  # Check only the main document
-        #         check_page_blank(self.page)
+        def on_response(response):
+            if response.url == self.page.url:  # Check only the main document
+                check_page_blank(self.page)
         
-        #self.page.on('response', on_response)
+        self.page.on('response', on_response)
         
         
     
@@ -73,8 +73,6 @@ class VNeIDPage:
                     return "\\static\\templates\\taiQR.gif"
         except playwright._impl._errors.TimeoutError:
             return ""
-        except:
-            self.closeVN()
 
     def set_trangthaiDN(self): 
         try:
@@ -88,7 +86,6 @@ class VNeIDPage:
                 self.trangthaidn = 'không lấy được tên'
                 notify_flask_server("Sai") 
         except:
-            self.closeVN()
             return "lỗi"
 
     def logout(self):
@@ -98,9 +95,6 @@ class VNeIDPage:
         except PlaywrightTimeoutError:
             self.page.locator("#userLogin").click(timeout=3000)
             self.page.locator("xpath=//a[contains(text(),'Đăng xuất')]").click()
-        except:
-            self.closeVN()
-            return "lỗi"
         
     def halfClose(self):
         self.trangthaidn = ''
@@ -134,13 +128,12 @@ class VNeIDPage:
                     userName_check = self.page.locator('xpath=/html/body/div[4]/div/div[2]/div/div/div[1]/div/div/div/div[2]/table/tbody/tr[2]/td').inner_text(timeout=10000)
                     kq = userName_check
                 except:
-                    self.closeVN()
+                    return "oops"
                 return self.trangthaidn +"--"+kq
             else:
                 self.set_trangthaiDN()
                 return self.trangthaidn
         except:
-            self.closeVN()
             return "lỗi"
     
     def loginForm(self,UserID,UserPass):
@@ -159,7 +152,6 @@ class VNeIDPage:
             td_textid = self.page.locator(td_selectorid).text_content()
             return td_text +" "+ td_textid
         except:
-            self.closeVN()
             return "lỗi"
     
     def getInf(self, nguoi):
@@ -201,7 +193,6 @@ class VNeIDPage:
             nguoi["Phường xã làm dv"] = self.villagehtml
             return nguoi
         except:
-            self.closeVN()
             nguoi={'messageER':'lỗi'}
             return nguoi
         
@@ -212,7 +203,7 @@ class VNeIDPage:
             self.page.locator("xpath=//span[contains(text(),'Xác nhận')]").click()
             self.set_trangthaiDN()
         except:
-            self.closeVN()
+            
             return "lỗi"
 
     def Timkiem_CCCD(self):
@@ -221,7 +212,7 @@ class VNeIDPage:
             self.page.fill("input[name='txtKEYWORD']", "căn cước công dân")
             self.page.get_by_role("button", name="Tìm kiếm").click()
         except:
-            self.closeVN()
+            
             return "lỗi"
 
     
@@ -284,8 +275,6 @@ class VNeIDPage:
             return "Cấp lại căn cước thành công"
         except:
             print("Đã gặp lỗi")
-            self.closeVN()
-            print("Đã restart")
             return "lỗi"
 
     def xacminh_CCCD_tinh(self):
@@ -307,7 +296,7 @@ class VNeIDPage:
             self.set_log("Xác minh số chứng minh nhân dân, căn cước thành công")
             return self.get_log()
         except:
-            self.closeVN()
+            
             return "lỗi"
 
     def chonlydo_caplai(self, num):
@@ -321,7 +310,7 @@ class VNeIDPage:
             reason_input.fill(f"{list_values[num]}")
             reason_input.press("Enter")
         except:
-            self.closeVN()
+            
             return "lỗi"
 
    
@@ -347,7 +336,7 @@ class VNeIDPage:
             self.set_log("Xác minh số chứng minh nhân dân, căn cước thành công")
             return self.get_log()
         except:
-            self.closeVN()
+            
             return "lỗi"
 
     def Timkiem_CT(self):
@@ -358,7 +347,7 @@ class VNeIDPage:
             self.page.keyboard.press('Enter')
             self.page.get_by_role("button", name="Tìm kiếm").click()
         except:
-            self.closeVN()
+            
             return "lỗi"
 
     #---------GIA HẠN TẠM TRÚ-----------
@@ -418,7 +407,7 @@ class VNeIDPage:
                     self.page.select_option('#select2-cboHH_PERSON_RELATIONSHIP_CODE-container', hoso["Quan hệ với chủ hộ"])
                     self.page.locator("#txtHH_PERSON_IDENTIFIER_NUMBER").fill(hoso["Số định danh cá nhân chủ hộ"])
         except:
-            self.closeVN()
+            
             return "lỗi"
 
     #---------XÁC MINH CƯ TRÚ-----------
@@ -447,7 +436,7 @@ class VNeIDPage:
             doc.render(self.CT_infor)
             doc.save(tenfile + ".docx")
         except:
-            self.closeVN()
+            
             return "lỗi"
     def Xacminh_cutru(self, hoso):
         
@@ -677,7 +666,7 @@ class VNeIDPage:
             
             self.page.locator("#chkRULE").click()
         except:
-            self.closeVN()
+            
             return "lỗi"
 
     def submitinfoTachho(self, hoso):
@@ -693,7 +682,7 @@ class VNeIDPage:
                 input_file = self.page.locator("input#fileUpload2")   
                 input_file.set_input_files("Giay ly hon.pdf")
         except:
-            self.closeVN()
+            
             return "lỗi"
         # Còn nút gửi hồ sơ
 

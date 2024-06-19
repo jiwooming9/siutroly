@@ -423,7 +423,7 @@ def dvc_xacminhcutru():
     if (result["message"]!="guithanhcong"):
         return jsonify(result)
     hab = send_messageG("Tôi đã làm xong dịch vụ công Xác minh cư trú. Hãy bắt đầu lại từ đầu, giúp tôi tìm dịch vụ công khác. " + prompt.khoidong)
-    result['message'] = '',
+    result['message'] = 'guithanhcong'
     return jsonify(result)
 
 @app.route("/dvc_tachho", methods=["GET","POST"])
