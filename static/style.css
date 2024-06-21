@@ -196,6 +196,22 @@ header{
 	height:70%;
 	width:100%;
 }
+.chudoindam {
+	font-weight: bold;
+	font-style: italic;
+	color: red; 
+}
+.chuxanhindam {
+	font-weight: bold;
+	font-style: italic;
+	color: greenyellow; 
+}
+.chudenindam {
+	font-weight: bold;
+	font-style: italic;
+	color: black;
+}
+
 #videoct, .img-container {
 	z-index:1;
     position: absolute;

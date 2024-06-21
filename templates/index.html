@@ -87,7 +87,7 @@
 						<section id="QR-sign">
 							<div id="fetched-html">
 								<img id="QRCode" src="\\static\\templates\\taiQR.gif" decoding="async" data-nimg="intrinsic" >
-								<p><b>Trạng thái đăng nhập: </b><span id="dangnhap-state">Chờ đăng nhập</span></p>
+								<p><b>Trạng thái đăng nhập: </b><span id="dangnhap-state" class="chudoindam">Chờ đăng nhập</span></p>
 								<p style="margin-top: 5rem;"><b>Hướng dẫn đăng nhập</b></p>
 								<p style="margin-top: 8rem; text-align: left; padding-left: 10px;">1. Vào ứng dụng VNeID</p>
 								<p style="margin-top: 11rem; text-align: left; padding-left: 10px;">2. Chọn phần quét đăng nhập</p>
@@ -160,7 +160,7 @@
 
 				}
 			})
-
+			var noti = "";
 			let isRunning = true;
 			let timeoutId;
 			let qua3s = false;
@@ -176,18 +176,20 @@
 					success: function(response) {
 						qr = response["QR"]
 						trangthai = response["TTDN"]
-						trangthaiglobal = trangthai
 						$('#QRCode').attr('src', qr);
 						if ($('#QRCode').src !== ""){
 							$(".center").css("visibility",'hidden')
+							$("#dangnhap-state").removeClass("chudenindam").addClass("chudoindam");
 							$("#dangnhap-state").text("Chờ đăng nhập");
 						}
 						if (qr === ""){
+							$("#dangnhap-state").removeClass("chudoindam").addClass("chudenindam");
 							$("#dangnhap-state").text("Đang tải...");
 							$('#QRCode').attr('src', "\\static\\templates\\taiQR.gif");
 						}		
-						if (trangthai.includes("--")){ 
+						if (trangthai.includes("--") && (trangthaiglobal !== trangthai)){ 
 							var trangthai = trangthai.split('--')[1].trim()
+							$("#dangnhap-state").removeClass("chudenindam").addClass("chuxanhindam");
 							$("#dangnhap-state").text("Đã đăng nhập");
 							$('#QRCode').attr('src', "\\static\\templates\\login_success.gif");
 							setTimeout(function() {
@@ -207,9 +209,9 @@
 								isRunning = false; // Set the flag to false to stop
 								clearTimeout(timeoutId);
 								return;
-							}, 5000);
-								
+							}, 5000);	
 						}
+						trangthaiglobal = trangthai
 					}
 
 					});
