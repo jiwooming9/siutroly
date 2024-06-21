@@ -14,7 +14,7 @@ body,html{
 	margin-top: auto;
 	margin-bottom: auto;
 }
-.card,#select-panel,.center,.process-dvc{
+.card,.dialog-area,#select-panel,.center,.process-dvc{
 	position: relative;
 	height: 850px;
 	border-radius: 15px !important;
@@ -22,7 +22,7 @@ body,html{
 
 }
 .card{
-	z-index: 1;
+	z-index: 1000;
 }
 
 .dialog-area.frame1{
@@ -38,12 +38,8 @@ body,html{
 
 .dialog-area{
 	position: absolute;
-	background: transparent !important;
+	background-color: none !important;
 	visibility: visible;
-	height: 80%;
-	width: 60%;
-	z-index: 1001;
-	top:10%;
 }
 
 
@@ -197,7 +193,7 @@ header{
 	width:100%;
 }
 #videoct, .img-container {
-	z-index:1;
+	z-index:10;
     position: absolute;
 	left:1rem !important;
 	top:5rem;
@@ -231,7 +227,7 @@ header{
 	
 } */
 
-.ytp-cued-thumbnail-overlay-image{
+.dialog-area,.ytp-cued-thumbnail-overlay-image{
 	position: absolute;
 	left:1rem !important;
 	width: 55%;
@@ -888,17 +884,17 @@ header{
   
   
 #login_area{
-	background-color: white;
-	border-radius: 40px;
+	background-color: rgb(255, 255, 255);
 	
+	border-radius:inherit;
 	position: relative;
 	
-	height: 90%;
-    width: 46%;
+	height: 65%;
+    width: 94%;
+    border-radius: inherit;
     position: relative;
-    left: 60%;
-    top: 5%;
-	z-index: 10001;
+    left: 3%;
+    top: 17%;
 }
 #restartBT{
 	font-size: 35;
@@ -911,9 +907,9 @@ header{
 .login-title{
 	position: relative;
 	width: fit-content;
-	left: 1.7rem;
-	top:2rem;
-	font-size: 40;
+	left: 2.5rem;
+	top:3rem;
+	font-size: 45;
 }
 .form-control{
 	width: 56%;
@@ -923,7 +919,9 @@ header{
 	font-size: larger;
 	
 }
-
+#fetched-html p {
+	font-size: larger;
+}
 #LoginSubmit{
 	font-size: 35;
 }
@@ -935,53 +933,34 @@ header{
 
 #QR-sign{
 	position: absolute;
-	left: -5px;
-	width: 100%;
-	height: 90%;
-	top:5%;
-	
+	left:65%;
+	width: 38%;
+	height: 80%;
+	top:10%;
+	border-left: 1px solid black;
 	border-radius: 0 10px 10px 0;
 }
-#QRCode{
-	height: 55%;
-	width: 80%;
-	border-radius: 40px;
-	border: 5px dashed gray;
-	padding: 5px;
-}
+
 #fetched-html img{
 	position: absolute; 
 	inset: 0px; 
 	box-sizing: border-box; 
+	border: medium; 
 	margin: auto;
 	display: block; 
 	min-width: 30%; 
-	max-width: 85%; 
+	max-width: 70%; 
 	max-height: 90%;
 	bottom:30%;
-	right:-3%;
-}
-#background-layout{
-	height: 110%;
-	width: 100%;
-	opacity: 0.7;
-	z-index: 2;
-	background-color: gray;
-	position: absolute;
-	top:-10%;
+	right:7%;
 }
   
 #fetched-html p {
 	position:absolute;
-	top:68%;
-	left:11%;
+	top:78%;
+	left:6%;
 	width: 80%;
-
 	text-align: center;
-	font-size: larger;
-	font-size: 25;
-	
-	border-radius: 20px;
 }
 
 

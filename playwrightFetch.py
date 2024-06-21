@@ -32,12 +32,12 @@ class VNeIDPage:
         self.trangthaidn = ''
         self.log=[]
         self.CT_infor = {}
-        self.start = False
+        self.login_suc = False
         playwright = sync_playwright().start()
         self.browser = playwright.firefox.launch(headless=False)
         self.context = self.browser.new_context(ignore_https_errors=True, no_viewport=True)
         self.page = self.context.new_page()
-        self.page.set_default_timeout(15000)
+        self.page.set_default_timeout(30000)
         def on_response(response):
             if response.url == self.page.url:  # Check only the main document
                 check_page_blank(self.page)
@@ -53,6 +53,7 @@ class VNeIDPage:
         self.page.get_by_role("link", name="Đăng nhập").click()
         self.page.locator("xpath=/html/body/div[4]/div/div[1]/div/div[2]/div/div[1]/a/div").click()
         self.page.locator('#icon-2').click()
+        
 
     def get_log(self):
         return self.log
@@ -70,7 +71,7 @@ class VNeIDPage:
                     image_src = qr_locator.get_attribute('src') 
                     return image_src
                 else:
-                    return "\\static\\templates\\taiQR.gif"
+                    return ""
         except playwright._impl._errors.TimeoutError:
             return ""
 
@@ -104,7 +105,7 @@ class VNeIDPage:
         self.context.close()
         self.context = self.browser.new_context(ignore_https_errors=True, no_viewport=True)
         self.page = self.context.new_page()
-        self.page.set_default_timeout(15000)
+        self.page.set_default_timeout(30000)
 
     def closeVN(self):
         self.trangthaidn = ''
@@ -114,7 +115,7 @@ class VNeIDPage:
         self.context.close()
         self.context = self.browser.new_context(ignore_https_errors=True, no_viewport=True)
         self.page = self.context.new_page()
-        self.page.set_default_timeout(15000)
+        self.page.set_default_timeout(30000)
         self.page.goto("https://dichvucong.bocongan.gov.vn/?home=1")
         self.page.get_by_role("link", name="Đăng nhập").click()
         self.page.locator("xpath=/html/body/div[4]/div/div[1]/div/div[2]/div/div[1]/a/div").click()
@@ -136,12 +137,17 @@ class VNeIDPage:
         except:
             return "lỗi"
     
-    def loginForm(self,UserID,UserPass):
-      
-        self.page.locator('input[id="username"]').fill(UserID)
-        self.page.locator('input[id="password"]').fill(UserPass)
-        self.page.locator("xpath=/html/body/div[1]/section/div[2]/section/section/div[1]/section/div/div[1]/form/div[3]/div/div/div/div/button").click()
+    def loginstb(self):
+        while not self.login_suc:
+            try:
+               self.page.wait_for_selector('selector_for_successful_login', timeout=55000)  # Thay thế 'selector_for_successful_login' bằng selector thực tế
+               self.login_suc = True
+               notify_flask_server("Login successful")
+            except:
+                self.page.wait_for_selector(tailaibtn)
+                self.page.click(tailaibtn)  # Thay thế 'selector_for_reload_button' bằng selector thực tế
 
+        
     def getDOB(self):
         try:
             th_selector = 'th:has-text("Ngày sinh")'
@@ -196,15 +202,15 @@ class VNeIDPage:
             nguoi={'messageER':'lỗi'}
             return nguoi
         
-    def OTPSend(self,OTParr):
-        try:
-            print(OTParr)
-            self.page.locator("xpath=//div[@class='ant-modal-root']//input[1]").press(OTParr[0] + "+" + OTParr[1] + "+" + OTParr[2] + "+" + OTParr[3] + "+" + OTParr[4] + "+" + OTParr[5])
-            self.page.locator("xpath=//span[contains(text(),'Xác nhận')]").click()
-            self.set_trangthaiDN()
-        except:
+    # def OTPSend(self,OTParr):
+    #     try:
+    #         print(OTParr)
+    #         self.page.locator("xpath=//div[@class='ant-modal-root']//input[1]").press(OTParr[0] + "+" + OTParr[1] + "+" + OTParr[2] + "+" + OTParr[3] + "+" + OTParr[4] + "+" + OTParr[5])
+    #         self.page.locator("xpath=//span[contains(text(),'Xác nhận')]").click()
+    #         self.set_trangthaiDN()
+    #     except:
             
-            return "lỗi"
+    #         return "lỗi"
 
     def Timkiem_CCCD(self):
         try:

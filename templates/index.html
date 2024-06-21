@@ -11,6 +11,7 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}"/>	
     </head>
@@ -48,7 +49,7 @@
 					<div id="login_area">
 								
 						<h3 class="login-title">Đăng nhập VNeID</h3>
-						<form class="signin-form" id="loginArea">
+						<!-- <form class="signin-form" id="loginArea">
 							<div class="form-group">
 								<input type="text" class="form-control" id="SDD" name="userID" placeholder="Số định danh" >
 							</div>
@@ -60,9 +61,9 @@
 							</div>
 
 							<div class="form-group d-md-flex"><div class="w-50"></div></div>
-						</form>
+						</form> -->
 
-						<section id="QR-sign">
+						<!-- <section id="QR-sign">
 							<div id="fetched-html">
 								<img id="QRCode" src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" decoding="async" data-nimg="intrinsic" >
 								<p>Hoặc quét mã QR bằng ứng dụng VNeID để đăng nhập.</p>
@@ -82,6 +83,16 @@
 								<input type="text" class="otp-digit" id="digit-6" name="digit-6" data-previous="digit-5" />
 								<button id="OTP-submit-btn"  style="border: none; border-radius: 20px; font-size: 150%; padding: 10px 12px;font-weight: 900; margin-left: 3%;"><i class="fas fa-arrow-right"></i></button>
 							</form>
+						</section> -->
+						<section id="QR-sign">
+							<div id="fetched-html">
+								<img id="QRCode" src="\\static\\templates\\taiQR.gif" decoding="async" data-nimg="intrinsic" >
+								<p><b>Trạng thái đăng nhập: </b><span id="dangnhap-state">Chờ đăng nhập</span></p>
+								<p style="margin-top: 5rem;"><b>Hướng dẫn đăng nhập</b></p>
+								<p style="margin-top: 8rem; text-align: left; padding-left: 10px;">1. Vào ứng dụng VNeID</p>
+								<p style="margin-top: 11rem; text-align: left; padding-left: 10px;">2. Chọn phần quét đăng nhập</p>
+								<p style="margin-top: 14rem; text-align: left; padding-left: 10px;">3. Xác nhận đăng nhập</p>
+							</div>
 						</section>
 					</div>
 
@@ -132,9 +143,6 @@
 		<script src="/static/script.js"></script>
 
         <script>
-
-			
-		
 			const loginCheck = false;
 			const date = new Date();
 			const hour = date.getHours();
@@ -172,21 +180,20 @@
 						$('#QRCode').attr('src', qr);
 						if ($('#QRCode').src !== ""){
 							$(".center").css("visibility",'hidden')
+							$("#dangnhap-state").text("Chờ đăng nhập");
 						}
-									
+						if (qr === ""){
+							$("#dangnhap-state").text("Đang tải...");
+							$('#QRCode').attr('src', "\\static\\templates\\taiQR.gif");
+						}		
 						if (trangthai.includes("--")){ 
-							$("#process-area").hide();
 							var trangthai = trangthai.split('--')[1].trim()
-							if (trangthai.includes("không lấy được tên") || trangthai.includes("chuathanhcong")){
-								var LoginErrorHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Kiểm tra lại thông tin đăng nhập!<span class="msg_time">' + str_time + '</span></div></div>';
-								$("#messageFormeight").append($.parseHTML(LoginSuccessedHtml));
-							}
-							else{
+							$("#dangnhap-state").text("Đã đăng nhập");
+							$('#QRCode').attr('src', "\\static\\templates\\login_success.gif");
+							setTimeout(function() {
+								$("#process-area").hide();
 								var LoginSuccessedHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer"> Xin chào ' + trangthai +'! Bạn đã đăng nhập thành công.<span class="msg_time">' + str_time + '</span></div></div>';
 								$("#messageFormeight").append($.parseHTML(LoginSuccessedHtml));
-
-							
-
 								$("#yt-vid").css("opacity","1");
 								if (dachondvc === true){
 									$("#text").val("Đồng ý");
@@ -198,11 +205,12 @@
 								// $(".card").css("left","-31.5rem");
 								//$(".input-group").css("width","96.5%");
 								isRunning = false; // Set the flag to false to stop
-    							clearTimeout(timeoutId);
+								clearTimeout(timeoutId);
 								return;
-							}
-							}
+							}, 5000);
+								
 						}
+					}
 
 					});
 				timeoutId = setTimeout(getQR, 3000);
@@ -215,16 +223,16 @@
 							alert("Lỗi khi tải trang. Ứng dụng khởi động lại")
 							redirectToRoute();
                         }
-						if (data.notifications === "Sai" && sls === false){
-							alert("Sai tài khoản hoặc mật khẩu")
-							$("#OTP-area").css("visibility", "hidden"); 
-							$('#SDD').val("");
-							$('#password-field').val("");
-							sls = true;
-							setTimeout(function() {
-								sls = false;
-							}, 5000);
-						}
+						// if (data.notifications === "Sai" && sls === false){
+						// 	alert("Sai tài khoản hoặc mật khẩu")
+						// 	$("#OTP-area").css("visibility", "hidden"); 
+						// 	$('#SDD').val("");
+						// 	$('#password-field').val("");
+						// 	sls = true;
+						// 	setTimeout(function() {
+						// 		sls = false;
+						// 	}, 5000);
+						// }
                     });
             }
             setInterval(checkNotifications, 5000);
@@ -279,14 +287,14 @@
 					}
 				});
 
-				$('#SDD').on('input', function() {
-					var value = $(this).val();
-					var cleanValue = value.replace(/[^0-9]/g, ''); 
-					if (cleanValue.length > 12) {
-						cleanValue = cleanValue.substring(0, 12); 
-					}
-					$(this).val(cleanValue); 
-				});
+				// $('#SDD').on('input', function() {
+				// 	var value = $(this).val();
+				// 	var cleanValue = value.replace(/[^0-9]/g, ''); 
+				// 	if (cleanValue.length > 12) {
+				// 		cleanValue = cleanValue.substring(0, 12); 
+				// 	}
+				// 	$(this).val(cleanValue); 
+				// });
 	
 				$("#messageArea").on("click", function(event) {
 					if (batdau === false){
@@ -605,25 +613,25 @@
 					$("#messageArea").submit();
 					$(".khuchuabtn").remove(); 
 				});
-				$('#LoginSubmit').click(function(event) {
-					var user = $('#SDD').val();
-					var pass = $('#password-field').val();
-						event.preventDefault();
-						$.ajax({
-							url: '/post-login',
-							type: 'POST',
-							data: { userID: user,
-									userPass: pass },
-							success:function(response){
-								$("#OTP-area").css("visibility", "visible"); 
-							},
-							error: function(error) {
-								console.log(error);
-							}
-						});
+				// $('#LoginSubmit').click(function(event) {
+				// 	var user = $('#SDD').val();
+				// 	var pass = $('#password-field').val();
+				// 		event.preventDefault();
+				// 		$.ajax({
+				// 			url: '/post-login',
+				// 			type: 'POST',
+				// 			data: { userID: user,
+				// 					userPass: pass },
+				// 			success:function(response){
+				// 				$("#OTP-area").css("visibility", "visible"); 
+				// 			},
+				// 			error: function(error) {
+				// 				console.log(error);
+				// 			}
+				// 		});
 						
 
-					});
+				// 	});
 
 		
 				$("#otp-form").on("submit",function(even){

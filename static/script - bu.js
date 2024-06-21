@@ -52,14 +52,14 @@ if (!('webkitSpeechRecognition' in window)) {
 // 		testInput.addEventListener("click", function (){
 // 		document.getElementById("videoct").style.top = "-100%";
 // 		});
-// const khungDN = document.getElementById('process-area');
-// const ytVideo = document.getElementById('yt-vid');
+const khungDN = document.getElementById('process-area');
+const ytVideo = document.getElementById('yt-vid');
 
-// khungDN.addEventListener('mouseover', () => {
-//   khungDN.style.opacity = 1; // Fade out on hover
-//   khungDN.style.transition = "opacity 0.5s";
-//   ytVideo.style.opacity = 0; // Fade out on hover
-// });
+khungDN.addEventListener('mouseover', () => {
+  khungDN.style.opacity = 1; // Fade out on hover
+  khungDN.style.transition = "opacity 0.5s";
+  ytVideo.style.opacity = 0; // Fade out on hover
+});
 
 // khungDN.addEventListener('mouseout', () => {
 //     khungDN.style.opacity = 0; // Fade in on mouseout

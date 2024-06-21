@@ -165,31 +165,31 @@ def get_notifications():
 
 #PHƯƠNG THỨC ĐĂNG NHẬP  
 #Đăng nhập bằng tài khoản
-@app.route("/post-login",methods=["GET","POST"])
-def login():
-    global login_status
-    try:
-        UserID = request.form["userID"]
-        UserPass = request.form["userPass"]
-        VneID.loginForm(UserID=UserID,UserPass=UserPass)
-        VneID.set_trangthaiDN()
-        if "thanhcong" in VneID.get_trangthaiDN():
-            login_status = True
-        print({"Username": UserID, "Password": UserPass})
-        return VneID.get_trangthaiDN()
-    except:
-        raise Exception("Lỗi đăng nhập!")
+# @app.route("/post-login",methods=["GET","POST"])
+# def login():
+#     global login_status
+#     try:
+#         UserID = request.form["userID"]
+#         UserPass = request.form["userPass"]
+#         VneID.loginForm(UserID=UserID,UserPass=UserPass)
+#         VneID.set_trangthaiDN()
+#         if "thanhcong" in VneID.get_trangthaiDN():
+#             login_status = True
+#         print({"Username": UserID, "Password": UserPass})
+#         return VneID.get_trangthaiDN()
+#     except:
+#         raise Exception("Lỗi đăng nhập!")
     
-#Kiểm tra OTP   
-@app.route("/otp-check",methods=["POST"])
-def check_OTP():
-    try:
-        received_otp = request.form.get("otp")
-        otp_arr = [x for x in received_otp]
-        VneID.OTPSend(otp_arr)
-        return jsonify({"OTPcode":received_otp})
-    except:
-        raise Exception("Lỗi OTP!")
+# #Kiểm tra OTP   
+# @app.route("/otp-check",methods=["POST"])
+# def check_OTP():
+#     try:
+#         received_otp = request.form.get("otp")
+#         otp_arr = [x for x in received_otp]
+#         VneID.OTPSend(otp_arr)
+#         return jsonify({"OTPcode":received_otp})
+#     except:
+#         raise Exception("Lỗi OTP!")
 
 
 #Lấy mã QR 
@@ -203,7 +203,7 @@ def get_qr_code():
     global nguoi
     qr_code_src = ''
     trangthaidn = VneID.get_trangthaiDN()
-    if login_status == False and trangthaidn != 'otp':
+    if login_status == False:
         qr_code_src = VneID.extract_qr_code_src()
     dob = ''
     expdate = ''
