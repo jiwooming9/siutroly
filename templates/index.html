@@ -31,7 +31,7 @@
 		<!-- Kết thúc form cư trú -->
 		<div id="videoct"><video id="yt-vid" autoplay muted loop><source src="\static\templates\gizdayy.mp4" type="video/mp4"></video></div>
 		<!-- <div id="videoct"><iframe id="yt-vid" src="https://www.youtube.com/embed/6AHAUUr1OVU?si=f8rSAe33aWKvR7Ar&autoplay=1&controls=0&disablekb=1&modestbranding=1&showinfo=0&mute=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div> -->
-		<div class="center" style="z-index: 10 !important;">
+		<!-- <div class="center" style="z-index: 10 !important;">
 			<div class="wave"></div>
 			<div class="wave"></div>
 			<div class="wave"></div>
@@ -42,10 +42,10 @@
 			<div class="wave"></div>
 			<div class="wave"></div>
 			<div class="wave"></div>
-		</div>
+		</div> -->
 		<button id="restartBT"><i class="fas fa-arrow-left"></i></button>
-		
-		<div id="process-area" class="dialog-area" style="display: visible; background-image: url('https://sso.dancuquocgia.gov.vn/_next/static/media/background-login.98683067.png') !important; background-repeat: no-repeat;z-index: 9; ">
+		<div id="background-layout" style="visibility: hidden;"></div>
+		<div id="process-area" class="dialog-area" style="visibility: hidden;z-index: 9; ">
 					<div id="login_area">
 								
 						<h3 class="login-title">Đăng nhập VNeID</h3>
@@ -178,7 +178,7 @@
 						trangthai = response["TTDN"]
 						$('#QRCode').attr('src', qr);
 						if ($('#QRCode').src !== ""){
-							$(".center").css("visibility",'hidden')
+							// $(".center").css("visibility",'hidden')
 							$("#dangnhap-state").removeClass("chudenindam").addClass("chudoindam");
 							$("#dangnhap-state").text("Chờ đăng nhập");
 						}
@@ -194,6 +194,7 @@
 							$('#QRCode').attr('src', "\\static\\templates\\login_success.gif");
 							setTimeout(function() {
 								$("#process-area").hide();
+								$("#background-layout").hide();
 								var LoginSuccessedHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer"> Xin chào ' + trangthai +'! Bạn đã đăng nhập thành công.<span class="msg_time">' + str_time + '</span></div></div>';
 								$("#messageFormeight").append($.parseHTML(LoginSuccessedHtml));
 								$("#yt-vid").css("opacity","1");
@@ -588,8 +589,8 @@
 						$(".khuchuabtn").remove();
 					} else {
 						dachondvc = true;
-						$("#process-area").css("opacity",'1')
-						$("#yt-vid").css("opacity",'0')
+						$("#background-layout").css("visibility", "visible")
+						$("#process-area").css("visibility", "visible")
 						alert("Trước tiên hãy đăng nhập vào dịch vụ công bằng khung bên trái. Sau đó bấm đồng ý để tiếp tục thực hiện.", 5)
 						const ytVideo = document.getElementById('yt-vid');
 						ytVideo.style.opacity = 0;

@@ -416,6 +416,15 @@ class VNeIDPage:
             
             return "lỗi"
 
+    def laydanhsachfile(self, ten, num):
+        current_file_path = os.path.abspath(__file__)
+        folderpath = os.path.dirname(current_file_path)
+        danhsach = []
+        for i in range(num):
+            file_path = f"{ten}_{str(i+1)}.jpg"
+            realpath = os.path.join(folderpath, file_path)
+            danhsach.append(realpath)
+        return danhsach
     #---------XÁC MINH CƯ TRÚ-----------
     def inphieuCT01(self, hoso, tenfile):
         try:
@@ -676,22 +685,23 @@ class VNeIDPage:
             return "lỗi"
 
     def submitinfoTachho(self, hoso):
-        try:
-            input_file = self.page.locator("input#fileUpload0")   
-            input_file.set_input_files("CT01.pdf")
-            if "Cho o hop phap" in hoso.keys():
-                self.page.locator("#chkIS_COMPULSORY1").check()
-                input_file = self.page.locator("input#fileUpload1")   
-                input_file.set_input_files("Cho o hop phap.pdf")
-            if "Giay ly hon" in hoso.keys():
+        danhsachfile = self.laydanhsachfile("CT01", hoso["CT01"])
+        input_file_ct = self.page.locator('input[id="fileUpload0"]')   
+        input_file_ct.set_input_files(danhsachfile)
+        if "Cho o hop phap" in hoso.keys():
+            danhsachfile_choo = self.laydanhsachfile("Cho o hop phap", hoso["Cho o hop phap"])
+            self.page.locator("#chkIS_COMPULSORY1").check()
+            input_file = self.page.locator("input#fileUpload1")   
+            input_file.set_input_files(danhsachfile_choo)
+        if "Giay ly hon" in hoso.keys():
+                danhsachfile_lyhon = self.laydanhsachfile("Giay ly hon", hoso["Giay ly hon"])
                 self.page.locator("#chkIS_COMPULSORY2").check()
                 input_file = self.page.locator("input#fileUpload2")   
-                input_file.set_input_files("Giay ly hon.pdf")
-        except:
-            
-            return "lỗi"
+                input_file.set_input_files(danhsachfile_lyhon)
         # Còn nút gửi hồ sơ
-
+        self.page.locator("#btn_Save_Send").click()
+        # Còn nút gửi hồ sơ
+    
  
 
 

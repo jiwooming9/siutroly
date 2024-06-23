@@ -130,7 +130,7 @@ def index():
 def greetings():
     data = {'greetings': "Xin chào tôi là trợ lý ảo dịch vụ công về căn cước và cư trú. Hãy hỏi tôi bất cứ điều gì bạn thắc mắc", 
             'pre_start': "Để thực hiện dịch vụ công, vui lòng đăng nhập quét QR code bằng ứng dụng VNeID hoặc đặng nhập bằng tài khoản ở khung bên cạnh"}
-    VneID.khoidong()
+    # VneID.khoidong()
     return data
 
 @app.route('/restart')
@@ -438,10 +438,12 @@ def dvc_tachho():
         return jsonify(result)
     if (VneID.submitinfoTachho(hoso)=="lỗi"):
         return jsonify(result)
+    time.sleep(3)
+    result["message"] = VneID.kiemtrattin()
+    if (result["message"]!="guithanhcong"):
+        return jsonify(result)
     hab = send_messageG("Tôi đã làm xong dịch vụ công Tách hộ. Hãy bắt đầu lại từ đầu, giúp tôi tìm dịch vụ công khác. " + prompt.khoidong)
-    result = {
-        'message': 'Đã gửi hồ sơ của bạn lên hệ thống. Mời bạn ra quầy để thực hiện các thủ tục kế tiếp.<br>Nếu không còn câu hỏi gì, hãy bấm nút mũi tên bên trái để thoát tài khoản.<br>Xin cảm ơn!!',
-    }
+    result['message'] = 'guithanhcong'
     return jsonify(result)
 
 

@@ -353,6 +353,7 @@
 
 <script>
     const quanHuyen = document.getElementById("quan-huyen-quangninh-tachho");
+	var phuongXanow = "halong";
 			const phuongXaUongbi = document.getElementById("phuong-xa-uongbi-tachho");
 			const phuongXaHalong = document.getElementById("phuong-xa-halong-tachho");
 			const phuongXaCampha = document.getElementById("phuong-xa-campha-tachho");
@@ -383,6 +384,7 @@
 				phuongXaHaiha.style.zIndex = "3"
 				phuongXaDongtrieu.style.zIndex = "2"
 				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
 			}
 			if (quanHuyen.value === "halong"){
 				phuongXaUongbi.style.zIndex = "12"
@@ -398,6 +400,7 @@
 				phuongXaHaiha.style.zIndex = "3"
 				phuongXaDongtrieu.style.zIndex = "2"
 				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
 			}
 			if (quanHuyen.value === "campha"){
 				phuongXaUongbi.style.zIndex = "11"
@@ -413,6 +416,7 @@
 				phuongXaHaiha.style.zIndex = "3"
 				phuongXaDongtrieu.style.zIndex = "2"
 				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
 			}
 
 			if (quanHuyen.value === "mongcai"){
@@ -429,6 +433,7 @@
 				phuongXaHaiha.style.zIndex = "3"
 				phuongXaDongtrieu.style.zIndex = "2"
 				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
 			}
 
 			if (quanHuyen.value === "vandon"){
@@ -445,6 +450,7 @@
 				phuongXaHaiha.style.zIndex = "3"
 				phuongXaDongtrieu.style.zIndex = "2"
 				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
 			}
 
 			if (quanHuyen.value === "coto"){
@@ -461,6 +467,7 @@
 				phuongXaHaiha.style.zIndex = "3"
 				phuongXaDongtrieu.style.zIndex = "2"
 				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
 			}
 
 			if (quanHuyen.value === "bache"){
@@ -477,6 +484,7 @@
 				phuongXaHaiha.style.zIndex = "3"
 				phuongXaDongtrieu.style.zIndex = "2"
 				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
 			}
 
 			if (quanHuyen.value === "binhlieu"){
@@ -493,6 +501,7 @@
 				phuongXaHaiha.style.zIndex = "3"
 				phuongXaDongtrieu.style.zIndex = "2"
 				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
 			}
 
 			if (quanHuyen.value === "tienyen"){
@@ -509,6 +518,7 @@
 				phuongXaHaiha.style.zIndex = "3"
 				phuongXaDongtrieu.style.zIndex = "2"
 				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
 			}
 
 			if (quanHuyen.value === "damha"){
@@ -525,6 +535,7 @@
 				phuongXaHaiha.style.zIndex = "3"
 				phuongXaDongtrieu.style.zIndex = "2"
 				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
 			}
 
 			if (quanHuyen.value === "haiha"){
@@ -541,6 +552,7 @@
 				phuongXaHaiha.style.zIndex = "13"
 				phuongXaDongtrieu.style.zIndex = "2"
 				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
 			}
 
 			if (quanHuyen.value === "dongtrieu"){
@@ -557,6 +569,7 @@
 				phuongXaHaiha.style.zIndex = "3"
 				phuongXaDongtrieu.style.zIndex = "13"
 				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
 			}
 
 			if (quanHuyen.value === "quangyen"){
@@ -573,6 +586,7 @@
 				phuongXaHaiha.style.zIndex = "3"
 				phuongXaDongtrieu.style.zIndex = "2"
 				phuongXaQuangyen.style.zIndex = "13"
+				phuongXanow = quanHuyen.value
 			}
 			// Options for selectB (replace with your actual data)
 			
@@ -628,7 +642,7 @@
 		const data = [];
 		const tableBody = document.getElementById('thongtinnguoicungthaydoi-tachho').getElementsByTagName('tbody')[0];
 
-		const tp = document.getElementById("tinh-tp-tachho").textContent;
+		const tp = document.getElementById("tinh-tp-tachho option:checked").textContent;
 		const quanHuyenz = document.getElementById('quan-huyen-quangninh-tachho option:checked').textContent;
 		const gtquanHuyen = document.querySelector('#quan-huyen-quangninh-tachho').value;
 		const selectedphuongxa = document.querySelector(`#phuong-xa-${gtquanHuyen}-tachho option:checked`);
@@ -661,7 +675,7 @@
 		$("#messageArea input").prop("disabled",true);
 		alert("Đang in phiếu CT01 cho bạn");
 		document.getElementById('img-div-id').style.visibility = 'visible';
-		var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Hệ thống đang in phiếu CT01 với thông tin bạn đã cung cấp.<span class="msg_time">' + str_time + '</span></div></div>';
+		var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Hệ thống đang in phiếu CT01 với thông tin bạn đã cung cấp<br>Kiểm tra lại thông tin trên phiếu, sau đó ký xác nhận vào mục số (6).<span class="msg_time">' + str_time + '</span></div></div>';
 		$("#messageFormeight").append($.parseHTML(Html));
 		// Send data to Flask backend print
 		fetch('/inCT01', { 
@@ -669,7 +683,7 @@
 			headers: {
 			'Content-Type': 'application/json'
 			},
-			body: JSON.stringify(tp +";;"+quanHuyenz+";;"+phuongxa+";Tách hộ;"+hoTen+";;"+ngaySinh+";;"+gioiTinh+";;"+soCCCD+";;"+sdt+";;"+nameChuho+";;"+qhChuho+";;"+soCCCDChuho+";;"+tableBody.rows.length+";;"+tableData)
+			body: JSON.stringify(tp +";;"+quanHuyenz+";;"+phuongxa+";;Tách hộ;;"+hoTen+";;"+ngaySinh+";;"+gioiTinh+";;"+soCCCD+";;"+sdt+";;"+nameChuho+";;"+qhChuho+";;"+soCCCDChuho+";;"+tableBody.rows.length+";;"+tableData)
 		})
 		.then(response => response.json())
 		.then(data => {
@@ -692,7 +706,7 @@
 				})
 				.then(response1 => response1.json())
 				.then(data => {
-					if (data.message === "Đã scan"){
+					if (data.message > 0){
 						document.getElementById('anhhuongdanscan').src = "static\\templates\\scantachho1.jpg";
 						var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Đặt Giấy tờ, tài liệu chứng minh việc tiếp tục được sử dụng chỗ ở hợp pháp vào máy quét<span class="msg_time">' + str_time + '</span></div></div>';
 						$("#messageFormeight").append($.parseHTML(Html));
@@ -725,7 +739,7 @@
 								})
 								.then(response2 => response2.json())
 								.then(data => {
-									if (data.message === "Đã scan"){
+									if (data.message > 0){
 										document.getElementById('anhhuongdanscan').src = "static\\templates\\loading.gif";
 										var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Đã nhận được các tài liệu, đang gửi hồ sơ lên hệ thống...<span class="msg_time">' + str_time + '</span></div></div>';
 										$("#messageFormeight").append($.parseHTML(Html));
@@ -741,14 +755,32 @@
 										})
 										.then(response => response.json())
 										.then(data => {
-												var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">'+ data.message +'<span class="msg_time">' + str_time + '</span></div></div>';
-												$("#messageFormeight").append($.parseHTML(Html));
-												document.getElementById('anhhuongdanscan').src = "static\\templates\\hoanthanh.gif";
-												scrollToBottom();
+											if (data.message === "lỗi"){
+												alert("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại")
 												setTimeout(function() {
 													document.getElementById('img-div-id').style.visibility = 'hidden';
 													document.getElementById('anhhuongdanscan').src = "static\\templates\\loading.gif";
 													document.getElementById("videoct").style.visibility = "visible";}, 5000);
+												redirectToRoute();
+											} else if (data.message === "guithanhcong"){
+												setTimeout(function() {
+													document.getElementById('img-div-id').style.visibility = 'hidden';
+													document.getElementById('anhhuongdanscan').src = "static\\templates\\loading.gif";
+													document.getElementById("videoct").style.visibility = "visible";}, 5000);	
+												var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">'+ data.message +'<span class="msg_time">' + str_time + '</span></div></div>';
+												$("#messageFormeight").append($.parseHTML(Html));
+												document.getElementById('anhhuongdanscan').src = "static\\templates\\hoanthanh.gif";
+												scrollToBottom();
+											} else {
+												alert(`${data.message}`)
+												$("#formcutru").css("visibility","visible");
+												$("#videoct").css("visibility","hidden");
+												var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Hãy kiểm tra thật kỹ lại các thông tin của bạn khai tại bảng bên cạnh. Sau khi đã chắc chắn thì ấn nút XÁC NHẬN để tiếp tục." <span class="msg_time">' + str_time + '</span></div></div>';
+												$("#messageFormeight").append($.parseHTML(Html));
+												scrollToBottom();
+												$("#messageArea input").css("opacity","1");
+												$("#messageArea input").prop("disabled",false);
+											}
 										})
 										.catch(error => {
 											console.error('Error:', error);
@@ -779,17 +811,30 @@
 								.then(response => response.json())
 								.then(data => {
 									if (data.message === "lỗi"){
+										alert("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại")
+										setTimeout(function() {
+											document.getElementById('img-div-id').style.visibility = 'hidden';
+											document.getElementById('anhhuongdanscan').src = "static\\templates\\loading.gif";
+											document.getElementById("videoct").style.visibility = "visible";}, 5000);
+										redirectToRoute();
+									} else if (data.message === "guithanhcong"){
+										setTimeout(function() {
+											document.getElementById('img-div-id').style.visibility = 'hidden';
+											document.getElementById('anhhuongdanscan').src = "static\\templates\\loading.gif";
+											document.getElementById("videoct").style.visibility = "visible";}, 5000);	
 										var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">'+ data.message +'<span class="msg_time">' + str_time + '</span></div></div>';
 										$("#messageFormeight").append($.parseHTML(Html));
 										document.getElementById('anhhuongdanscan').src = "static\\templates\\hoanthanh.gif";
 										scrollToBottom();
 									} else {
-										setTimeout(function() {
-											document.getElementById('img-div-id').style.visibility = 'hidden';
-											document.getElementById('anhhuongdanscan').src = "static\\templates\\loading.gif";
-											document.getElementById("videoct").style.visibility = "visible";}, 5000);
-										alert("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại")
-										redirectToRoute();
+										alert(`${data.message}`)
+										$("#formcutru").css("visibility","visible");
+										$("#videoct").css("visibility","hidden");
+										var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Hãy kiểm tra thật kỹ lại các thông tin của bạn khai tại bảng bên cạnh. Sau khi đã chắc chắn thì ấn nút XÁC NHẬN để tiếp tục." <span class="msg_time">' + str_time + '</span></div></div>';
+										$("#messageFormeight").append($.parseHTML(Html));
+										scrollToBottom();
+										$("#messageArea input").css("opacity","1");
+										$("#messageArea input").prop("disabled",false);
 									}
 								})
 								.catch(error => {

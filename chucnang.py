@@ -120,8 +120,8 @@ def scanlientuc(tenvb):
     dem = 0
     while dem < 40:
         try:
-            dem = scanVB_enhanced(tenvb)
-            return dem
+            soto = scanVB_enhanced(tenvb)
+            return soto
         except:
             dem += 1
             time.sleep(3)
