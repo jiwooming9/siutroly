@@ -397,8 +397,8 @@ def scantailieu():
     print("Chuẩn bị scan")
     msg = request.get_json()
     time.sleep(5)
-    kq = 0
-    kq = chucnang.scanlientuc(msg)
+    kq = 1
+    #kq = chucnang.scanlientuc(msg)
     if kq > 0:
         hoso[msg] = kq
     result = {
