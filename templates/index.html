@@ -99,7 +99,7 @@
 		</div>
 		
 		
-
+		<div id="notification"></div>
 		<div class="container-fluid h-100">
 			<div class="row justify-content-center h-100">		
 				<div class="col-md-8 col-xl-6 chat">
@@ -165,7 +165,6 @@
 			let timeoutId;
 			let qua3s = false;
 			let dachondvc = false;
-			var trangthaiglobal = "";
 			var batdau = false;
 			var sls = false;
 			var Htmld = '<div id="doity" class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer"> Đang xử lý yêu cầu...</div></div>';
@@ -187,7 +186,7 @@
 							$("#dangnhap-state").text("Đang tải...");
 							$('#QRCode').attr('src', "\\static\\templates\\taiQR.gif");
 						}		
-						if (trangthai.includes("--") && (trangthaiglobal !== trangthai)){ 
+						if (trangthai.includes("--")){ 
 							var trangthai = trangthai.split('--')[1].trim()
 							$("#dangnhap-state").removeClass("chudenindam").addClass("chuxanhindam");
 							$("#dangnhap-state").text("Đã đăng nhập");
@@ -212,7 +211,6 @@
 							isRunning = false; // Set the flag to false to stop
 							clearTimeout(timeoutId);	
 						}
-						trangthaiglobal = trangthai
 					}
 
 					});
@@ -252,7 +250,6 @@
 				dachondvc = false;
 				document.getElementById('anhhuongdanscan').src = "static\\templates\\loading.gif";
 				qua3s = false;
-				trangthaiglobal = "";
 				resetTimer();
 			 	window.location.href = "http://127.0.0.1:5000/restart"; // Redirect to the timeout route
 			 }
@@ -583,7 +580,7 @@
 		
 				});
 				$(document).on("click", "#dongybtn", function(event) {
-					if (trangthaiglobal.includes("thanhcong")){
+					if (trangthai !== "loi"){
 						$("#text").val("Đồng ý");
 						$("#messageArea").submit();
 						$(".khuchuabtn").remove();
@@ -591,7 +588,8 @@
 						dachondvc = true;
 						$("#background-layout").css("visibility", "visible")
 						$("#process-area").css("visibility", "visible")
-						alert("Trước tiên hãy đăng nhập vào dịch vụ công bằng khung bên trái. Sau đó bấm đồng ý để tiếp tục thực hiện.", 5)
+						//alert("Trước tiên hãy đăng nhập vào dịch vụ công bằng khung bên trái. Sau đó bấm đồng ý để tiếp tục thực hiện.", 5)
+
 						const ytVideo = document.getElementById('yt-vid');
 						ytVideo.style.opacity = 0;
 						$.ajax({

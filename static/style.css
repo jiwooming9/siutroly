@@ -9,6 +9,16 @@ body,html{
 	background: linear-gradient(to right, rgb(38, 51, 61), rgb(50, 55, 65), rgb(33, 33, 78)); */
 }
 
+#notification {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	background-color: #4CAF50;
+	color: white;
+	padding: 15px;
+	border-radius: 5px;
+	display: none; /* Ẩn thông báo lúc đầu */
+}
 
 .chat{
 	margin-top: auto;
