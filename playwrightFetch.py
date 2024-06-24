@@ -81,13 +81,13 @@ class VNeIDPage:
             if self.page.locator("xpath=/html/body/div[4]/div/div[2]/div/div/div[1]/div/div/div/div[2]/table/tbody/tr[2]/td").count()>0:
                 ten = self.page.locator("xpath=/html/body/div[4]/div/div[2]/div/div/div[1]/div/div/div/div[2]/table/tbody/tr[2]/td").inner_text()
                 self.trangthaidn = "thanhcong--"+ten
-            elif self.page.locator(opt).count()>0:
-                self.trangthaidn = 'otp'
-            elif self.page.locator(tbdangnhapsai).count()>0:
-                self.trangthaidn = 'không lấy được tên'
-                notify_flask_server("Sai") 
+            # elif self.page.locator(opt).count()>0:
+            #     self.trangthaidn = 'otp'
+            # elif self.page.locator(tbdangnhapsai).count()>0:
+            #     self.trangthaidn = 'không lấy được tên'
+            #     notify_flask_server("Sai") 
         except:
-            return "lỗi"
+            return "loi"
 
     def logout(self):
         try:
@@ -129,13 +129,13 @@ class VNeIDPage:
                     userName_check = self.page.locator('xpath=/html/body/div[4]/div/div[2]/div/div/div[1]/div/div/div/div[2]/table/tbody/tr[2]/td').inner_text(timeout=10000)
                     kq = userName_check
                 except:
-                    return "oops"
+                    return "loi"
                 return self.trangthaidn +"--"+kq
             else:
                 self.set_trangthaiDN()
                 return self.trangthaidn
         except:
-            return "lỗi"
+            return "loi"
     
     def loginstb(self):
         while not self.login_suc:
