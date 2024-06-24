@@ -642,8 +642,8 @@
 		const data = [];
 		const tableBody = document.getElementById('thongtinnguoicungthaydoi-tachho').getElementsByTagName('tbody')[0];
 
-		const tp = document.getElementById("tinh-tp-tachho option:checked").textContent;
-		const quanHuyenz = document.getElementById('quan-huyen-quangninh-tachho option:checked').textContent;
+		const tp = document.querySelector("tinh-tp-tachho option:checked").textContent;
+		const quanHuyenz = document.querySelector('quan-huyen-quangninh-tachho option:checked').textContent;
 		const gtquanHuyen = document.querySelector('#quan-huyen-quangninh-tachho').value;
 		const selectedphuongxa = document.querySelector(`#phuong-xa-${gtquanHuyen}-tachho option:checked`);
 		const phuongxa = selectedphuongxa.textContent;
