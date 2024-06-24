@@ -192,8 +192,6 @@
 							$("#dangnhap-state").removeClass("chudenindam").addClass("chuxanhindam");
 							$("#dangnhap-state").text("Đã đăng nhập");
 							$('#QRCode').attr('src', "\\static\\templates\\login_success.gif");
-							isRunning = false; // Set the flag to false to stop
-							clearTimeout(timeoutId);
 							setTimeout(function() {
 								$("#process-area").hide();
 								$("#background-layout").hide();
@@ -209,9 +207,10 @@
 								// $(".card").css("width","200%");
 								// $(".card").css("left","-31.5rem");
 								//$(".input-group").css("width","96.5%");
-
 								return;
-							}, 5000);	
+							}, 5000);
+							isRunning = false; // Set the flag to false to stop
+							clearTimeout(timeoutId);	
 						}
 						trangthaiglobal = trangthai
 					}
