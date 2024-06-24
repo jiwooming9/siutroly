@@ -154,8 +154,8 @@
 				success:function(response){
 					var GreetingsHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">' + response.greetings  + '<br><span class="msg_time">' + str_time + '</span></div></div>';
 					$("#messageFormeight").append($.parseHTML(GreetingsHtml));
-					var GreetingsHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">' + response.pre_start  + '<span class="msg_time">' + str_time + '</span></div></div>';
-					$("#messageFormeight").append($.parseHTML(GreetingsHtml));
+					// var GreetingsHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">' + response.pre_start  + '<span class="msg_time">' + str_time + '</span></div></div>';
+					// $("#messageFormeight").append($.parseHTML(GreetingsHtml));
 					scrollToBottom(); 
 
 				}
@@ -187,10 +187,11 @@
 							$("#dangnhap-state").text("Đang tải...");
 							$('#QRCode').attr('src', "\\static\\templates\\taiQR.gif");
 						}		
-						if (trangthai.includes("--") && (trangthaiglobal !== trangthai)){ 
+						if (trangthai.includes("--") && (trangthaiglobal !== trangthai)){
+							trangthaiglobal = trangthai
 							var trangthai = trangthai.split('--')[1].trim()
 							$("#dangnhap-state").removeClass("chudenindam").addClass("chuxanhindam");
-							$("#dangnhap-state").text("Đã đăng nhập");
+							$("#dangnhap-state").text("Đăng nhập thành công");
 							$('#QRCode').attr('src', "\\static\\templates\\login_success.gif");
 							setTimeout(function() {
 								$("#process-area").hide();
@@ -212,7 +213,6 @@
 								return;
 							}, 5000);	
 						}
-						trangthaiglobal = trangthai
 					}
 
 					});
@@ -591,7 +591,7 @@
 						dachondvc = true;
 						$("#background-layout").css("visibility", "visible")
 						$("#process-area").css("visibility", "visible")
-						alert("Trước tiên hãy đăng nhập vào dịch vụ công bằng khung bên trái. Sau đó bấm đồng ý để tiếp tục thực hiện.", 5)
+						alert("Bạn vui lòng đăng nhập bằng tài khoản VNeID bằng cách quét mã QR!0", 5)
 						const ytVideo = document.getElementById('yt-vid');
 						ytVideo.style.opacity = 0;
 						$.ajax({

@@ -128,9 +128,9 @@ def index():
 #Chào người dùng
 @app.route("/greentings")
 def greetings():
-    data = {'greetings': "Xin chào tôi là trợ lý ảo dịch vụ công về căn cước và cư trú. Hãy hỏi tôi bất cứ điều gì bạn thắc mắc", 
+    data = {'greetings': "Xin chào tôi là trợ lý ảo dịch vụ công về căn cước và cư trú. Tôi có thể giúp gì được cho bạn? ", 
             'pre_start': "Để thực hiện dịch vụ công, vui lòng đăng nhập quét QR code bằng ứng dụng VNeID hoặc đặng nhập bằng tài khoản ở khung bên cạnh"}
-    VneID.khoidong()
+    #VneID.khoidong()
     return data
 
 @app.route('/restart')
@@ -267,7 +267,7 @@ def chat():
     if msg == "Huỷ":
         dichvucong = ""
         chitiet_dvc = ""
-        send_messageG("Tôi sẽ cung cấp thêm thông tin")
+        send_messageG("Hãy quên những yêu cầu mà tôi vừa đưa ra. Tôi sẽ đưa yêu cầu mới ở lần trả lời kế tiếp. Bạn thực hiện phân loại dịch vụ công về căn cước hay cư trú lại từ đầu. Đừng đưa ra gợi ý về tên dịch vụ công lúc này.")
         return "Hãy mô tả chi tiết hơn yêu cầu của bạn."
     if msg == "Dịch vụ công căn cước":
         hab = send_messageG(prompt.prompt_dvccancuoc)
@@ -278,7 +278,7 @@ def chat():
         dichvucong = "Đăng ký, quản lý cư trú"
         return "Một số dịch vụ công hay được tiếp nhận:<br>-Dịch vụ 1: Xác nhận thông tin cư trú---Dịch vụ 2: Tách hộ<br>"
     response = send_messageG(msg)
-    print(response)
+    print("Thử " + response)
     if dichvucong == '':
         time.sleep(3)
         adap = ""
@@ -295,7 +295,7 @@ def chat():
             response = adap +"<br>"+ response
             print(response)
             
-    if dichvucong == "Cấp, quản lý thẻ căn cước" and chitiet_dvc == "":
+    if chitiet_dvc == "":
         if "phù hợp" in response and "căn cước" in response and "do mất" in response:
             chitiet_dvc = "cấp lại căn cước do mất"
         if "phù hợp" in response and "căn cước" in response and "hư hỏng" in response:
@@ -310,8 +310,6 @@ def chat():
             chitiet_dvc = "cấp đổi căn cước do hết hạn"
         if "phù hợp" in response and "xác minh" in response.lower() or "xác nhận" in response.lower():
             chitiet_dvc = "xác nhận số"
-
-    if dichvucong == "Đăng ký, quản lý cư trú" and chitiet_dvc == "":
         if "phù hợp" in response.lower() and ("xác minh" in response.lower() or "xác nhận" in response.lower()):
             chitiet_dvc = "xác minh cư trú"
         if "phù hợp" in response and "tách hộ" in response.lower():
@@ -418,7 +416,7 @@ def dvc_xacminhcutru():
         return jsonify(result)
     if (VneID.submitinfoXacminh(hoso["CT01"])=="lỗi"):
         return jsonify(result)
-    time.sleep(3)
+    time.sleep(5)
     result["message"] = VneID.kiemtrattin()
     if (result["message"]!="guithanhcong"):
         return jsonify(result)

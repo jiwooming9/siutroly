@@ -579,7 +579,7 @@ class VNeIDPage:
 
     def kiemtrattin(self):
         kq = "guithanhcong"
-        if self.page.locator("#lblCheck_Du_Thong_Tin").count() > 0:
+        if self.page.locator("#lblCheck_Du_Thong_Tin").count() > 0 and self.page.locator("#lblNAME_CITIZEN").count() > 0:
             kq = self.page.locator("#lblNAME_CITIZEN").text_content() + " " + self.page.locator("#lblCheck_Du_Thong_Tin").text_content()
         return kq
 
