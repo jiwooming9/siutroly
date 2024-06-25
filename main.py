@@ -130,14 +130,14 @@ def index():
 def greetings():
     data = {'greetings': "Xin chào tôi là trợ lý ảo dịch vụ công về căn cước và cư trú. Tôi có thể giúp gì được cho bạn? ", 
             'pre_start': "Để thực hiện dịch vụ công, vui lòng đăng nhập quét QR code bằng ứng dụng VNeID hoặc đặng nhập bằng tài khoản ở khung bên cạnh"}
-    #VneID.khoidong()
+    VneID.khoidong()
     return data
 
 @app.route('/restart')
 def restart():
     global VneID
-    if login_status == True:
-        VneID.logout()
+    # if login_status == True:
+    #     VneID.logout()
     VneID.halfClose()
     khoitaobien()
     return redirect(url_for('index'))

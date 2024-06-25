@@ -91,10 +91,10 @@ class VNeIDPage:
 
     def logout(self):
         try:
-            self.page.locator("xpath=//div[@class='user-btn']//a[@type='button']").click(timeout=3000)
+            self.page.locator("xpath=//div[@class='user-btn']//a[@type='button']").click(timeout=10000)
             self.page.locator("xpath=//div[@class='user-btn open']//a[contains(text(),'Đăng xuất')]").click()
         except PlaywrightTimeoutError:
-            self.page.locator("#userLogin").click(timeout=3000)
+            self.page.locator("#userLogin").click(timeout=10000)
             self.page.locator("xpath=//a[contains(text(),'Đăng xuất')]").click()
         
     def halfClose(self):

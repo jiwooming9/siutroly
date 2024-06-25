@@ -18,7 +18,12 @@
 	
 	
 	<body>
-	  
+		<div id="popup">
+			<p></p>
+			<div id="countdown"></div> 
+		  </div>
+		  
+		  <div class="overlay"></div> 
 		<div class="img-container" id="img-div-id"><img id="anhhuongdanscan" src="static\templates\loading.gif" alt=""></div>
 	<!-- form cư trú -->
 		
@@ -223,7 +228,7 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.notifications === "Page is blank") {
-							alert("Lỗi khi tải trang. Ứng dụng khởi động lại")
+							showPopup("Lỗi khi tải trang. Ứng dụng khởi động lại")
 							redirectToRoute();
                         }
 						// if (data.notifications === "Sai" && sls === false){
@@ -357,7 +362,7 @@
 									url:"/chon_dvc_caplai",
 									success:function(response){
 										if (response === "lỗi"){
-											alert("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại", 5)
+											showPopup("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại")
 											redirectToRoute();
 										} else {
 										document.getElementById('anhhuongdanscan').src = "static\\templates\\hoanthanh.gif";
@@ -390,7 +395,7 @@
 									url:"/chon_dvc_xacminh",
 									success:function(response){
 										if (response === "lỗi"){
-											alert("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại", 5)
+											showPopup("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại")
 											redirectToRoute();
 										} else {
 										document.getElementById('anhhuongdanscan').src = "static\\templates\\hoanthanh.gif";
@@ -421,7 +426,7 @@
 									url:"/chon_dvc_doithe",
 									success:function(response){
 										if (response === "lỗi"){
-											alert("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại", 5)
+											showPopup("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại")
 											redirectToRoute();
 										} else {
 										document.getElementById('anhhuongdanscan').src = "static\\templates\\hoanthanh.gif";
@@ -450,7 +455,7 @@
 									url:"/laythongtin",
 									success:function(response){
 										if (response.hasOwnProperty("messageER")){
-											alert("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại", 5)
+											showPopup("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại")
 											redirectToRoute();
 										} else{
 										$('#formcutru').load('/static/xacminhct.html', function() {
@@ -516,7 +521,7 @@
 									url:"/laythongtin",
 									success:function(response){
 										if (response.hasOwnProperty("messageER")){
-											alert("Lỗi khi lấy thông tin. Ứng dụng sẽ khởi động lại", 5)
+											showPopup("Lỗi khi lấy thông tin. Ứng dụng sẽ khởi động lại")
 											redirectToRoute();
 										} else{
 										$('#formcutru').load('/static/tachho.html', function() {
@@ -589,9 +594,11 @@
 						$(".khuchuabtn").remove();
 					} else {
 						dachondvc = true;
-						$("#background-layout").css("visibility", "visible")
-						$("#process-area").css("visibility", "visible")
-						alert("Bạn vui lòng đăng nhập bằng tài khoản VNeID bằng cách quét mã QR!0", 5)
+						setTimeout(function() {
+							$("#background-layout").css("visibility", "visible");
+							$("#process-area").css("visibility", "visible");
+						},5000)
+						showPopup("Để tiếp tục thực hiện dịch vụ công, bạn vui lòng đăng nhập vào hệ thống bằng cách quét mã QR trên ứng dụng VNeID!")
 						const ytVideo = document.getElementById('yt-vid');
 						ytVideo.style.opacity = 0;
 						$.ajax({

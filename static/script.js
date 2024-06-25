@@ -48,6 +48,28 @@ if (!('webkitSpeechRecognition' in window)) {
     };
 }
 
+function showPopup(message) {
+    var popup = document.getElementById("popup");
+    var overlay = document.querySelector(".overlay");
+    var countdown = document.getElementById("countdown");
+  
+    popup.querySelector("p").textContent = message;
+    popup.style.display = "block";
+    overlay.style.display = "block"; // Hiển thị lớp phủ mờ
+  
+    let seconds = 5;
+    countdown.textContent = seconds; // Hiển thị đếm ngược ban đầu
+  
+    let timer = setInterval(function() {
+      seconds--;
+      countdown.textContent = seconds;
+      if (seconds == 0) {
+        clearInterval(timer);
+        popup.style.display = "none";
+        overlay.style.display = "none"; // Ẩn lớp phủ khi popup biến mất
+      }
+    }, 1000);
+  }
 // const testInput = document.getElementById("messageArea");
 // 		testInput.addEventListener("click", function (){
 // 		document.getElementById("videoct").style.top = "-100%";
