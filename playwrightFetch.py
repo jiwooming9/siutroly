@@ -5,7 +5,15 @@ from docxtpl import DocxTemplate
 import time
 import requests
 import os
+import re
+import unicodedata
+from datetime import datetime
+import traceback
 
+BANG_XOA_DAU = str.maketrans(
+    "ÁÀẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÈÉẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỴáàảãạăắằẳẵặâấầẩẫậđèéẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵ",
+    "A"*17 + "D" + "E"*11 + "I"*5 + "O"*17 + "U"*11 + "Y"*5 + "a"*17 + "d" + "e"*11 + "i"*5 + "o"*17 + "u"*11 + "y"*5
+)
 tailaibtn = "xpath=//button[@class='absolute top-1/2 left-1/2 z-10 flex h-9 w-[88px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-md bg-red100 font-bold text-white']//*[name()='svg']//*[name()='g']//*[name()='path'][2]"
 tbdangnhapsai = "xpath=//div[@class='ant-notification-notice-message']"
 opt="xpath=//div[@class='ant-modal-root']//input[1]"
@@ -22,6 +30,16 @@ def check_page_blank(page):
         page.reload()
         notify_flask_server("Page is blank")
 
+def timtuoi(datestr):
+    today = datetime.now()
+    birthday = datetime.strptime(datestr, "%d/%m/%Y")
+    tuoi = today.year - birthday.year
+    print(tuoi)
+    if (today.month, today.day) < (birthday.month, birthday.day):
+        tuoi -= 1
+    return tuoi
+
+
 class VNeIDPage:
     def __init__(self, playwright: Playwright):
         self.province = "Quảng Ninh"
@@ -29,7 +47,7 @@ class VNeIDPage:
         self.village = "Phường Hà Tu"
         self.districthtml = "halong"
         self.villagehtml = "hatu"
-        self.trangthaidn = ''
+        self.trangthaidn = 0
         self.log=[]
         self.CT_infor = {}
         self.login_suc = False
@@ -37,22 +55,17 @@ class VNeIDPage:
         self.browser = playwright.firefox.launch(headless=False)
         self.context = self.browser.new_context(ignore_https_errors=True, no_viewport=True)
         self.page = self.context.new_page()
-        self.page.set_default_timeout(30000)
-        def on_response(response):
-            if response.url == self.page.url:  # Check only the main document
-                check_page_blank(self.page)
-        
-        self.page.on('response', on_response)
-        
-        
-    
-        
-    
+        self.page.set_default_timeout(10000)
+
     def khoidong(self):
-        self.page.goto("https://dichvucong.bocongan.gov.vn/?home=1")
-        self.page.get_by_role("link", name="Đăng nhập").click()
-        self.page.locator("xpath=/html/body/div[4]/div/div[1]/div/div[2]/div/div[1]/a/div").click()
-        self.page.locator('#icon-2').click()
+        try:
+            self.page.goto("https://dichvucong.dancuquocgia.gov.vn/portal/p/home/dvc-gioi-thieu.html")
+            self.page.get_by_role("link", name="Đăng nhập").click()
+            self.page.locator("xpath=//img[@src='p/home/img/header/quoc_huy.png']").click()
+            self.page.locator('#idp-name2').click()
+        except:
+            self.page.reload()
+            self.khoidong()
         
 
     def get_log(self):
@@ -72,22 +85,17 @@ class VNeIDPage:
                     return image_src
                 else:
                     return ""
-        except playwright._impl._errors.TimeoutError:
-            return ""
-
-    def set_trangthaiDN(self): 
-        try:
-            userName_check = ''
-            if self.page.locator("xpath=/html/body/div[4]/div/div[2]/div/div/div[1]/div/div/div/div[2]/table/tbody/tr[2]/td").count()>0:
-                ten = self.page.locator("xpath=/html/body/div[4]/div/div[2]/div/div/div[1]/div/div/div/div[2]/table/tbody/tr[2]/td").inner_text()
-                self.trangthaidn = "thanhcong--"+ten
-            # elif self.page.locator(opt).count()>0:
-            #     self.trangthaidn = 'otp'
-            # elif self.page.locator(tbdangnhapsai).count()>0:
-            #     self.trangthaidn = 'không lấy được tên'
-            #     notify_flask_server("Sai") 
         except:
-            return "loi"
+            self.page.reload()
+            return ""
+        
+    def get_trangthaiDN(self):
+        try:
+            userName_check = self.page.locator('#userLogin').inner_text(timeout=100)
+            kq = userName_check
+            return "thanhcong--"+kq
+        except:
+            return "chuadn"
 
     def logout(self):
         try:
@@ -98,45 +106,26 @@ class VNeIDPage:
             self.page.locator("xpath=//a[contains(text(),'Đăng xuất')]").click()
         
     def halfClose(self):
-        self.trangthaidn = ''
+        self.trangthaidn = 0
         self.log=[]
         self.CT_infor = {}
         self.page.close()
         self.context.close()
         self.context = self.browser.new_context(ignore_https_errors=True, no_viewport=True)
         self.page = self.context.new_page()
-        self.page.set_default_timeout(30000)
+        self.page.set_default_timeout(10000)
 
     def closeVN(self):
-        self.trangthaidn = ''
+        self.trangthaidn = 0
         self.log=[]
         self.CT_infor = {}
         self.page.close()
         self.context.close()
         self.context = self.browser.new_context(ignore_https_errors=True, no_viewport=True)
         self.page = self.context.new_page()
-        self.page.set_default_timeout(30000)
-        self.page.goto("https://dichvucong.bocongan.gov.vn/?home=1")
-        self.page.get_by_role("link", name="Đăng nhập").click()
-        self.page.locator("xpath=/html/body/div[4]/div/div[1]/div/div[2]/div/div[1]/a/div").click()
-        self.page.locator('#icon-2').click()
+        self.page.set_default_timeout(10000)
+        self.khoidong()
 
-    def get_trangthaiDN(self):
-        try:
-            if self.trangthaidn == "thanhcong":
-                kq = "không lấy được tên"
-                try:
-                    userName_check = self.page.locator('xpath=/html/body/div[4]/div/div[2]/div/div/div[1]/div/div/div/div[2]/table/tbody/tr[2]/td').inner_text(timeout=10000)
-                    kq = userName_check
-                except:
-                    return "loi"
-                return self.trangthaidn +"--"+kq
-            else:
-                self.set_trangthaiDN()
-                return self.trangthaidn
-        except:
-            return "loi"
-    
     def loginstb(self):
         while not self.login_suc:
             try:
@@ -146,28 +135,25 @@ class VNeIDPage:
             except:
                 self.page.wait_for_selector(tailaibtn)
                 self.page.click(tailaibtn)  # Thay thế 'selector_for_reload_button' bằng selector thực tế
-
         
-    def getDOB(self):
+    def xoa_dau(self, txt: str) -> str:
+        if not unicodedata.is_normalized("NFC", txt):
+            txt = unicodedata.normalize("NFC", txt)
+        return txt.translate(BANG_XOA_DAU)
+
+    def chonclick(self, id, fill):
+        self.page.locator(id).click()
+        newfill = self.xoa_dau(fill)
+        self.page.locator("xpath=/html/body/span/span/span[1]/input").fill(newfill)
+        self.page.keyboard.press('Enter')
+
+    def getInf(self, nguoi, max_retries=2):
         try:
-            th_selector = 'th:has-text("Ngày sinh")'
-            td_selector = f'{th_selector} + td'
-            td_text = self.page.locator(td_selector).text_content()
-            th_selectorid = 'th:has-text("Số CMND/CCCD")'
-            td_selectorid = f'{th_selectorid} + td'
-            td_textid = self.page.locator(td_selectorid).text_content()
-            return td_text +" "+ td_textid
-        except:
-            return "lỗi"
-    
-    def getInf(self, nguoi):
-        try:
-            self.page.goto("https://dichvucong.dancuquocgia.gov.vn/")
-            self.page.locator("#btnLogin").click()
-            self.page.get_by_role("link", name=" Cổng dịch vụ công Quốc Gia").click()
             nguoi = {}
             self.page.locator("#userLogin").click()
             self.page.get_by_role("link", name="Tra cứu thông tin công dân").click()
+            time.sleep(2)
+            self.page.reload()
             time.sleep(5)
             thongtin = ["Họ tên", "Giới tính", "Tình trạng hôn nhân", "Ngày sinh", "Quốc tịch", "Dân tộc", "Tôn giáo", "Nhóm máu", "Nơi đăng ký khai sinh", "Quê quán", "Nơi ở thường trú", "Nơi ở tạm trú", "Nơi ở hiện tại", "Nơi khai báo tạm vắng"]
             giatri = ["txtFULLNAME_RESULT", "txtGENDER_RESULT", "txtMARRIAGE_RESULT", "txtDOB_RESULT", "txtNATIONALITY_RESULT", "txtETHNIC_RESULT", "txtRELIGION_RESULT", "txtBLOOD_TYPE_RESULT", "txtBIRTH_PLACE_RESULT", "txtHOME_PLACE_RESULT", "txtPERMANENT_PLACE_RESULT", "txtTEMP_RES_RESULT", "txtLIVING_RESULT", "txtABS_RES_RESULT"]
@@ -195,51 +181,33 @@ class VNeIDPage:
                 else:
                     nguoi["Giới tính người " + str(count)] = "Nữ"
                 count += 1
+                if row_data[1] == nguoi["Họ tên"]:
+                    nguoi["Số định danh người"] = row_data[2]
             nguoi["Quận huyện làm dv"] = self.districthtml
             nguoi["Phường xã làm dv"] = self.villagehtml
+            nguoi["Phường xã đăng ký trú"] = ""
+            noio = ""
+            if nguoi["Nơi ở thường trú"] != "":
+                noio = nguoi["Nơi ở thường trú"]
+            elif nguoi["Nơi ở tạm trú"] != "":
+                noio = nguoi["Nơi ở tạm trú"]
+            else:
+                noio = nguoi["Nơi ở hiện tại"]
+            ket_qua = re.search(r"(.*?), (Phường|Xã|Thị trấn) (.*?), (Quận|Huyện|Thị xã|Thành phố) (.*?), (Tỉnh|Thành phố) (.*?)$", noio)
+            if ket_qua:
+                    nguoi["Địa chỉ cụ thể trú"] = ket_qua.group(1).strip()
+                    nguoi["Quận huyện đăng ký trú"] = ket_qua.group(5).strip()
+                    nguoi["Phường xã đăng ký trú"] = ket_qua.group(3).strip()
+                    nguoi["Tỉnh thành phố đăng ký trú"] = ket_qua.group(7).strip()
             return nguoi
-        except:
-            nguoi={'messageER':'lỗi'}
-            return nguoi
-        
-    # def OTPSend(self,OTParr):
-    #     try:
-    #         print(OTParr)
-    #         self.page.locator("xpath=//div[@class='ant-modal-root']//input[1]").press(OTParr[0] + "+" + OTParr[1] + "+" + OTParr[2] + "+" + OTParr[3] + "+" + OTParr[4] + "+" + OTParr[5])
-    #         self.page.locator("xpath=//span[contains(text(),'Xác nhận')]").click()
-    #         self.set_trangthaiDN()
-    #     except:
-            
-    #         return "lỗi"
-
-    def Timkiem_CCCD(self):
-        try:
-            self.page.get_by_role("link", name="Nộp hồ sơ trực tuyến").click()
-            self.page.fill("input[name='txtKEYWORD']", "căn cước công dân")
-            self.page.get_by_role("button", name="Tìm kiếm").click()
-        except:
-            
-            return "lỗi"
-
-    
-
-    def chonlydo(self):
-        self.page.wait_for_load_state("load")
-        self.page.locator("#select2-cboreason-container").click()
-        list_options = self.page.locator("ul.select2-results__options >> li[class*='select2-results__option']")
-        list_values = [option.inner_text() for option in list_options.all()]
-
-        if len(list_values) < 2:
-            reason_input = self.page.locator("input[class='select2-search__field'][type='search'][tabindex='0']")
-            reason_input.fill(f"{list_values[int(0)]}")
-        else:
-            dic_reasions = dict(zip(range(len(list_values)),list_values))
-            print(tabulate(dic_reasions.items(), headers=["Key", "Value"], tablefmt="simple"))
-            answer = input("Bạn hãy chọn lý do để đổi thẻ: ")
-            reason_input = self.page.locator("input[class='select2-search__field'][type='search'][tabindex='0']")
-            reason_input.fill(f"{list_values[int(answer)]}")
-        reason_input.press("Enter")
-
+        except Exception as e:
+            print(type(e).__name__)
+            traceback.print_exc()
+            if max_retries > 0:
+                self.getInf(nguoi, max_retries - 1)
+            else:
+                nguoi["Họ tên"] = "oioioi"
+                return nguoi
     
     def confirm_data(self):
         checkbox_selector = "#chkassure"
@@ -258,103 +226,134 @@ class VNeIDPage:
                 self.page.locator("#btnNEXT_TAB_4").click()
                 break 
         self.page.locator("#btnSEND_CCCD").click()
+  
+    def Timkiem_CCCD():
+        return "a"
+    
+    def Capmoi_CC_nguoicancap(self, hoso):
+        self.page.locator("#txtFULLNAME_NCC").fill(hoso["Người cần họ và tên"])
 
-    def Caplai_CCCD_tinh(self):
-        try:
-            self.page.get_by_text("Cấp lại thẻ Căn cước công dân (thực hiện tại cấp tỉnh)").click()
-            self.page.get_by_role("link", name="Nộp hồ sơ", exact=True).click()
-            self.chonlydo_caplai(0)
-            input_element_T = self.page.locator('#type_T')
-            input_element_T.evaluate("element => element.removeAttribute('disabled')")
-            radio_button = self.page.locator("#type_T")
-            radio_button.check()
-            self.page.locator("#select2-cbocityOrganization-container").click()
-            search_input = self.page.locator("xpath=/html/body/span/span/span[1]/input")
-            search_input.fill(f"{self.province}")
-            search_input.press("Enter")
-            self.page.locator("#btnNEXT_TAB_2").click()
-            self.confirm_data()
-            self.get_active_day()
-            self.set_log("Cấp lại căn cước thành công")
-            # self.page.locator("#btnSEND_CCCD").click()
-            self.page.wait_for_timeout(10000)
-            return "Cấp lại căn cước thành công"
-        except:
-            print("Đã gặp lỗi")
-            return "lỗi"
+        self.page.click('input[id="txtBIRTHDATE_NCC"]')
+        self.page.type('input[id="txtBIRTHDATE_NCC"]', hoso["Người cần ngày sinh"])
 
-    def xacminh_CCCD_tinh(self):
-        try:
-            self.page.get_by_text("Xác nhận số Chứng minh nhân dân, Căn cước công dân  (thực hiện tại cấp tỉnh)").click()
-            self.page.get_by_role("link", name="Nộp hồ sơ", exact=True).click()
-            self.chonlydo()
-            input_element_T = self.page.locator('#type_T')
-            input_element_T.evaluate("element => element.removeAttribute('disabled')")
-            radio_button = self.page.locator("#type_T")
-            radio_button.check()
-            self.page.locator("#select2-cbocityOrganization-container").click()
-            search_input = self.page.locator("xpath=/html/body/span/span/span[1]/input")
-            search_input.fill(f"{self.province}")
-            search_input.press("Enter")
-            self.page.locator("#btnNEXT_TAB_2").click()
-            self.confirm_data()
-            self.get_active_day()
-            self.set_log("Xác minh số chứng minh nhân dân, căn cước thành công")
-            return self.get_log()
-        except:
-            
-            return "lỗi"
+        self.chonclick("#select2-cboGENDER_ID_NCC-container", hoso["Người cần giới tính"])
 
-    def chonlydo_caplai(self, num):
-        try:
-        #self.page.wait_for_load_state("load")
-            self.page.locator("#select2-cboreason-container").click()
-            list_options = self.page.locator("ul.select2-results__options >> li[class*='select2-results__option']")
+        self.page.locator("#txtIDENTIFY_NUMBER_NCC").fill(hoso["Người cần số định danh"])
 
-            list_values = [option.inner_text() for option in list_options.all()]
-            reason_input = self.page.locator("input[class='select2-search__field'][type='search'][tabindex='0']")
-            reason_input.fill(f"{list_values[num]}")
-            reason_input.press("Enter")
-        except:
-            
-            return "lỗi"
+        self.chonclick("#select2-cboRELATIONSHIP_WITH_NDN-container", hoso["Quan hệ với người khai"])
 
-   
+        self.page.locator("#btnCheckCD").click()
+        self.page.wait_for_timeout(2000)
+        if self.page.locator("xpath=//div[@class='toast-message']").count() > 0:
+            kq = self.page.locator("xpath=//div[@class='toast-message']").text_content()
+            if ("công dân hợp lệ" in kq):
+                return "ok"
+            else:
+                return kq
+        return "kbjetnsj"
+        
+    def Capmoi_CC_kethongtin_tren14(self, hoso):
+        self.chonclick("#select2-cboLyDoCap-container", hoso["Lý do cấp"])
+        self.page.locator("#chkCapTinh").click()
+        self.chonclick("#select2-cboORGTinh-container", "Quang Ninh")
+        #self.chonclick("#select2-cboORGHuyen-container", self.district)
+        self.page.locator("#chkRULE").click()
+        self.page.locator("#btnSaveNextToPage2").click()
+
+    def Capmoi_CC_kethongtin_duoi14(self, hoso):
+        self.page.locator("#chkCapTinh").click()
+        self.chonclick("#select2-cboORGTinh-container", "Quang Ninh")
+        #self.chonclick("#select2-cboORGHuyen-container", self.district)
+        self.page.locator("#chkRULE").click()
+        self.page.locator("#btnSaveNextToPage2").click()
+        
 
     
-    def Doithe_CCCD_tinh(self, num):
-        try:
-            self.page.get_by_text("Đổi thẻ Căn cước công dân (thực hiện tại cấp tỉnh)").click()
-            self.page.get_by_role("link", name="Nộp hồ sơ", exact=True).click()
-            self.chonlydo_caplai(num)
-            input_element_T = self.page.locator('#type_T')
-            input_element_T.evaluate("element => element.removeAttribute('disabled')")
-            radio_button = self.page.locator("#type_T")
-            radio_button.check()
-            self.page.locator("#select2-cbocityOrganization-container").click()
-            search_input = self.page.locator("xpath=/html/body/span/span/span[1]/input")
-            search_input.fill(f"{self.province}")
-            search_input.press("Enter")
-            self.page.locator("#btnNEXT_TAB_2").click()
+    def Capmoi_CC_kethongtin_duoi6(self, hoso):
+        self.page.locator("#chkCapTinh").click()
+        self.chonclick("#select2-cboORGTinh-container", "Quang Ninh")
+        self.chonclick("#select2-cboGET_RESULT_CITY_ADDR-container", "Quang Ninh")
+        self.chonclick("#cboGET_RESULT_DISTRICT_ADDR", hoso["Quận huyện đăng ký trú"])
+        self.chonclick("#cboGET_RESULT_VILLAGE_ADDR", hoso["Phường xã đăng ký trú"])
+        self.chonclick("#txtGET_RESULT_DETAIL_ADDR", hoso["Địa chỉ cụ thể trú"])
+        self.page.locator("#txtFULLNAME_NN").fill(hoso["Họ tên"])
+        self.page.locator("#txtPHONE_NUMBER_NN").fill(hoso["Số điện thoại"])
+        self.page.locator("#chkRULE").click()
+        self.page.locator("#btnSaveNextToPage2").click()
 
-            self.confirm_data()
-            self.get_active_day()
-            self.set_log("Xác minh số chứng minh nhân dân, căn cước thành công")
-            return self.get_log()
-        except:
-            
-            return "lỗi"
+    def Capmoi_CC_duoi14(self, hoso, max_retries = 2):
+        try:
+            self.page.goto("https://dichvucong.dancuquocgia.gov.vn/portal/p/home/dvc-cac-thu-tuc.html")
+            self.page.click("span.text-m:has-text('Cấp thẻ Căn cước cho người dưới 14 tuổi')")
+            self.page.wait_for_timeout(5000)
+            if self.page.locator("#txtPHONE_NUMBER_NDN").input_value() == "":
+                self.page.locator("#txtPHONE_NUMBER_NDN").fill(hoso["Số điện thoại"])
+            kq = self.Capmoi_CC_nguoicancap(hoso)
+            if (kq == "ok"):
+                print("ok")
+            else:
+                return kq
+            tuoi = timtuoi(hoso["Người cần ngày sinh"])
+            if (tuoi > 5):
+                self.Capmoi_CC_kethongtin_duoi14(hoso)
+            else:
+                self.Capmoi_CC_kethongtin_duoi6(hoso)
+            self.page.wait_for_timeout(3000)
+            if self.page.locator("xpath=//div[@class='toast-message']").count() > 0:
+                return self.page.locator("xpath=//div[@class='toast-message']").text_content()
+            return "thanhcong"
+        except Exception as e:
+            print(type(e).__name__)
+            traceback.print_exc()
+            if max_retries > 0:
+                self.Capmoi_CC_duoi14(hoso, max_retries - 1)
+            else:
+                return "oioioi"
+
+    def Capmoi_CC_tren14(self, hoso, max_retries = 2):
+        try:    
+            self.page.goto("https://dichvucong.dancuquocgia.gov.vn/portal/p/home/dvc-cac-thu-tuc.html")
+            self.page.click("span.text-m:has-text('Cấp thẻ Căn cước cho người từ đủ 14 tuổi trở lên')")
+            self.page.wait_for_timeout(5000)
+            if self.page.locator("#txtPHONE_NUMBER_NDN").input_value() == "":
+                self.page.locator("#txtPHONE_NUMBER_NDN").fill(hoso["Số điện thoại"])
+            if (hoso["Trường hợp"]=="Cấp hộ"):
+                self.page.locator("#chkIS_NOT_NCC").click()
+                kq = self.Capmoi_CC_nguoicancap(hoso)
+                if (kq == "ok"):
+                    print("ok")
+                else:
+                    return kq
+            self.Capmoi_CC_kethongtin_tren14(hoso)
+            self.page.wait_for_timeout(3000)
+            if self.page.locator("xpath=//div[@class='toast-message']").count() > 0:
+                return self.page.locator("xpath=//div[@class='toast-message']").text_content()
+            return "thanhcong"
+        except Exception as e:
+            print(type(e).__name__)
+            traceback.print_exc()
+            if max_retries > 0:
+                self.Capmoi_CC_tren14(hoso, max_retries - 1)
+            else:
+                return "oioioi"
+    
+    def ChonngaycapCC(self):
+        table = self.page.locator("table")
+        cells = table.locator("td")
+        selected_date_label = self.page.locator("#lblselectedDate")
+
+        for cell in cells.element_handles():
+            cell.click() 
+            current_date = selected_date_label.inner_text()
+            if current_date:
+                self.page.locator("#btnFinishPage2").click()
+                break 
+        self.page.locator("#alertify-ok").click()
+
+
 
     def Timkiem_CT(self):
-        try:
-            self.page.get_by_role("link", name="Nộp hồ sơ trực tuyến").click()
-            self.page.locator("#select2-lv_block_search-container").click()
-            self.page.fill("input[class='select2-search__field']","Đăng ký, Quản lý cư trú")
-            self.page.keyboard.press('Enter')
-            self.page.get_by_role("button", name="Tìm kiếm").click()
-        except:
-            
-            return "lỗi"
+        self.page.goto("https://dichvucong.dancuquocgia.gov.vn/portal/p/home/dvc-cac-thu-tuc.html")
 
     #---------GIA HẠN TẠM TRÚ-----------
     def Giahan_tamtru(self, hoso):
@@ -453,36 +452,21 @@ class VNeIDPage:
         except:
             
             return "lỗi"
-    def Xacminh_cutru(self, hoso):
-        
+    def Xacminh_cutru(self, hoso, max_retries=2):
+        try:    
             self.page.get_by_text("Xác nhận thông tin về cư trú").click()
-            self.page.get_by_role("link", name="Nộp hồ sơ", exact=True).click()
             self.page.reload()
 
-            self.page.locator("#select2-cboRECEIVE_ADDR_CITY_ID-container").click()
-            self.page.locator("xpath=/html/body/span/span/span[1]/input").fill(self.province)
-            self.page.keyboard.press('Enter')
-
-            self.page.locator("#select2-cboRECEIVE_ADDR_DISTRICT_ID-container").click()
-            self.page.locator("xpath=/html/body/span/span/span[1]/input").fill(self.district)
-            self.page.keyboard.press('Enter')
-
-            self.page.locator("#select2-cboRECEIVE_ADDR_VILLAGE_ID-container").click()
-            self.page.locator("xpath=/html/body/span/span/span[1]/input").fill(self.village)
-            self.page.keyboard.press('Enter')
+            self.chonclick("#select2-cboRECEIVE_ADDR_CITY_ID-container", "Quảng Ninh")
+            print(hoso["Quận huyện"])
+            self.chonclick("#select2-cboRECEIVE_ADDR_DISTRICT_ID-container", hoso["Quận huyện"])
+            print(hoso["Phường xã"])
+            self.chonclick("#select2-cboRECEIVE_ADDR_VILLAGE_ID-container", hoso["Phường xã"])
 
             coquan = self.page.locator("#select2-cboORG-container").text_content()
-            # if "cấp cho NK thường trú trên địa bàn quản lý" in hoso[0].lower():
-            self.page.locator("#select2-cboBPROC_CASE_CODE-container").click()
-            self.page.locator("xpath=/html/body/span/span/span[1]/input").fill(hoso["Trường hợp"])
-            self.page.keyboard.press('Enter')
+
+            self.chonclick("#select2-cboBPROC_CASE_CODE-container", hoso["Trường hợp"])
             
-            # else:
-            #     self.page.locator("#select2-cboBPROC_CASE_CODE-container").click()
-            #     self.page.locator("xpath=/html/body/span/span/span[1]/input").fill("Cấp cho NK thường trú khác địa bàn quản lý")
-            #     self.page.keyboard.press('Enter')
-
-
             nguoikhai = "cho tôi"
             if "cho tôi" in nguoikhai or "cho mình" in nguoikhai:
                 self.page.locator("#chkIS_CHANGED_PERSON").check()
@@ -501,7 +485,7 @@ class VNeIDPage:
                 name=input("Họ và tên: ")
                 birthday = input("Ngày tháng năm sinh vd:15/03/2000 hoặc 03/2000 hoặc 2000 ")
                 sex = input("Giới tính: ")
-                cccd = input("Số căn cước công dân: ")
+                cccd = input("Số căn cước: ")
                 tenchuho = input("Tên chủ hộ: ")
                 quanhechuho = input("quanhevoichuho")
                 cccd_chuho = input("Số căn cước của chủ hộ")
@@ -555,7 +539,11 @@ class VNeIDPage:
             
             
             self.page.locator("#chkRULE").click()
-        
+        except:
+            if max_retries > 0:
+                self.Xacminh_cutru(max_retries - 1)
+            else:
+                return "oioioi"
         
     def submitinfoXacminh(self, num):
             current_file_path = os.path.abspath(__file__)
@@ -581,27 +569,22 @@ class VNeIDPage:
         kq = "guithanhcong"
         if self.page.locator("#lblCheck_Du_Thong_Tin").count() > 0 and self.page.locator("#lblNAME_CITIZEN").count() > 0:
             kq = self.page.locator("#lblNAME_CITIZEN").text_content() + " " + self.page.locator("#lblCheck_Du_Thong_Tin").text_content()
+        self.page.goto("https://dichvucong.dancuquocgia.gov.vn/portal/p/home/dvc-cac-thu-tuc.html")
+  
         return kq
 
  
     #---------TÁCH HỘ-----------    
-    def Tachho(self, hoso):
+    def Tachho(self, hoso, max_retries=2):
         try:
             self.page.get_by_text("Tách hộ").click()
-            self.page.get_by_role("link", name="Nộp hồ sơ", exact=True).click()
             self.page.reload()
 
-            self.page.locator("#select2-cboRECEIVE_ADDR_CITY_ID-container").click()
-            self.page.locator("xpath=/html/body/span/span/span[1]/input").fill(self.province)
-            self.page.keyboard.press('Enter')
+            self.chonclick("#select2-cboRECEIVE_ADDR_CITY_ID-container", "Quảng Ninh")
 
-            self.page.locator("#select2-cboRECEIVE_ADDR_DISTRICT_ID-container").click()
-            self.page.locator("xpath=/html/body/span/span/span[1]/input").fill(self.district)
-            self.page.keyboard.press('Enter')
-
-            self.page.locator("#select2-cboRECEIVE_ADDR_VILLAGE_ID-container").click()
-            self.page.locator("xpath=/html/body/span/span/span[1]/input").fill(self.village)
-            self.page.keyboard.press('Enter')
+            self.chonclick("#select2-cboRECEIVE_ADDR_DISTRICT_ID-container", hoso["Quận huyện"])
+            
+            self.chonclick("#select2-cboRECEIVE_ADDR_VILLAGE_ID-container", hoso["Phường xã"])
 
             coquan = self.page.locator("#select2-cboORG-container").text_content()
             # if "cấp cho NK thường trú trên địa bàn quản lý" in hoso[0].lower():
@@ -609,12 +592,6 @@ class VNeIDPage:
             self.page.locator("xpath=/html/body/span/span/span[1]/input").fill(hoso["Trường hợp"])
             self.page.keyboard.press('Enter')
             
-            # else:
-            #     self.page.locator("#select2-cboBPROC_CASE_CODE-container").click()
-            #     self.page.locator("xpath=/html/body/span/span/span[1]/input").fill("Cấp cho NK thường trú khác địa bàn quản lý")
-            #     self.page.keyboard.press('Enter')
-
-
             nguoikhai = "khaiho"
             if "cho tôi" in nguoikhai or "cho mình" in nguoikhai:
                 self.page.locator("#chkIS_CHANGED_PERSON").check()
@@ -627,8 +604,7 @@ class VNeIDPage:
 
                 self.page.locator("#txtID_CARD_NUMBER_HHEAD").fill(hoso["Số định danh chủ hộ"])
             else:
-                radio_button = self.page.locator("#chkIS_NOT_CHANGED_PERSON")
-                radio_button.check()
+                self.page.wait_for_timeout(1000) 
                 name=hoso["Họ tên người khai"]
                 birthday = hoso["Ngày tháng năm sinh"]
                 sex = hoso["Giới tính"]
@@ -638,20 +614,24 @@ class VNeIDPage:
                 quanhechuho = hoso["Quan hệ với chủ hộ"]
                 cccd_chuho = hoso["Số định danh chủ hộ"]
 
-                self.page.fill("input[id='txtFULLNAME']",name)
+                self.page.locator("#txtFULLNAME").fill(name)
                 if len(birthday) == 10 or len(birthday) == 8 or len(birthday) == 9:
                     pass
                 elif len(birthday) == 7 and len(birthday) == 6:
                     self.page.select_option("select#cboFORMAT_DATE", value="2")
                 else:
                     self.page.select_option("select#cboFORMAT_DATE", value="3")
-                self.page.fill("input[id='txtBIRTH_DATE']",birthday)
-
-                self.page.locator("#select2-cboGENDER_ID-container").fill(sex)
+                self.page.click('input[name="txtBIRTH_DATE"]')
+                self.page.type('input[name="txtBIRTH_DATE"]', birthday)
+                self.page.locator("#select2-cboGENDER_ID-container").click()
+                self.page.locator("xpath=/html/body/span/span/span[1]/input").fill(sex)
+                self.page.keyboard.press('Enter')
                 self.page.locator("#txtID_CARD_NUMBER").fill(cccd)
                 self.page.locator("#txtPHONE_NUMBER").fill(sdt)
                 self.page.locator("#txtHH_HEAD_FULLNAME").fill(tenchuho)
-                self.page.locator("#select2-cboRELATIONSHIP_WITH_HHHEAD_ID-container").fill(quanhechuho)
+                self.page.locator("#select2-cboRELATIONSHIP_WITH_HHHEAD_ID-container").click() 
+                self.page.locator("xpath=/html/body/span/span/span[1]/input").fill(quanhechuho)
+                self.page.keyboard.press('Enter')
                 self.page.locator("#txtID_CARD_NUMBER_HHEAD").fill(cccd_chuho)
 
             soluongthanhvien = int(hoso["Số lượng thành viên cùng thay đổi"])
@@ -681,13 +661,17 @@ class VNeIDPage:
             
             self.page.locator("#chkRULE").click()
         except:
-            
-            return "lỗi"
+            if max_retries > 0:
+                self.Tachho(max_retries - 1)
+            else:
+                return "oioioi"
 
     def submitinfoTachho(self, hoso):
         danhsachfile = self.laydanhsachfile("CT01", hoso["CT01"])
         input_file_ct = self.page.locator('input[id="fileUpload0"]')   
         input_file_ct.set_input_files(danhsachfile)
+        danhsachfile_choo = []
+        danhsachfile_lyhon = []
         if "Cho o hop phap" in hoso.keys():
             danhsachfile_choo = self.laydanhsachfile("Cho o hop phap", hoso["Cho o hop phap"])
             self.page.locator("#chkIS_COMPULSORY1").check()
@@ -700,6 +684,7 @@ class VNeIDPage:
                 input_file.set_input_files(danhsachfile_lyhon)
         # Còn nút gửi hồ sơ
         self.page.locator("#btn_Save_Send").click()
+
         # Còn nút gửi hồ sơ
     
  

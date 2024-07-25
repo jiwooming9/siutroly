@@ -4,6 +4,9 @@ import google.generativeai as genai
 from playwright.sync_api import sync_playwright,Playwright
 from playwrightFetch import *
 from gevent import monkey
+from threading import Thread
+from googleapiclient.discovery import build
+import feedparser
 import time
 import prompt
 from datetime import datetime
@@ -24,6 +27,7 @@ login_status = False
 hoso=[]
 age = 0
 nguoi = {}
+nguoi2 = {}
 chucnang.clear_print_queue()
 notifications = ""
 threads_safe = [
@@ -61,8 +65,12 @@ def send_messageG(msg):
             ans = chatt.send_message(msg,safety_settings=threads_safe)
             return ans.text 
         except:
-            time.sleep(2)    
-os.environ['GOOGLE_API_KEY'] = "AIzaSyAgX68LjbI8uh3PaerAbbZIaLDavCk-FS8"
+            time.sleep(5)    
+def get_news(url="https://vtcnews.vn/rss/thoi-su.rss"):
+    feed = feedparser.parse(url)
+    return feed.entries
+
+os.environ['GOOGLE_API_KEY'] = ""
 genai.configure(api_key = os.environ['GOOGLE_API_KEY'])
 model = genai.GenerativeModel('gemini-1.5-flash-latest',   #gemini-1.5-flash-latest
 safety_settings=threads_safe,
@@ -70,8 +78,9 @@ generation_config=generation_config,
 )
 chatt = model.start_chat(history=[])
 VneID = VNeIDPage(Playwright)
-#aloy = chatt.send_message(prompt.batdau + prompt.prompt_quydinhcancuoc, safety_settings=threads_safe)\
-lmfao = send_messageG(prompt.khoidong)
+def kdv():
+    VneID.khoidong()
+lmfao = send_messageG(prompt.khoidong + prompt.prompt_dvccancuoc + prompt.prompt_dvccutru)
 def khoitaobien():
     global login_status
     global dichvucong 
@@ -85,10 +94,10 @@ def khoitaobien():
     global age
     global nguoi
     global notifications
+    global nguoi2
     chucnang.clear_print_queue()
     chatt = model.start_chat(history=[])
-    lmfao = send_messageG(prompt.khoidong + "Đây là thông tin về dịch vụ công căn cước để lấy thông tin: " + prompt.prompt_quydinhcancuoc)
-    #aloy = chatt.send_message(prompt.batdau + prompt.prompt_quydinhcancuoc, safety_settings=threads_safe)
+    lmfao = send_messageG(prompt.khoidong + prompt.prompt_dvccancuoc + prompt.prompt_dvccutru)
     dichvucong = ""
     chitiet = ""
     chitiet_dvc = ""
@@ -97,6 +106,7 @@ def khoitaobien():
     chatflag = 0
     hoso=[]
     nguoi={}
+    nguoi2={}
     age = 0
     login_status = False
     notifications = ""
@@ -116,6 +126,14 @@ def removeTT(input_str):
         new = new.replace("bbangtt", "")
     return new
 
+def timtuoi(datestr):
+    today = datetime.now()
+    birthday = datetime.strptime(datestr, "%d/%m/%Y")
+    tuoi = today.year - birthday.year
+    if (today.month, today.day) < (birthday.month, birthday.day):
+        tuoi -= 1
+    return tuoi
+
 
 
 ##NỘI DUNG HỆ THỐNG
@@ -123,15 +141,23 @@ def removeTT(input_str):
 
 @app.route("/")
 def index():
-    return render_template('index.html',current_flow=current_flow)
+    tintuc = ""
+    news = get_news()
+    for article in news:
+        tintuc += article['title'] + ". "
+    return render_template('index.html',current_flow=current_flow, my_string=tintuc)
 
 #Chào người dùng
 @app.route("/greentings")
 def greetings():
     data = {'greetings': "Xin chào tôi là trợ lý ảo dịch vụ công về căn cước và cư trú. Tôi có thể giúp gì được cho bạn? ", 
             'pre_start': "Để thực hiện dịch vụ công, vui lòng đăng nhập quét QR code bằng ứng dụng VNeID hoặc đặng nhập bằng tài khoản ở khung bên cạnh"}
-    VneID.khoidong()
     return data
+
+@app.route("/ktBrowser")
+def ktBrowser():
+    Thread(target=kdv).start()
+    return "ok"
 
 @app.route('/restart')
 def restart():
@@ -140,11 +166,11 @@ def restart():
     #     VneID.logout()
     VneID.halfClose()
     khoitaobien()
-    return redirect(url_for('index'))
+    return "ok"
 
 @app.route('/restartBrowser')
 def restartBrowser():
-    VneID.closeVN()
+    VneID.page.reload()
     return "ok"
 
 @app.route('/notify', methods=['POST'])
@@ -162,36 +188,6 @@ def get_notifications():
     notifications = ""
     return jsonify({'notifications': sendS})
 
-
-#PHƯƠNG THỨC ĐĂNG NHẬP  
-#Đăng nhập bằng tài khoản
-# @app.route("/post-login",methods=["GET","POST"])
-# def login():
-#     global login_status
-#     try:
-#         UserID = request.form["userID"]
-#         UserPass = request.form["userPass"]
-#         VneID.loginForm(UserID=UserID,UserPass=UserPass)
-#         VneID.set_trangthaiDN()
-#         if "thanhcong" in VneID.get_trangthaiDN():
-#             login_status = True
-#         print({"Username": UserID, "Password": UserPass})
-#         return VneID.get_trangthaiDN()
-#     except:
-#         raise Exception("Lỗi đăng nhập!")
-    
-# #Kiểm tra OTP   
-# @app.route("/otp-check",methods=["POST"])
-# def check_OTP():
-#     try:
-#         received_otp = request.form.get("otp")
-#         otp_arr = [x for x in received_otp]
-#         VneID.OTPSend(otp_arr)
-#         return jsonify({"OTPcode":received_otp})
-#     except:
-#         raise Exception("Lỗi OTP!")
-
-
 #Lấy mã QR 
 @app.route("/get_qr_code")
 def get_qr_code():
@@ -205,33 +201,22 @@ def get_qr_code():
     trangthaidn = VneID.get_trangthaiDN()
     if login_status == False:
         qr_code_src = VneID.extract_qr_code_src()
-    dob = ''
-    expdate = ''
     if "thanhcong" in trangthaidn and login_status == False:
         chatflag = 0
         login_status = True
-        thongtinchung = VneID.getDOB()
-        dob = thongtinchung.split()[0]
-        nguoi["Số định danh"] = thongtinchung.split()[1]
-    if dob !='':
-        datemod = datetime.strptime(dob, date_format)
-        today = datetime.today()
-        age = today.year - datemod.year - ((today.month, today.day) < (datemod.month, datemod.day))
-        if 24 <= age <= 25:
-            doithetheotuoi = 'doithe25'
-        if 39 <= age <= 40:
-            doithetheotuoi = 'doithe40'
-        if 59 <= age <= 60:
-            doithetheotuoi = 'doithe60'
     data = {"QR": qr_code_src,
             "TTDN": trangthaidn}
+    
     print(trangthaidn)
     return data
 
 @app.route('/laythongtin', methods=['GET'])
 def laythongtin():
     global nguoi
-    nguoi2 = VneID.getInf(nguoi)
+    global nguoi2
+    if len(nguoi2) == 0:
+        nguoi2 = VneID.getInf(nguoi)
+    print(nguoi2)
     return jsonify(nguoi2)
             
     
@@ -257,9 +242,9 @@ def chat():
         chitiet = chitiet_dvc
         chitiet_dvc = ""
         if dichvucong == "Đăng ký, quản lý cư trú":
-            hab = send_messageG("Đã xong phần tìm kiếm dịch vụ công. Tiếp theo hãy hướng dẫn tôi cách nhập thông tin vào phiếu CT01, nếu tôi hỏi bạn cách điền trường nào trong phiếu CT01 thì bạn trả lời cho tôi giới hạn điền của trường đó. Giới hạn câu trả lời trong việc hướng dẫn khai thông tin vào phiếu CT01. Nếu tôi hỏi về cách thêm thành viên thì trả lời bấm vào nút dấu cộng trên bảng thông tin bên trái.")
+            hab = send_messageG("Đã xong phần tìm kiếm dịch vụ công. Tiếp theo hãy hướng dẫn tôi cách nhập thông tin vào phiếu CT01, nếu tôi hỏi bạn cách điền trường nào trong phiếu CT01 thì bạn trả lời cho tôi giới hạn điền của trường đó. Giới hạn câu trả lời trong việc hướng dẫn khai thông tin vào phiếu CT01. Nếu tôi hỏi về cách thêm thành viên thì trả lời bấm vào nút dấu cộng trên bảng thông tin bên trái. Các câu trả lời của bạn nên hướng đến chủ đề dịch vụ công về cư trú nhé.")
         if dichvucong == "Cấp, quản lý thẻ căn cước":
-            hab = send_messageG("Tôi đã thực hiện xong dịch vụ công này. Hãy bắt đầu lại từ đầu, giúp tôi tìm dịch vụ công khác. " + prompt.khoidong)
+            hab = send_messageG("Đã xong phần tìm kiếm dịch vụ công. Tiếp theo hãy hướng dẫn tôi cách nhập thông tin vào trường khai thông tin cấp căn cước. Nếu tôi hỏi thêm người KHÁC không có trong danh sách, hãy trả lời theo hướng Liên hệ với cán bộ để được giúp đỡ. Giới hạn câu trả lời trong việc hướng dẫn khai thông tin")
         print(f"{dichvucong} --- {chitiet}")
         dvc = "Dịch vụ công phù hợp là " + dichvucong + " --- " + chitiet
         dichvucong = "" 
@@ -269,33 +254,12 @@ def chat():
         chitiet_dvc = ""
         send_messageG("Hãy quên những yêu cầu mà tôi vừa đưa ra. Tôi sẽ đưa yêu cầu mới ở lần trả lời kế tiếp. Bạn thực hiện phân loại dịch vụ công về căn cước hay cư trú lại từ đầu. Đừng đưa ra gợi ý về tên dịch vụ công lúc này.")
         return "Hãy mô tả chi tiết hơn yêu cầu của bạn."
-    if msg == "Dịch vụ công căn cước":
-        hab = send_messageG(prompt.prompt_dvccancuoc)
-        dichvucong = "Cấp, quản lý thẻ căn cước"
-        return "Một số dịch vụ công hay được tiếp nhận:<br>-Dịch vụ 1: Cấp lại thẻ do mất---Dịch vụ 2: Cấp đổi thẻ do hết hạn<br>"
-    if msg == "Dịch vụ công cư trú":
-        hab = send_messageG(prompt.prompt_dvccutru)
-        dichvucong = "Đăng ký, quản lý cư trú"
-        return "Một số dịch vụ công hay được tiếp nhận:<br>-Dịch vụ 1: Xác nhận thông tin cư trú---Dịch vụ 2: Tách hộ<br>"
     response = send_messageG(msg)
-    print("Thử " + response)
-    if dichvucong == '':
-        time.sleep(3)
-        adap = ""
-        if "bbangcancuoc" in response:
-            adap = response
-            dichvucong = "Cấp, quản lý thẻ căn cước"
-            response = send_messageG(prompt.prompt_dvccancuoc)
-            response = adap +"<br>"+ response
-            print(response)
-        if "bbangcutru" in response:
-            adap = response
-            dichvucong = "Đăng ký, quản lý cư trú"
-            response = send_messageG(prompt.prompt_dvccutru)
-            response = adap +"<br>"+ response
-            print(response)
-            
+    print("Thử " + response)            
     if chitiet_dvc == "":
+        if "phù hợp" in response and "căn cước" in response.lower() and "cấp mới" in response.lower():
+            chitiet_dvc = "cấp mới căn cước"
+            dichvucong = "Cấp, quản lý thẻ căn cước"
         if "phù hợp" in response and "căn cước" in response and "do mất" in response:
             chitiet_dvc = "cấp lại căn cước do mất"
         if "phù hợp" in response and "căn cước" in response and "hư hỏng" in response:
@@ -307,27 +271,22 @@ def chat():
         if "phù hợp" in response and "căn cước" in response and "sai sót thông tin" in response:
             chitiet_dvc = "cấp đổi căn cước do có sai sót thông tin trên căn cước"
         if "phù hợp" in response and "căn cước" in response and "hết hạn" in response:
-            chitiet_dvc = "cấp đổi căn cước do hết hạn"
+            chitiet_dvc = "cấp đổi căn cướcc do hết hạn"
         if "phù hợp" in response and "xác minh" in response.lower() or "xác nhận" in response.lower():
             chitiet_dvc = "xác nhận số"
+    if chitiet_dvc == "":
         if "phù hợp" in response.lower() and ("xác minh" in response.lower() or "xác nhận" in response.lower()):
             chitiet_dvc = "xác minh cư trú"
+            dichvucong = "Đăng ký, quản lý cư trú"
         if "phù hợp" in response and "tách hộ" in response.lower():
             chitiet_dvc = "tách hộ"
+            dichvucong = "Đăng ký, quản lý cư trú"
         response = removeTT(response)
         return response
     response = removeTT(response)
     return response
 
-@app.route("/chon_dvc_caplai")
-def dvc_caplai():
-    if (VneID.Timkiem_CCCD()=="lỗi"):
-        return "lỗi"
-    status = VneID.Caplai_CCCD_tinh()
-    print(status)
-    if (status=="lỗi"):
-        return "lỗi"
-    return status
+
 @app.route("/chon_dvc_doithe")
 def dvc_doithe():
     global age
@@ -357,6 +316,7 @@ def dvc_doithe():
     if (status == 'lỗi'):
         return "lỗi"
     return status
+
 @app.route("/chon_dvc_xacminh")
 def dvc_xacminh():
     if (VneID.Timkiem_CCCD()=="lỗi"):
@@ -365,6 +325,28 @@ def dvc_xacminh():
     if (status == 'lỗi'):
         return "lỗi"
     return status
+
+@app.route("/capmoicancuoc", methods=["GET","POST"])
+def capcancuoct14():
+    global hoso
+    global nguoi
+    msg = request.get_json()
+    key = ["Số điện thoại", "Trường hợp", "Người cần họ và tên", "Người cần ngày sinh", "Người cần giới tính", "Người cần số định danh", "Quan hệ với người khai", "Lý do cấp"]
+    hoso = dict(zip(key,msg.split(";;")))
+    print(hoso)
+    tuoi = timtuoi(hoso["Người cần ngày sinh"])
+    if (tuoi > 13):
+        kq = VneID.Capmoi_CC_tren14(hoso)
+    else:
+        kq = VneID.Capmoi_CC_duoi14(hoso)
+    result = {
+        'message': kq,
+    }
+    if (kq == "thanhcong"):
+        VneID.ChonngaycapCC()
+        hab = send_messageG("Đã thực hiện xong dịch vụ công này. Quay về trạng thái tìm dịch vụ công lúc bắt đầu")
+    return jsonify(result)
+
 
 @app.route("/inCT01", methods=["GET","POST"])
 def inCT01():
@@ -395,8 +377,8 @@ def scantailieu():
     print("Chuẩn bị scan")
     msg = request.get_json()
     time.sleep(5)
-    kq = 1
-    #kq = chucnang.scanlientuc(msg)
+    kq = 0
+    kq = chucnang.scanlientuc(msg)
     if kq > 0:
         hoso[msg] = kq
     result = {
@@ -416,7 +398,7 @@ def dvc_xacminhcutru():
         return jsonify(result)
     if (VneID.submitinfoXacminh(hoso["CT01"])=="lỗi"):
         return jsonify(result)
-    time.sleep(5)
+    time.sleep(8)
     result["message"] = VneID.kiemtrattin()
     if (result["message"]!="guithanhcong"):
         return jsonify(result)
@@ -436,69 +418,13 @@ def dvc_tachho():
         return jsonify(result)
     if (VneID.submitinfoTachho(hoso)=="lỗi"):
         return jsonify(result)
-    time.sleep(3)
+    time.sleep(8)
     result["message"] = VneID.kiemtrattin()
     if (result["message"]!="guithanhcong"):
         return jsonify(result)
     hab = send_messageG("Tôi đã làm xong dịch vụ công Tách hộ. Hãy bắt đầu lại từ đầu, giúp tôi tìm dịch vụ công khác. " + prompt.khoidong)
     result['message'] = 'guithanhcong'
     return jsonify(result)
-
-
-# @app.route('/xemlichsu_trochuyen')
-# def xemlichsu_trochuyen():
-#     global chon_lydo_doithe
-#     _history = ""
-#     for i in range(len(chatt.history)):
-#         if i % 2 != 0:
-#             _history+= "," + str(chatt.history[i].parts[0]).replace("text: ","")
-#     if "chờ" in _history[1:]:
-#         if "hư hỏng" in _history[1:]:
-#             chon_lydo_doithe = "Đổi Căn cước do bị hư hỏng không sử dụng được"
-#         if "họ tên" in  _history[1:]:
-#             chon_lydo_doithe = "Đổi Căn cước do thay đổi thông tin họ tên"
-#         if "nhận dạng" in _history[1:]:
-#             chon_lydo_doithe = "Đổi Căn cước do thay đổi đặc điểm nhận dạng"
-#         if "giới tính" in  _history[1:]:
-#             chon_lydo_doithe = "Đổi Căn cước do xác định lại giới tính"
-#         if "quê quán" in _history[1:]:
-#             chon_lydo_doithe = "Đổi Căn cước do xác định lại quê quán"
-#         if "sai sót thông tin" in  _history[1:]:
-#             chon_lydo_doithe = "Đổi Căn cước do có sai sót thông tin trên Căn cước"
-#         if "25" in _history[1:]:
-#             chon_lydo_doithe = "Đổi Căn cước khi công dân đủ 25 tuổi"
-#         if "40" in  _history[1:]:
-#             chon_lydo_doithe = "Đổi Căn cước khi công dân đủ 40 tuổi"
-#         if "60" in _history[1:]:
-#             chon_lydo_doithe = "Đổi Căn cước khi công dân đủ 60 tuổi"
-#     chatt._history = []
-#     VneID.Timkiem_CCCD()
-#     VneID.page.get_by_text("Đổi thẻ Căn cước công dân (thực hiện tại cấp tỉnh)").click()
-#     VneID.page.get_by_role("link", name="Nộp hồ sơ", exact=True).click()
-#     VneID.page.wait_for_load_state("load")
-#     VneID.page.locator("#select2-cboreason-container").click()
-#     reason = VneID.page.locator("input[class='select2-search__field']")
-#     reason.fill(chon_lydo_doithe)
-#     VneID.page.wait_for_timeout(2000)
-#     input_element_T = VneID.page.locator('#type_T')
-#     input_element_T.evaluate("element => element.removeAttribute('disabled')")
-#     radio_button = VneID.page.locator("#type_T")
-#     radio_button.check()
-
-#     VneID.page.locator("#select2-cbocityOrganization-container").click()
-#     search_input = VneID.page.locator("xpath=/html/body/span/span/span[1]/input")
-#     search_input.fill(f"{VneID.province}")
-#     search_input.press("Enter")
-
-
-#     VneID.page.locator("#btnNEXT_TAB_2").click()
-
-#     VneID.confirm_data()
-#     VneID.get_active_day()
-#     VneID.page.wait_for_timeout(5000)
-#     return chon_lydo_doithe 
-
-
 
 if __name__ == "__main__":
     app.run(debug=False)

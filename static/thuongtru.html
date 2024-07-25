@@ -1,0 +1,761 @@
+<section id="coquanthuchien">
+    <h4><b>CƠ QUAN THỰC HIỆN</b></h4>
+    <div class="diachi-container">
+        <div class="diachi-item" style="margin-right: 80px;">
+            <label for="tinh-tp">Tỉnh/ Thành phố <span class="red">(*)</span></label></br>
+            <select name="tinh-tp" id="tinh-tp" >
+                <option value="quang-ninh">Tỉnh Quảng Ninh</option>
+            </select>
+        </div>
+
+        <div class="diachi-item" style="margin-right: 80px;">
+            <label for="quan-huyen">Quận/ Huyện <span class="red">(*)</span></label></br>
+            <select name="quan-huyen-quangninh" id="quan-huyen-quangninh">
+                    <option value="halong" selected>Thành phố Hạ Long</option>
+                    <option value="uongbi">Thành phố Uông Bí</option>
+                    <option value="campha">Thành phố Cẩm Phả</option>
+                    <option value="mongcai">Thành phố Móng Cái</option>
+                    <option value="vandon">Huyện Vân Đồn</option>
+                    <option value="coto">Huyện Cô Tô</option>
+                    <option value="bache">Huyện Ba Chẽ</option>
+                    <option value="binhlieu">Huyện Bình Liêu</option>
+                    <option value="tienyen">Huyện Tiên Yên</option>
+                    <option value="damha">Huyện Đầm Hà</option>
+                    <option value="haiha">Huyện Hải Hà</option>
+                    <option value="dongtrieu">Thị xã Đông Triều</option>
+                    <option value="quangyen">Thị xã Quảng Yên</option>
+                </select> 
+        </div>
+
+        <div class="diachi-item-phuong-xa">
+            <label for="phuong-xa">Phường/ Xã <span class="red">(*)</span></label></br>
+
+            <select name="phuong-xa-halong" id="phuong-xa-halong" style="position:absolute; z-index: 13;" class="phuong-xa-chung">
+                <option value="hongha">Phường Hồng Hà</option>
+                <option value="bachdang">Phường Bạch Đằng</option>
+                <option value="baichay">Phường Bãi Cháy</option>
+                <option value="caothang">Phường Cao Thắng</option>
+                <option value="caoxanh">Phường Cao Xanh</option>
+                <option value="daiyen">Phường Đại Yên</option>
+                <option value="giengday">Phường Giếng Đáy</option>
+                <option value="hakhanh">Phường Hà Khánh</option>
+                <option value="hakhau">Phường Hà Khẩu</option>
+                <option value="halam">Phường Hà Lầm</option>
+                <option value="haphong">Phường Hà Phong</option>
+                <option value="hatrung">Phường Hà Trung</option>
+                <option value="hatu" selected>Phường Hà Tu</option>
+                <option value="hoanhbo">Phường Hoành Bồ</option>
+                <option value="honggai">Phường Hồng Gai</option>
+                <option value="honghai">Phường Hồng Hải</option>
+                <option value="hungthang">Phường Hùng Thắng</option>
+                <option value="tranhungdao">Phường Trần Hưng Đạo</option>
+                <option value="tuanchau">Phường Tuần Châu</option>
+                <option value="viethung">Phường Việt Hưng</option>
+                <option value="yetkieu">Phường Yết Kiêu</option>
+
+                <option value="bangca">Xã Bằng Cả</option>
+                <option value="danchu">Xã Dân Chủ</option>
+                <option value="donglam">Xã Đồng Lâm</option>
+                <option value="dongson">Xã Đồng Sơn</option>
+                <option value="hoabinh">Xã Hòa Bình</option>
+                <option value="kythuong">Xã Kỳ Thượng</option>
+                <option value="leloi">Xã Lê Lợi</option>
+                <option value="quangla">Xã Quảng La</option>
+                <option value="sonduong">Xã Sơn Dương</option>
+                <option value="tandan">Xã Tân Dân</option>
+                <option value="thongnhat">Xã Thống Nhất</option>
+                <option value="vuoai">Xã Vũ Oai</option>
+            </select>
+
+            <select name="phuong-xa-uongbi" id="phuong-xa-uongbi" style="position:absolute;z-index: 12;" class="phuong-xa-chung">
+                <option value="bacson">Phường Bắc Sơn</option>
+                <option value="namkhe">Phường Nam Khê</option>
+                <option value="phuongdong">Phường Phương Đông</option>
+                <option value="phuongnam">Phường Phương Nam</option>
+                <option value="quangtrung">Phường Quang Trung</option>
+                <option value="thanhson">Phường Thanh Sơn</option>
+                <option value="trungvuong">Phường Trưng Vương</option>
+                <option value="vangdanh">Phường Vàng Danh</option>
+                <option value="yenthanh">Phường Yên Thanh</option>
+                
+                <option value="thuongyencong">Xã Thượng Yên Công</option>
+            </select>
+
+            <select name="phuong-xa-campha" id="phuong-xa-campha" style="position:absolute;z-index: 11;" class="phuong-xa-chung">
+                <option value="cambinh">Phường Cẩm Bình</option>
+                <option value="camdong">Phường Cẩm Đông</option>
+                <option value="camphu">Phường Cẩm Phú</option>
+                <option value="camson">Phường Cẩm Sơn</option>
+                <option value="camtay">Phường Cẩm Tây</option>
+                <option value="camthach">Phường Cẩm Thạch</option>
+                <option value="camthanh">Phường Cẩm Thành</option>
+                <option value="camthinh">Phường Cẩm Thịnh</option>
+                <option value="camthuy">Phường Cẩm Thủy</option>
+                <option value="camtrung">Phường Cẩm Trung</option>
+                <option value="cuaong">Phường Cửa Ông</option>
+                <option value="mongduong">Phường Mông Dương</option>
+                <option value="quanghanh">Phường Quang Hanh</option>
+
+                <option value="camhai">Xã Cẩm Hải</option>
+                <option value="conghoa">Xã Cộng Hòa</option>
+                <option value="duonghuy">Xã Dương Huy</option>
+            </select>
+
+            <select name="phuong-xa-mongcai" id="phuong-xa-mongcai" style="position:absolute;z-index: 10;" class="phuong-xa-chung">
+                <option value="binhngoc">Phường Bình Ngọc</option>
+                <option value="haihoa">Phường Hải Hòa</option>
+                <option value="haiyen">Phường Hải Yên</option>
+                <option value="hoalac">Phường Hòa Lạc</option>
+                <option value="kalong">Phường Ka Long</option>
+                <option value="ninhduong">Phường Ninh Dương</option>
+                <option value="traco">Phường Trà Cổ</option>
+                <option value="tranphu">Phường Trần Phú</option>
+
+                <option value="bacson">Xã Bắc Sơn</option>
+                <option value="binhan">Xã Bình An</option>
+                <option value="dongninh">Xã Đông Ninh</option>
+                <option value="haidong">Xã Hải Đông</option>
+                <option value="haison">Xã Hải Sơn</option>
+                <option value="haitien">Xã Hải Tiến</option>
+                <option value="haixuan">Xã Hải Xuân</option>
+                <option value="quangnghia">Xã Quảng Nghĩa</option>
+                <option value="vanninh">Xã Vạn Ninh</option>
+            </select>
+
+            <select name="phuong-xa-vandon" id="phuong-xa-vandon" style="position:absolute;z-index: 9;" class="phuong-xa-chung">
+                <option value="cairon">Thị trấn Cái Rồng</option>
+
+                <option value="bansen">Xã Bản Sen</option>
+                <option value="binhdan">Xã Bình Dân</option>
+                <option value="daixuyen">Xã Đài Xuyên</option>
+                <option value="doanket">Xã Đoàn Kết</option>
+                <option value="dongxa">Xã Đông Xá</option>
+                <option value="xahalong">Xã Hạ Long</option>
+                <option value="minhchau">Xã Minh Châu</option>
+                <option value="ngocvung">Xã Ngọc Vừng</option>
+                <option value="quanlan">Xã Quan Lạn</option>
+                <option value="thangloi">Xã Thắng Lợi</option>
+                <option value="vanyen">Xã Vạn Yên</option>
+            </select>
+
+            <select name="phuong-xa-coto" id="phuong-xa-coto" style="position:absolute;z-index: 8;" class="phuong-xa-chung">
+                <option value="xacoto">Thị trấn Cô Tô</option>
+
+                <option value="dongtien">Xã Đồng Tiến</option>
+                <option value="thanhlan">Xã Thanh Lân</option>
+            </select>
+
+            <select name="phuong-xa-bache" id="phuong-xa-bache" style="position:absolute;z-index: 7;" class="phuong-xa-chung">
+                <option value="ttbache">Thị trấn Ba Chẽ</option>
+
+                <option value="dapthanh">Xã Đạp Thanh</option>
+                <option value="dondac">Xã Đồn Đạc</option>
+                <option value="luongmong">Xã Lương Mông</option>
+                <option value="minhcam">Xã Minh Cầm</option>
+                <option value="namson">Xã Nam Sơn</option>
+                <option value="thanhlam">Xã Thanh Lâm</option>
+                <option value="thanhson">Xã Thanh Sơn</option>
+            </select>
+
+            <select name="phuong-xa-binhlieu" id="phuong-xa-binhlieu" style="position:absolute;z-index: 6;" class="phuong-xa-chung">
+                <option value="ttbinhlieu">Thị trấn Bình Liêu</option>
+                <option value="dongtam">Xã Đồng Tâm</option>
+                <option value="dongvan">Xã Đồng Văn</option>
+                <option value="hoanhmo">Xã Hoành Mô</option>
+                <option value="hucdong">Xã Húc Động</option>
+                <option value="luchon">Xã Lục Hồn</option>
+                <option value="vongai">Xã Vô Ngại</option>
+            </select>
+
+            <select name="phuong-xa-tienyen" id="phuong-xa-tienyen" style="position:absolute;z-index: 5;" class="phuong-xa-chung">
+                <option value="tttienyen">Thị trấn Tiên Yên</option>
+
+                <option value="daiduc">Xã Đại Dực</option>
+                <option value="daithanh">Xã Đại Thành</option>
+                <option value="dienxa">Xã Điền Xá</option>
+                <option value="donghai">Xã Đông Hải</option>
+                <option value="dongngu">Xã Đông Ngũ</option>
+                <option value="halau">Xã Hà Lâu</option>
+                <option value="hailang">Xã Hải Lạng</option>
+                <option value="phongdu">Xã Phong Dụ</option>
+                <option value="tienlang">Xã Tiên Lãng</option>
+                <option value="tayson">Xã Tây Sơn</option>
+                <option value="tienson">Xã Tiên Sơn</option>
+                <option value="yenthan">Xã Yên Than</option>
+                <option value="yenmac">Xã Yên Mạc</option>
+                <option value="yenphuc">Xã Yên Phúc</option>
+            </select>
+
+            <select name="phuong-xa-damha" id="phuong-xa-damha" style="position:absolute;z-index: 4;" class="phuong-xa-chung">
+                <option value="ttdamha">Thị xã Đầm Hà</option>
+
+                <option value="daibinh">Xã Đại Bình</option>
+                <option value="ducyen">Xã Dực Yên</option>
+                <option value="quangan">Xã Quảng An</option>
+                <option value="quangloi">Xã Quảng Lợi</option>
+                <option value="quangtan">Xã Quảng Tân</option>
+                <option value="tanbinh">Xã Tân Bình</option>
+                <option value="tanlap">Xã Tân Lập</option>
+
+            </select>
+
+            <select name="phuong-xa-haiha" id="phuong-xa-haiha" style="position:absolute;z-index: 3;" class="phuong-xa-chung">
+                <option value="Quangha">Thị trấn Quảng Hà</option>
+
+                <option value="caichien">Xã Cái Chiên</option>
+                <option value="duonghoa">Xã Đường Hoa</option>
+                <option value="quangchinh">Xã Quảng Chính</option>
+                <option value="quangduc">Xã Quảng Đức</option>
+                <option value="quanglong">Xã Quảng Long</option>
+                <option value="quangminh">Xã Quảng Minh</option>
+                <option value="quangphong">Xã Quảng Phong</option>
+                <option value="quangson">Xã Quảng Sơn</option>
+                <option value="quangthanh">Xã Quảng Thành</option>
+                <option value="quangthinh">Xã Quảng Thịnh</option>
+            </select>
+
+            <select name="phuong-xa-dongtrieu" id="phuong-xa-dongtrieu" style="position:absolute;z-index: 2;" class="phuong-xa-chung">
+                <option value="pdongtrieu">Phường Đông Triều</option>
+                <option value="ducchinh">Phường Đức Chính</option>
+                <option value="hoangque">Phường Hoàng Quế</option>
+                <option value="hongphong">Phường Hồng Phong</option>
+                <option value="hungdao">Phường Hưng Đạo</option>
+                <option value="kimson">Phường Kim Sơn</option>
+                <option value="maokhe">Phường Mạo Khê</option>
+                <option value="trangan">Phường Tràng An</option>
+                <option value="xuanson">Phường Xuân Sơn</option>
+                <option value="yentho">Phường Yên Thọ</option>
+
+                <option value="ansinh">Xã An Sinh</option>
+                <option value="binhduong">Xã Bình Dương</option>
+                <option value="binhkhe">Xã Bình Khê</option>
+                <option value="hongthaidong">Xã Hồng Thái Đông</option>
+                <option value="hongthaitay">Xã Hồng Thái Tây</option>
+                <option value="nguyenhue">Xã Nguyễn Huệ</option>
+                <option value="tanviet">Xã Tân Việt</option>
+                <option value="thuyan">Xã Thủy An</option>
+                <option value="trangluong">Xã Tràng Lương</option>
+                <option value="vietdan">Xã Việt Dân</option>
+                <option value="yenduc">Xã Yên Đức</option>
+            </select>
+
+            <select name="phuong-xa-quangyen" id="phuong-xa-quangyen" style="position:absolute;z-index: 1;" class="phuong-xa-chung">
+                <option value="pconghoa">Phường Cộng Hòa</option>
+                <option value="dongmai">Phường Đông Mai</option>
+                <option value="haan">Phường Hà An</option>
+                <option value="minhthanh">Phường Minh Thành</option>
+                <option value="namhoa">Phường Nam Hòa</option>
+                <option value="phongcoc">Phường Phong Cốc</option>
+                <option value="phonghai">Phường Phong Hải</option>
+                <option value="pquangyen">Phường Quảng Yên</option>
+                <option value="tanan">Phường Tân An</option>
+                <option value="yengiang">Phường Yên Giang</option>
+                <option value="yenhai">Phường Yên Hải</option>
+
+                <option value="camla">Xã Cẩm La</option>
+                <option value="hiephoa">Xã Hiệp Hòa</option>
+                <option value="hoangtan">Xã Hoàng Tân</option>
+                <option value="lienhoa">Xã Liên Hòa</option>
+                <option value="lienvi">Xã Liên Vị</option>
+                <option value="songkhoai">Xã Sông Khoai</option>
+                <option value="tienan">Xã Tiền An</option>
+                <option value="tienphong">Xã Tiền Phong</option>
+            </select>
+            
+        </div>
+    </div>
+</section>
+
+<section id="thutuchanhchinhyeucau">
+    <h4><b>THỦ TỤC HÀNH CHÍNH YÊU CẦU</b></h4>
+    <div class="body"> 
+        <div class="row"> 
+         <div class="col-sm-4 col-xs-12"> 
+          <div class="form-group"> 
+           <div class="label-text f16">
+            Thủ tục
+            <span class="red">(*)</span>
+           </div> 
+           <div class="select-custom"> 
+            <select class="form-control select2-hidden-accessible" id="cboBPROC_TYPE_CODE" name="cboBPROC_TYPE_CODE" data-bv-field="cboBPROC_TYPE_CODE" data-select2-id="cboBPROC_TYPE_CODE" tabindex="-1" aria-hidden="true" disabled=""><option value="THUONGTRU_01" data-select2-id="1623">Đăng ký thường trú</option><option value="THUONGTRU_02" data-select2-id="1624">Xóa đăng ký thường trú</option><option value="THUONGTRU_05" data-select2-id="1625">Tách hộ</option><option value="THUONGTRU_08" data-select2-id="1626">Điều chỉnh thông tin về cư trú trong CSDL cư trú</option><option value="THUONGTRU_09" data-select2-id="1627">Xác nhận thông tin về cư trú</option><option value="THUONGTRU_10" data-select2-id="1628">Khai báo thông tin về cư trú</option></select><span class="select2 select2-container select2-container--default select2-container--disabled" dir="ltr" data-select2-id="1631" style="width: 366.656px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-labelledby="select2-cboBPROC_TYPE_CODE-container"><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span> 
+           </div> 
+          <small class="help-block" data-bv-validator="notEmpty" data-bv-for="cboBPROC_TYPE_CODE" data-bv-result="NOT_VALIDATED" style="display: none;">Nhập Thủ tục</small></div> 
+         </div> 
+         <div class="col-sm-4 col-xs-12"> 
+          <div class="list-checks mart10" id="divIS_HOUSEHOLD" style="display: block"> 
+           <div class="item"> 
+            <div class="check-action mart10"> 
+             <input type="radio" class="check" name="radIsHouseHold" id="chkLHM" checked="true" onclick="onclickLHM()"> 
+             <span class="name">Đăng ký thường trú lập hộ mới</span> 
+            </div> 
+           </div> 
+           <div class="item"> 
+            <div class="check-action mart10"> 
+             <input type="radio" class="check" name="radIsHouseHold" id="chkHDC" onclick="onclickLHM()"> 
+             <span class="name">Đăng ký thường trú vào hộ đã có</span> 
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="col-sm-4 col-xs-12"> 
+          <div class="form-group"> 
+           <div class="mart10" id="divDOSSIER_CT02" hidden="" style="display: block;"> 
+            <div class="item"> 
+             <div class="check-action"> 
+              <input type="checkbox" class="check" id="chkDOSSIER_CT02" onclick="check_DOSSIER_CT02()"> 
+              <span id="spnDOSSIER_CT02" class="name">CD Việt Nam định cư ở nước ngoài không có hộ chiếu Việt Nam còn giá trị sử dụng</span> 
+             </div> 
+            </div> 
+           </div> 
+           <div class="label-text">
+             Trường hợp 
+            <span class="red">(*)</span> 
+           </div> 
+           <div class="select-custom"> 
+            <select class="form-control select2-hidden-accessible" id="cboBPROC_CASE_CODE" name="cboBPROC_CASE_CODE" data-bv-field="cboBPROC_CASE_CODE" data-select2-id="cboBPROC_CASE_CODE" tabindex="-1" aria-hidden="true"><option value="DKTT_CAHO" data-id="2009" data-select2-id="1637">Đăng ký thường trú cả hộ</option><option value="DKTT_LANDAU" data-id="2030" data-select2-id="1638">Đăng ký thường trú lần đầu.</option><option value="DKTT_NHANKHAU" data-id="2029" data-select2-id="1639">Đăng ký thường trú nhân khẩu</option></select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="1640" style="width: 366.656px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-cboBPROC_CASE_CODE-container"><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span> 
+           </div> 
+          <small class="help-block" data-bv-validator="notEmpty" data-bv-for="cboBPROC_CASE_CODE" data-bv-result="NOT_VALIDATED" style="display: none;">Nhập Trường hợp</small></div> 
+         </div> 
+        </div> 
+       </div>
+</section>
+<section id="thongtindenghi">
+    <h4><b>THÔNG TIN ĐỀ NGHỊ</b></h4>
+    <div class="body" style="display: block;"> 
+        <div id="divNoiDeNghiDKTT" style="display: block;"> 
+        
+         <div class="row"> 
+          <div class="col-sm-4 col-xs-12"> 
+           <div class="form-group"> 
+            <div class="label-text">
+             Tỉnh/ Thành phố
+            </div> 
+            <div class="select-custom"> 
+                <input type="text" id="cboSUGGEST_CITY_ADDR" disabled="disable">
+                
+            </div> 
+           </div> 
+          </div> 
+          <div class="col-sm-4 col-xs-12"> 
+           <div class="form-group"> 
+            <div class="label-text">
+             Quận/ Huyện
+            </div> 
+            <div class="select-custom"> 
+                <input type="text" id="cboSUGGEST_DISTRICT_ADDR" disabled="disable">
+            </div> 
+           </div> 
+          </div> 
+          <div class="col-sm-4 col-xs-12"> 
+           <div class="form-group"> 
+            <div class="label-text">
+             Phường/ Xã
+            </div> 
+            <div class="select-custom"> 
+                <input type="text" id="cboSUGGEST_VILLAGE_ADDR" disabled="disable">
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="form-group"> 
+          <div class="label-text" style="margin-top: 10px;">
+            Địa chỉ (số nhà, đường phố, thôn, xóm, làng, ấp, bản, buôn, phum, sóc)
+          </div> 
+          <input id="txtSUGGEST_DETAIL_ADDR" name="txtSUGGEST_DETAIL_ADDR" class="form-control" placeholder="Địa chỉ nơi cư trú hiện tại của công dân" data-bv-field="txtSUGGEST_DETAIL_ADDR"> 
+          <small class="help-block" data-bv-validator="stringLength" data-bv-for="txtSUGGEST_DETAIL_ADDR" data-bv-result="NOT_VALIDATED" style="display: none;">Địa chỉ không được vượt quá 500 ký tự</small> 
+         </div> 
+         <div id="divInfoChuHo_DKTT"><div id="divChuHo"><div class="row"><div class="col-sm-4 col-xs-12"><div class="form-group"><div class="label-text" id="lblHoTenChuHo">Họ tên chủ hộ <span class="red">(*)</span></div> <input id="txtHH_HEAD_FULLNAME" name="txtHH_HEAD_FULLNAME" class="form-control" placeholder="" ></div></div><div class="col-sm-3 col-xs-12" id="divQuanHeVsChuHo" style="margin-right:7%;"><div class="form-group"><div class="label-text" id="lblQuanHeVsChuHo">Quan hệ với chủ hộ <span class="red">(*)</span></div><div class="select-custom"><input type="text" id="cboRELATIONSHIP_WITH_HHHEAD_ID"><span class="select2 select2-container select2-container--default select2-container--disabled" dir="ltr" data-select2-id="3778" style="width: 267.5px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-labelledby="select2-cboRELATIONSHIP_WITH_HHHEAD_ID-container"><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></div></div></div><div class="col-sm-3 col-xs-12"><div class="form-group"><div class="label-text f16" id="lblSoCMNDChuHo">Số ĐDCN (CCCD) chủ hộ<span class="red">(*)</span></div><input id="txtID_CARD_NUMBER_HHEAD" name="txtID_CARD_NUMBER_HHEAD" class="form-control" placeholder="" maxlength="12" ></div></div><div class="col-sm-2 col-xs-12"><div class="actions right mart26 marb20"><button class="btn btn-main" id="btn_Check_ChuHo" style="display: none" onclick="checkChuHo(true)" disabled="disabled"><span class="nc-icon-outline"></span>Kiểm tra chủ hộ</button></div></div></div></div></div> 
+        </div> 
+        <div class="form-group"> 
+         <div class="label-text">
+          Nội dung đề nghị
+          <span class="red">(*)</span>
+         </div> 
+         <textarea rows="2" id="txtCHANGED_CONTENT_NOTE" name="txtCHANGED_CONTENT_NOTE" class="form-control" placeholder=""></textarea> 
+        </div> 
+       </div>
+</section>
+<section id="thongtinnguoidenghidangkythuongtru">
+    <h4><b>THÔNG TIN NGƯỜI ĐỀ NGHỊ ĐĂNG KÝ THƯỜNG TRÚ</b></h4>
+    <div class="content">
+        <div class="thongtin">
+            <div class="thongtin-item" style="margin-right: 80px;">	
+            <label for="">Họ tên <span class="red">(*)</span></label><br>
+            <input type="text" id="hoten-dk"></br></div>
+    
+            <div class="thongtin-item" style="margin-right: 80px;">
+            <label for="">Ngày Sinh <span class="red">(*)</span></label></br>
+            <input type="text" id="ngaysinh-dk"></br></div>
+    
+            <div class="thongtin-item" style="margin-right: 80px;">
+            <label for="">Giới Tính <span class="red">(*)</span></label></br>
+            <input type="text" id="gioitinh-dk"></br></div>
+    
+            <div class="thongtin-item">
+            <label for="">Số CCCD (ĐDCD) <span class="red">(*)</span></label></br>
+            <input type="text" id="cccd-dk"></br></div>
+    
+            <div class="thongtin-item" style="margin-top: 15px;margin-right: 80px;">
+            <label for="">Số ĐT liên hệ</label></br>
+            <input type="text" id="sdt-dk"></br></div>
+    
+            
+        </div>
+    
+        <div class="nguoicungthaydoi">
+        <label for="thongtinnguoicungthaydoi">Những thành viên trong hộ gia đình cùng thay đổi (Ấn dấu "+" để thêm thành viên)</label></br>
+        <table id="thongtinnguoicungthaydoi">
+            <thead>
+                <tr>
+                <th><button id="add-row">+</button></th> 
+                <th>STT</th>
+                <th>Họ và tên <span class="red">(*)</span></th>
+                <th>Ngày sinh <span class="red">(*)</span></th>
+                <th>Giới tính <span class="red">(*)</span></th>
+                <th>Số CCCD (ĐDCN) <span class="red">(*)</span></th>
+                <th>Quan hệ với chủ hộ <span class="red">(*)</span></th>
+                </tr>
+            </thead>
+        
+            <tbody>
+                
+            
+            
+            </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<section id="truonghopvahosodinhkem">
+    <h4><b>TRƯỜNG HỢP VÀ HỒ SƠ DÍNH KÈM</b></h4>
+    <div id="truonghopGiaytolienquan">
+        <fieldset>
+
+      
+          <div>
+            <input type="radio" id="option1" name="truonghop" value="option1">
+            <label for="option1">Đăng ký thường trú vào chỗ ở hợp pháp thuộc quyền sở hữu của mình</label>
+          </div>
+      
+          <div>
+            <input type="radio" id="option2" name="truonghop" value="option2">
+            <label for="option2">Người sinh sống, người làm nghề lưu động trên phương tiện được đăng ký thường trú tại phương tiện</label>
+          </div>
+      
+          <div>
+            <input type="radio" id="option3" name="truonghop" value="option3">
+            <label for="option3">Đăng ký thường trú tại chỗ ở hợp pháp không thuộc quyền sở hữu của mình khi được chủ hộ và chủ sở hữu chỗ ở hợp pháp đó đồng ý</label>
+          </div>
+      
+          <div>
+            <input type="radio" id="option4" name="truonghop" value="option4">
+            <label for="option4">Đăng ký thường trú tại chỗ ở hợp pháp do thuê, mượn, ở nhờ</label>
+          </div>
+      
+          <div>
+            <input type="radio" id="option5" name="truonghop" value="option5">
+            <label for="option5">Đăng ký thường trú tại cơ sở tín ngưỡng, cơ sở tôn giáo có công trình phụ trợ là nhà ở</label>
+          </div>
+      
+          <div>
+            <input type="radio" id="option6" name="truonghop" value="option6">
+            <label for="option6">Người được chăm sóc, nuôi dưỡng, trợ giúp được đăng ký thường trú tại cơ sở trợ giúp xã hội hoặc được đăng ký thường trú vào hộ gia đình nhận chăm sóc, nuôi dưỡng, trợ giúp</label>
+          </div>
+      
+          <div>
+            <input type="radio" id="option7" name="truonghop" value="option7">
+            <label for="option7">Đăng ký thường trú tại nơi đơn vị đóng quân trong Công an nhân dân</label>
+          </div>
+      
+          <div>
+            <input type="radio" id="option8" name="truonghop" value="option8">
+            <label for="option8">Đăng ký thường trú tại nơi đơn vị đóng quân trong Quân đội nhân dân</label>
+          </div>
+      
+        </fieldset>
+      </div>
+      
+</section>
+
+
+<div class="button-containter">
+<button id="confirm-btn">XÁC NHẬN</button>
+<button id="quit-btn">HỦY</button>
+</div>
+
+<script>
+     var quanHuyen = document.getElementById("quan-huyen-quangninh");
+	var phuongXanow = "halong";
+			var phuongXaUongbi = document.getElementById("phuong-xa-uongbi");
+			var phuongXaHalong = document.getElementById("phuong-xa-halong");
+			var phuongXaCampha = document.getElementById("phuong-xa-campha");
+			var phuongXaMongcai = document.getElementById("phuong-xa-mongcai");
+			var phuongXaVandon = document.getElementById("phuong-xa-vandon");
+			var phuongXaCoto = document.getElementById("phuong-xa-coto");
+			var phuongXaBache = document.getElementById("phuong-xa-bache");
+			var phuongXaBinhlieu = document.getElementById("phuong-xa-binhlieu");
+			var phuongXaTienyen = document.getElementById("phuong-xa-tienyen");
+			var phuongXaDamha = document.getElementById("phuong-xa-damha");
+			var phuongXaHaiha = document.getElementById("phuong-xa-haiha");
+			var phuongXaDongtrieu = document.getElementById("phuong-xa-dongtrieu");
+			var phuongXaQuangyen = document.getElementById("phuong-xa-quangyen");
+			quanHuyen.addEventListener("change", () => {
+ 
+  
+				if (quanHuyen.value === "uongbi"){
+				phuongXaUongbi.style.zIndex = "13"
+				phuongXaHalong.style.zIndex = "12"
+				phuongXaCampha.style.zIndex = "11"
+				phuongXaMongcai.style.zIndex = "10"
+				phuongXaVandon.style.zIndex = "9"
+				phuongXaCoto.style.zIndex = "8"
+				phuongXaBache.style.zIndex = "7"
+				phuongXaBinhlieu.style.zIndex = "6"
+				phuongXaTienyen.style.zIndex = "5"
+				phuongXaDamha.style.zIndex = "4"
+				phuongXaHaiha.style.zIndex = "3"
+				phuongXaDongtrieu.style.zIndex = "2"
+				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
+			}
+			if (quanHuyen.value === "halong"){
+				phuongXaUongbi.style.zIndex = "12"
+				phuongXaHalong.style.zIndex = "13"
+				phuongXaCampha.style.zIndex = "11"
+				phuongXaMongcai.style.zIndex = "10"
+				phuongXaVandon.style.zIndex = "9"
+				phuongXaCoto.style.zIndex = "8"
+				phuongXaBache.style.zIndex = "7"
+				phuongXaBinhlieu.style.zIndex = "6"
+				phuongXaTienyen.style.zIndex = "5"
+				phuongXaDamha.style.zIndex = "4"
+				phuongXaHaiha.style.zIndex = "3"
+				phuongXaDongtrieu.style.zIndex = "2"
+				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
+			}
+			if (quanHuyen.value === "campha"){
+				phuongXaUongbi.style.zIndex = "11"
+				phuongXaHalong.style.zIndex = "12"
+				phuongXaCampha.style.zIndex = "13"
+				phuongXaMongcai.style.zIndex = "10"
+				phuongXaVandon.style.zIndex = "9"
+				phuongXaCoto.style.zIndex = "8"
+				phuongXaBache.style.zIndex = "7"
+				phuongXaBinhlieu.style.zIndex = "6"
+				phuongXaTienyen.style.zIndex = "5"
+				phuongXaDamha.style.zIndex = "4"
+				phuongXaHaiha.style.zIndex = "3"
+				phuongXaDongtrieu.style.zIndex = "2"
+				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
+			}
+
+			if (quanHuyen.value === "mongcai"){
+				phuongXaUongbi.style.zIndex = "10"
+				phuongXaHalong.style.zIndex = "12"
+				phuongXaCampha.style.zIndex = "11"
+				phuongXaMongcai.style.zIndex = "13"
+				phuongXaVandon.style.zIndex = "9"
+				phuongXaCoto.style.zIndex = "8"
+				phuongXaBache.style.zIndex = "7"
+				phuongXaBinhlieu.style.zIndex = "6"
+				phuongXaTienyen.style.zIndex = "5"
+				phuongXaDamha.style.zIndex = "4"
+				phuongXaHaiha.style.zIndex = "3"
+				phuongXaDongtrieu.style.zIndex = "2"
+				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
+			}
+
+			if (quanHuyen.value === "vandon"){
+				phuongXaUongbi.style.zIndex = "9"
+				phuongXaHalong.style.zIndex = "12"
+				phuongXaCampha.style.zIndex = "11"
+				phuongXaMongcai.style.zIndex = "10"
+				phuongXaVandon.style.zIndex = "13"
+				phuongXaCoto.style.zIndex = "8"
+				phuongXaBache.style.zIndex = "7"
+				phuongXaBinhlieu.style.zIndex = "6"
+				phuongXaTienyen.style.zIndex = "5"
+				phuongXaDamha.style.zIndex = "4"
+				phuongXaHaiha.style.zIndex = "3"
+				phuongXaDongtrieu.style.zIndex = "2"
+				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
+			}
+
+			if (quanHuyen.value === "coto"){
+				phuongXaUongbi.style.zIndex = "8"
+				phuongXaHalong.style.zIndex = "12"
+				phuongXaCampha.style.zIndex = "11"
+				phuongXaMongcai.style.zIndex = "10"
+				phuongXaVandon.style.zIndex = "9"
+				phuongXaCoto.style.zIndex = "13"
+				phuongXaBache.style.zIndex = "7"
+				phuongXaBinhlieu.style.zIndex = "6"
+				phuongXaTienyen.style.zIndex = "5"
+				phuongXaDamha.style.zIndex = "4"
+				phuongXaHaiha.style.zIndex = "3"
+				phuongXaDongtrieu.style.zIndex = "2"
+				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
+			}
+
+			if (quanHuyen.value === "bache"){
+				phuongXaUongbi.style.zIndex = "7"
+				phuongXaHalong.style.zIndex = "12"
+				phuongXaCampha.style.zIndex = "11"
+				phuongXaMongcai.style.zIndex = "10"
+				phuongXaVandon.style.zIndex = "9"
+				phuongXaCoto.style.zIndex = "8"
+				phuongXaBache.style.zIndex = "13"
+				phuongXaBinhlieu.style.zIndex = "6"
+				phuongXaTienyen.style.zIndex = "5"
+				phuongXaDamha.style.zIndex = "4"
+				phuongXaHaiha.style.zIndex = "3"
+				phuongXaDongtrieu.style.zIndex = "2"
+				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
+			}
+
+			if (quanHuyen.value === "binhlieu"){
+				phuongXaUongbi.style.zIndex = "6"
+				phuongXaHalong.style.zIndex = "12"
+				phuongXaCampha.style.zIndex = "11"
+				phuongXaMongcai.style.zIndex = "10"
+				phuongXaVandon.style.zIndex = "9"
+				phuongXaCoto.style.zIndex = "8"
+				phuongXaBache.style.zIndex = "7"
+				phuongXaBinhlieu.style.zIndex = "13"
+				phuongXaTienyen.style.zIndex = "5"
+				phuongXaDamha.style.zIndex = "4"
+				phuongXaHaiha.style.zIndex = "3"
+				phuongXaDongtrieu.style.zIndex = "2"
+				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
+			}
+
+			if (quanHuyen.value === "tienyen"){
+				phuongXaUongbi.style.zIndex = "5"
+				phuongXaHalong.style.zIndex = "12"
+				phuongXaCampha.style.zIndex = "11"
+				phuongXaMongcai.style.zIndex = "10"
+				phuongXaVandon.style.zIndex = "9"
+				phuongXaCoto.style.zIndex = "8"
+				phuongXaBache.style.zIndex = "7"
+				phuongXaBinhlieu.style.zIndex = "6"
+				phuongXaTienyen.style.zIndex = "13"
+				phuongXaDamha.style.zIndex = "4"
+				phuongXaHaiha.style.zIndex = "3"
+				phuongXaDongtrieu.style.zIndex = "2"
+				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
+			}
+
+			if (quanHuyen.value === "damha"){
+				phuongXaUongbi.style.zIndex = "4"
+				phuongXaHalong.style.zIndex = "12"
+				phuongXaCampha.style.zIndex = "11"
+				phuongXaMongcai.style.zIndex = "10"
+				phuongXaVandon.style.zIndex = "9"
+				phuongXaCoto.style.zIndex = "8"
+				phuongXaBache.style.zIndex = "7"
+				phuongXaBinhlieu.style.zIndex = "6"
+				phuongXaTienyen.style.zIndex = "5"
+				phuongXaDamha.style.zIndex = "13"
+				phuongXaHaiha.style.zIndex = "3"
+				phuongXaDongtrieu.style.zIndex = "2"
+				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
+			}
+
+			if (quanHuyen.value === "haiha"){
+				phuongXaUongbi.style.zIndex = "3"
+				phuongXaHalong.style.zIndex = "12"
+				phuongXaCampha.style.zIndex = "11"
+				phuongXaMongcai.style.zIndex = "10"
+				phuongXaVandon.style.zIndex = "9"
+				phuongXaCoto.style.zIndex = "8"
+				phuongXaBache.style.zIndex = "7"
+				phuongXaBinhlieu.style.zIndex = "6"
+				phuongXaTienyen.style.zIndex = "5"
+				phuongXaDamha.style.zIndex = "4"
+				phuongXaHaiha.style.zIndex = "13"
+				phuongXaDongtrieu.style.zIndex = "2"
+				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
+			}
+
+			if (quanHuyen.value === "dongtrieu"){
+				phuongXaUongbi.style.zIndex = "2"
+				phuongXaHalong.style.zIndex = "12"
+				phuongXaCampha.style.zIndex = "11"
+				phuongXaMongcai.style.zIndex = "10"
+				phuongXaVandon.style.zIndex = "9"
+				phuongXaCoto.style.zIndex = "8"
+				phuongXaBache.style.zIndex = "7"
+				phuongXaBinhlieu.style.zIndex = "6"
+				phuongXaTienyen.style.zIndex = "5"
+				phuongXaDamha.style.zIndex = "4"
+				phuongXaHaiha.style.zIndex = "3"
+				phuongXaDongtrieu.style.zIndex = "13"
+				phuongXaQuangyen.style.zIndex = "1"
+				phuongXanow = quanHuyen.value
+			}
+
+			if (quanHuyen.value === "quangyen"){
+				phuongXaUongbi.style.zIndex = "1"
+				phuongXaHalong.style.zIndex = "12"
+				phuongXaCampha.style.zIndex = "11"
+				phuongXaMongcai.style.zIndex = "10"
+				phuongXaVandon.style.zIndex = "9"
+				phuongXaCoto.style.zIndex = "8"
+				phuongXaBache.style.zIndex = "7"
+				phuongXaBinhlieu.style.zIndex = "6"
+				phuongXaTienyen.style.zIndex = "5"
+				phuongXaDamha.style.zIndex = "4"
+				phuongXaHaiha.style.zIndex = "3"
+				phuongXaDongtrieu.style.zIndex = "2"
+				phuongXaQuangyen.style.zIndex = "13"
+				phuongXanow = quanHuyen.value
+			}
+			// Options for selectB (repla
+			})
+		
+    document.getElementById('add-row').addEventListener('click', function() {
+    var tableBody = document.getElementById('thongtinnguoicungthaydoi').getElementsByTagName('tbody')[0];
+
+    if (this.textContent === '+') { // Add Row
+        var newRow = tableBody.insertRow();
+        newRow.innerHTML = `
+        <td><button class="action-button">-</button></td>
+        <td>${tableBody.rows.length}</td>
+        <td><input type="text" name="hoten" id="hoten-tb-${tableBody.rows.length}"></td>
+        <td><input type="text" name="ngaysinh" id="ngaysinh-tb-${tableBody.rows.length}"></td>
+        <td><select name="gioitinh" id="gioitinh-tb-${tableBody.rows.length}">
+            <option value="Nam">Nam</option>
+            <option value="Nữ">Nữ</option>
+            <option value="Không xác định">Không xác định</option>
+        </select></td>
+        <td><input type="text" name="cccd" id="cccd-tb-${tableBody.rows.length}"></td>
+        <td><input type="text" name="quanhe" id="quanhe-tb-${tableBody.rows.length}"></td>
+        `;
+    } else { // Remove Row
+        tableBody.deleteRow(-1); // Delete the last row
+        
+    }
+    });
+
+    document.getElementById('thongtinnguoicungthaydoi').addEventListener('click', function(event) {
+		if (event.target.classList.contains('action-button')) {
+			var tableBody = this.getElementsByTagName('tbody')[0];
+			tableBody.deleteRow(event.target.parentNode.parentNode.rowIndex - 1); // Get row index and delete
+
+			// Update STT (row numbers)
+			for (let i = 0; i < tableBody.rows.length; i++) {
+			tableBody.rows[i].cells[1].textContent = i + 1; 
+			}
+		}
+		});
+</script>

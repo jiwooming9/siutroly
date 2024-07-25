@@ -5,10 +5,38 @@ body,html{
 	background-image: url('https://sso.dancuquocgia.gov.vn/_next/static/media/background-login.98683067.png'); 
 	background-repeat: no-repeat;
 	background-size: cover;
+	overflow: hidden;
    /* background: -webkit-linear-gradient(to right, rgb(40, 59, 34), rgb(54, 60, 70), rgb(32, 32, 43));
 	background: linear-gradient(to right, rgb(38, 51, 61), rgb(50, 55, 65), rgb(33, 33, 78)); */
 }
+.marquee {
+	position: relative;
+    color: #fff; /* Màu chữ trắng */
+    font-size: 20px; /* Kích thước chữ lớn */
+    font-weight: bold;
+    padding: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+}
 
+.marquee__inner {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 250s linear infinite;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Bóng đổ */
+	z-index: 1;
+}
+.marquee img {
+	position: absolute;
+	top: 6px;
+    left: -6px;
+	z-index: 2;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
 #popup {
 	position: fixed;
 	top: 50%;
@@ -16,9 +44,15 @@ body,html{
 	transform: translate(-50%, -50%);
 	background-color: #f0f0f0;
 	padding: 20px;
-	border: 1px solid #ccc;
+	border: 2px dotted #ccc;
 	display: none;
-	z-index: 1003; /* Ẩn popup ban đầu */
+	z-index: 1003; 
+	
+	border-radius: 25px;
+	/* Ẩn popup ban đầu */
+  }
+#popup p {
+	font-size: 2.5rem;
   }
 .overlay { /* Lớp phủ mờ */
 position: fixed;
@@ -45,7 +79,7 @@ display: none; /* Ẩn lớp phủ ban đầu */
 }
 .card,#select-panel,.center,.process-dvc{
 	position: relative;
-	height: 850px;
+	height: 921px;
 	border-radius: 15px !important;
 	background-color: rgba(102, 102, 102, 0.753) !important;
 
@@ -53,6 +87,10 @@ display: none; /* Ẩn lớp phủ ban đầu */
 .card{
 	z-index: 1;
 }
+#nutContainer button {
+	display: block; /* Đảm bảo mỗi nút chiếm toàn bộ chiều rộng */
+	margin-bottom: 10px; /* Khoảng cách giữa các nút (điều chỉnh giá trị tùy ý) */
+  }
 
 .dialog-area.frame1{
 	background-image: url('https://ebh.vn/Content/Clients/ung-dung-vneid.jpg') !important;
@@ -109,7 +147,6 @@ header{
 	  transition:all .8s cubic-bezier(0.645, 0.045, 0.355, 1),
 				 transform .3s cubic-bezier(0.455, 0.03, 0.515, 0.955),
 				 box-shadow .3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-	  overflow:hidden;
 	  
 	  &:hover{
 		box-shadow:0 0 0 0 rgba(#000, 0.5);
@@ -216,9 +253,8 @@ header{
 
 
 .card{
-	width: 80%;
-    left: 50rem;
-    height: 80% !important;
+	width: 74%;
+    left: 48.5rem;
 }
 #yt-vid{
 	margin-top:8.7rem;
@@ -244,8 +280,8 @@ header{
 #videoct, .img-container {
 	z-index:1;
     position: absolute;
-	left:1rem !important;
-	top:5rem;
+	left: 5rem !important;
+    top: -1rem;
     width: 55%;
 	height: 70%;
 	pointer-events: none;
@@ -288,15 +324,23 @@ header{
 
 
 /* style form cư trú */
-.dktt-box{
+.dktt-box,.dkcc-box{
 	position: absolute;
-	left:1.5rem !important;
-	width: 59%;
-	height: 1200px;
-	margin-top: 3%;
+	width: 62%;
+	height: 1100px;
+	margin-top: 2%;
 	background-color: rgba(255, 255, 255, 0.973) !important;
 	border-radius: 25px;
 	z-index: 1000000;
+	overflow-y: scroll;
+}
+
+.dkcc-box{
+	width: 61.8% !important;
+	height: 1136px !important;
+	margin-top: 1% !important;
+	overflow-y: scroll;
+	padding-bottom: 30px;
 }
 
 .diachi-container,.diachi-container-tachho{
@@ -304,7 +348,7 @@ header{
 }
 
 
-.dktt-box section{
+.dktt-box section, .dkcc-box section{
 	font-family: 'Roboto', Arial;
     font-size: 1rem;
     line-height: 1.333;
@@ -318,7 +362,7 @@ header{
 
 }
 
-.dktt-box section h4{
+.dktt-box section h4, .dkcc-box section h4{
 	background-color: rgba(255, 241, 184, 0.5);
 	border-bottom: #b13a3a 1px solid;
 	width: 103%;
@@ -333,6 +377,59 @@ header{
 
 }
 
+.dkcc-box #thongtinnguoikekhai input{
+	height: 50%;
+	margin-top: 1%;
+	border: 1px solid black;
+}
+
+#divCheck_NDN{
+	margin-top: 1%;
+}
+#divCheck_NDN input{
+	height: 40%;
+	margin-top: 1%;
+
+}
+
+.form-group input[type='text']{
+	border: 1px black solid;
+	width: 81%;
+	height: 50%;
+	border-radius: 10px;
+	margin-top: 5px;
+}
+
+.form-group input[id='txtSUGGEST_DETAIL_ADDR']{
+	border: 1px black solid;
+	height: 4% !important;
+	margin-top: 5px;
+	width: 94%;
+}
+.form-group input[id='txtHH_HEAD_FULLNAME']{
+	border: 1px black solid;
+	width: 80% !important;
+	height: 40% !important;
+	margin-top: 5px;
+}
+
+.form-group input[id='txtID_CARD_NUMBER_HHEAD']{
+	border: 1px black solid;
+	width:117% !important;
+	height: 40% !important;
+	margin-top: 5px;
+}
+
+.select-custom input[id='cboRELATIONSHIP_WITH_HHHEAD_ID']{
+	border: 1px black solid;
+	width:110% !important;
+	height: 40% !important;
+	margin-top: 5px;
+}
+
+.form-group textarea[id="txtCHANGED_CONTENT_NOTE"]{
+	margin-top:5px;
+}
 .diachi-container,.diachi-container-tachho{
 	display:flex;
 	flex-wrap: nowrap;
@@ -383,6 +480,7 @@ header{
     flex-wrap: wrap;
     width: 100%;
     font-size: 1.0rem;
+	
 }
 .thongtin-item, .thongtin-item-tachho{
 	margin-right: 8px;
@@ -391,14 +489,21 @@ header{
 .thongtin-item input, .thongtin-item-tachho input{
 	border-radius: 10px;
 	padding: 5px 10px;
-	width: 115%;
+	width: 130%;
 }
 
 #thongtinnguoidexuat, #thongtinnguoidexuat-tachho{
-	height: 50%;
+	height: fit-content;
 	
 }
+#thongtinnguoidenghidangkythuongtru{
+	height:fit-content !important;
+}
 
+#truonghopGiaytolienquan label{
+	font-size: 1rem;
+	margin-bottom: 13px;
+}
 .nguoicungthaydoi label,.nguoicungthaydoi-tachho label{
 	font-size: 1rem;
 	margin-top: 1.5rem;
@@ -429,9 +534,10 @@ header{
 }
 .content, .content-tachho{
 	height: 90%;
-	overflow:scroll;
-	overflow-y:scroll;
-	overflow-x:hidden;
+	overflow-y:auto;
+}
+#cboBPROC_TYPE_CODE,#cboBPROC_CASE_CODE{
+	margin-top:5px;
 }
 ::-webkit-scrollbar {
 	width: 5px;
@@ -463,11 +569,46 @@ header{
 	border-radius: 10px;
   }
 
-
+#txtBIRTHDATE_NDN{
+	width: 97%;
+	height: 60% !important;
+}
 .button-container{
 	width: 100%;
+	
+}
+.select-custom{
+	height: 82%;
 }
 
+#cboLyDoCap{
+	margin-top:5px;
+}
+
+
+#txtBIRTHDATE_NCC,#txtFULLNAME_NCC,#txtIDENTIFY_NUMBER_NCC{
+	height:49% !important;
+	border: 1px black solid;
+	border-radius: 10px !important;
+}
+#txtBIRTHDATE_NCC{
+	height: 58% !important;
+	width: 98% !important;
+}
+#cboGENDER_ID_NCC,#cboRELATIONSHIP_WITH_NDN{
+	border: 1px black solid;
+}
+
+#cboRELATIONSHIP_WITH_NDN{
+	width: 48%;
+}
+
+#divNoiCuTru{
+	margin-top:10px;
+}
+#cboLoaiHoSo{
+	margin-bottom: 5% !important;
+}
 
 /* CSS */
 .button-containter button {
@@ -503,8 +644,12 @@ header{
   width: auto;
   will-change: transform,opacity;
   z-index: 0;
-  margin-top: 3rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
   text-align: center;
+  margin-left: 10rem;
+width: 30%;
+
 }
 
 .button-container button:hover {
@@ -542,16 +687,18 @@ header{
 }
 
 #confirm-btn{
-	margin-left: 25%;
+	margin-left: 13%;
 }
-#confirm-btn:hover{
+#confirm-btn:hover, #confirm-btn-capcc:hover, #confirm-btn-capccd14:hover{
 	background-color: #58cc71;
 }
 
 #refesh-btn{
 	margin-left: 10rem;
 }
-
+#truonghopvahosodinhkem{
+	width: 100%;
+}
 .red{
 	color : red;
 }
@@ -568,10 +715,10 @@ header{
 
 .img-container{
 	z-index: 15;
-	visibility: hidden;
 	width: 107%;
 	height: 90%;
 	top:-5%;
+	left: .5rem !important;
 }
 .img-container img{
 	width: 55%;
@@ -579,44 +726,61 @@ header{
 }
 
 
-
+#divIS_HOUSEHOLD{
+	margin-top: 18px;
+    margin-left: 44px;
+    font-size: 1.2rem;
+}
 
 /* Kết thúc style form cư trú */
 
 .khuchuabtn{
-	width: 100%;
+	width: 142%;
+	padding: 7px 0;
 }
 .khuchuabtn button{
 	border-radius: 10px;
+  padding: 2px 10px;
+  margin-right: 15px;
+  width: 70%;
+  margin-top: 8px;
+
 }
 
-#dongybtn{
-	margin: 10px 70px 5px 30px;
-    border-radius: 15px;
+#dongybtn, #khongcobtn{
+	margin: 10px 70px 5px 5%;
+    border-radius: 10px;
     background-color: white;
-    font-size: 1.5rem;
-	width: 20%;
+    font-size: 1.2rem;
+	width: 61%;
 	font-weight: 600;
 }
 
 #huybtn{
 	border-radius: 15px;
 	background-color: white;
-	font-size: 1.5rem;
-	width: 20%;
+	font-size: 1.2rem;
+	width: 61%;
 	font-weight: 600;
+	margin-left:5%;
 }
 
 #quit-btn{
-	width: 20%;
+	width: 30%;
 	margin-left: 10%;
 }
 
 #confirm-btn{
-	width: 20%;
+	width: 30%;
 }
 
-
+#nutContainer button{
+	border-radius: 15px;
+	font-size: 1.2rem;
+	margin: 1px auto 10px;
+	padding: 2px 10px;
+	width: 101%;
+}
 
 
 
@@ -627,9 +791,10 @@ header{
 	overflow-y: auto;
 	white-space: nowrap;
 }
-.msg_card_body{
+.msg_card_body {
 	overflow-y: auto;
-}
+	overflow-x: hidden;
+  }
 .card-header{
 	border-radius: 15px 15px 0 0 !important;
 	border-bottom: 0 !important;
@@ -936,7 +1101,6 @@ header{
 	background-color: white;
 	border-radius: 40px;
 	
-	position: relative;
 	
 	height: 90%;
     width: 46%;
@@ -944,13 +1108,20 @@ header{
     left: 60%;
     top: 5%;
 	z-index: 10001;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Chọn font chữ hiện đại */
+  
 }
 #restartBT{
 	font-size: 35;
-    width: 3%;
-    border-radius: 20px;
-    margin-top: 13px;
-    margin-left: 13px;
+  width: 3%;
+  border-radius: 50px;
+  margin-top: 13px;
+  margin-left: 13px;
+  position: absolute;
+  right: 1%;
+  top: 15%;
+  z-index: 10;
+  height: 4.5%;
 
 }
 .login-title{
@@ -961,9 +1132,8 @@ header{
 	font-size: 40;
 }
 .form-control{
-	width: 56%;
+	width: 98%;
 	height: 13%;
-	margin-top: 20px;
 	border-radius: 10px;
 	font-size: larger;
 	
@@ -1037,30 +1207,6 @@ header{
 	z-index: 100;
 }
 
-.digit-group {
-	input {
-		width: 35px;
-		height: 60px;
-		background-color: lighten($BaseBG, 5%);
-		border: none;
-		line-height: 50px;
-		text-align: center;
-		font-size: 24px;
-		font-family: 'Raleway', sans-serif;
-		font-weight: 200;
-		color: black;
-		margin: 0 2px;
-		margin-top: -5px !important;
-		border-radius: 10px;
-	}
-
-	.splitter {
-		padding: 0 5px;
-		color: white;
-		font-size: 24px;
-	}
-}
-
 .prompt {
 	margin-bottom: 20px;
 	font-size: 20px;
@@ -1111,7 +1257,7 @@ header{
       }
   }
   #messageFormeight{
-	font-size: 23;
+	font-size: 20;
   }
 
   .center {
@@ -1445,4 +1591,5 @@ dvc-btn:disabled {
   background-color: var(--line-border-empty);
   cursor: not-allowed;
 }
+
 

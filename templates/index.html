@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="UTF-8">
 		<title>Chatbot</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -18,77 +19,30 @@
 	
 	
 	<body>
+		<button id="restartBT" title="Ấn để đăng xuất khỏi hệ thống"><i class="fa-solid fa-arrow-rotate-left"></i></button>
+		<div class="marquee">
+			<img src="\static\templates\news.gif" alt="Tin tức">
+			<div class="marquee__inner">
+				<span class="marquee__text">{{ my_string }}</span>
+			</div>
+		</div>
 		<div id="popup">
 			<p></p>
-			<div id="countdown"></div> 
 		  </div>
 		  
 		  <div class="overlay"></div> 
-		<div class="img-container" id="img-div-id"><img id="anhhuongdanscan" src="static\templates\loading.gif" alt=""></div>
+		<div class="img-container" id="img-div-id" style="display: none;"><img id="anhhuongdanscan" src="static\templates\loading.gif" alt=""></div>
 	<!-- form cư trú -->
 		
-		<div class="dktt-box" id="formcutru" style="visibility: hidden;">
-			
-		</div>
+		<div class="dktt-box" id="formcutru" style="display: none;"></div>
+		<div class="dkcc-box" id="formcancuoc" style="display: none;"></div>
 
-
-
-		<!-- Kết thúc form cư trú -->
 		<div id="videoct"><video id="yt-vid" autoplay muted loop><source src="\static\templates\gizdayy.mp4" type="video/mp4"></video></div>
-		<!-- <div id="videoct"><iframe id="yt-vid" src="https://www.youtube.com/embed/6AHAUUr1OVU?si=f8rSAe33aWKvR7Ar&autoplay=1&controls=0&disablekb=1&modestbranding=1&showinfo=0&mute=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div> -->
-		<!-- <div class="center" style="z-index: 10 !important;">
-			<div class="wave"></div>
-			<div class="wave"></div>
-			<div class="wave"></div>
-			<div class="wave"></div>
-			<div class="wave"></div>
-			<div class="wave"></div>
-			<div class="wave"></div>
-			<div class="wave"></div>
-			<div class="wave"></div>
-			<div class="wave"></div>
-		</div> -->
-		<button id="restartBT"><i class="fas fa-arrow-left"></i></button>
 		<div id="background-layout" style="visibility: hidden;"></div>
 		<div id="process-area" class="dialog-area" style="visibility: hidden;z-index: 9; ">
 					<div id="login_area">
 								
 						<h3 class="login-title">Đăng nhập VNeID</h3>
-						<!-- <form class="signin-form" id="loginArea">
-							<div class="form-group">
-								<input type="text" class="form-control" id="SDD" name="userID" placeholder="Số định danh" >
-							</div>
-							<div class="form-group">
-								<input id="password-field" name="userPass" type="password"  class="form-control" placeholder="Mât khẩu" >
-							</div>
-							<div class="form-group">
-								<button id="LoginSubmit" class="form-control btn btn-primary submit px-3" style="background-color: #d71920;border: none;">Đăng nhập</button>
-							</div>
-
-							<div class="form-group d-md-flex"><div class="w-50"></div></div>
-						</form> -->
-
-						<!-- <section id="QR-sign">
-							<div id="fetched-html">
-								<img id="QRCode" src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" decoding="async" data-nimg="intrinsic" >
-								<p>Hoặc quét mã QR bằng ứng dụng VNeID để đăng nhập.</p>
-							</div>
-						</section>
-
-						<section id="OTP-area" style="visibility: hidden;">
-							<div class="prompt">Vui lòng nhập mã OTP đã được gửi vào số điện thoại của bạn!</div>
-								
-							<form id ="otp-form" class="digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
-								<input type="text" class="otp-digit" id="digit-1" name="digit-1" data-next="digit-2" />
-								<input type="text" class="otp-digit" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" />
-								<input type="text" class="otp-digit" id="digit-3" name="digit-3" data-next="digit-4" data-previous="digit-2" />
-								<span class="splitter">&ndash;</span>
-								<input type="text" class="otp-digit" id="digit-4" name="digit-4" data-next="digit-5" data-previous="digit-3" />
-								<input type="text" class="otp-digit" id="digit-5" name="digit-5" data-next="digit-6" data-previous="digit-4" />
-								<input type="text" class="otp-digit" id="digit-6" name="digit-6" data-previous="digit-5" />
-								<button id="OTP-submit-btn"  style="border: none; border-radius: 20px; font-size: 150%; padding: 10px 12px;font-weight: 900; margin-left: 3%;"><i class="fas fa-arrow-right"></i></button>
-							</form>
-						</section> -->
 						<section id="QR-sign">
 							<div id="fetched-html">
 								<img id="QRCode" src="\\static\\templates\\taiQR.gif" decoding="async" data-nimg="intrinsic" >
@@ -165,6 +119,11 @@
 
 				}
 			})
+			setTimeout(function() {
+				$.ajax({
+					url:"/ktBrowser",
+				})		
+			}, 1000);
 			var noti = "";
 			let isRunning = true;
 			let timeoutId;
@@ -174,6 +133,11 @@
 			var batdau = false;
 			var sls = false;
 			var Htmld = '<div id="doity" class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer"> Đang xử lý yêu cầu...</div></div>';
+			function botnoi(noi){
+				var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">'+ noi +'<span class="msg_time">' + str_time + '</span></div></div>';
+				$("#messageFormeight").append($.parseHTML(Html));
+				scrollToBottom();
+			}
 			function getQR(){
 				if (!isRunning) return;
 				$.ajax({
@@ -182,21 +146,11 @@
 						qr = response["QR"]
 						trangthai = response["TTDN"]
 						$('#QRCode').attr('src', qr);
-						if ($('#QRCode').src !== ""){
-							// $(".center").css("visibility",'hidden')
-							$("#dangnhap-state").removeClass("chudenindam").addClass("chudoindam");
-							$("#dangnhap-state").text("Chờ đăng nhập");
-						}
-						if (qr === ""){
-							$("#dangnhap-state").removeClass("chudoindam").addClass("chudenindam");
-							$("#dangnhap-state").text("Đang tải...");
-							$('#QRCode').attr('src', "\\static\\templates\\taiQR.gif");
-						}		
-						if (trangthai.includes("--") && (trangthaiglobal !== trangthai)){
+						if (trangthai.includes("--")){
 							trangthaiglobal = trangthai
 							var trangthai = trangthai.split('--')[1].trim()
 							$("#dangnhap-state").removeClass("chudenindam").addClass("chuxanhindam");
-							$("#dangnhap-state").text("Đăng nhập thành công");
+							$("#dangnhap-state").text("Thành công");
 							$('#QRCode').attr('src', "\\static\\templates\\login_success.gif");
 							setTimeout(function() {
 								$("#process-area").hide();
@@ -209,41 +163,35 @@
 									$("#messageArea").submit();
 									$("#khuchuabtn").remove();
 								}
-								// $("#process-area").css("visibility","hidden");
-								// $(".card").css("width","200%");
-								// $(".card").css("left","-31.5rem");
-								//$(".input-group").css("width","96.5%");
-								isRunning = false; // Set the flag to false to stop
 								clearTimeout(timeoutId);
 								return;
-							}, 5000);	
-						}
+							}, 5000);
+							isRunning = false; // Set the flag to false to stop	
+						} else if ((qr === "")){
+							$("#dangnhap-state").removeClass("chudoindam").addClass("chudenindam");
+							$("#dangnhap-state").text("Đang tải...");
+							$('#QRCode').attr('src', "\\static\\templates\\taiQR.gif");
+						} else if ($('#QRCode').src !== ""){
+							// $(".center").css("visibility",'hidden')
+							$("#dangnhap-state").removeClass("chudenindam").addClass("chudoindam");
+							$("#dangnhap-state").text("Chờ đăng nhập");
+						} 
 					}
 
 					});
-				timeoutId = setTimeout(getQR, 3000);
+				timeoutId = setTimeout(getQR, 1000);
 				}
 			function checkNotifications() {
                 fetch('/notifications')
                     .then(response => response.json())
                     .then(data => {
                         if (data.notifications === "Page is blank") {
-							showPopup("Lỗi khi tải trang. Ứng dụng khởi động lại")
+							showPopup("Lỗi khi tải trang. Ứng dụng khởi động lại", 5)
 							redirectToRoute();
                         }
-						// if (data.notifications === "Sai" && sls === false){
-						// 	alert("Sai tài khoản hoặc mật khẩu")
-						// 	$("#OTP-area").css("visibility", "hidden"); 
-						// 	$('#SDD').val("");
-						// 	$('#password-field').val("");
-						// 	sls = true;
-						// 	setTimeout(function() {
-						// 		sls = false;
-						// 	}, 5000);
-						// }
                     });
             }
-            setInterval(checkNotifications, 5000);
+            //setInterval(checkNotifications, 5000);
 			//Kiểm tra người dùng inactive thì restart
 			 let inactivityTimeout;
 			 function resetTimer() {
@@ -259,7 +207,12 @@
 				qua3s = false;
 				trangthaiglobal = "";
 				resetTimer();
-			 	window.location.href = "http://127.0.0.1:5000/restart"; // Redirect to the timeout route
+				$.ajax({
+					url:"/restart",
+					success:function(data){
+						window.location.href = "http://127.0.0.1:5000/"
+					}
+				})
 			 }
 			 function doiemti(){
 				if (!qua3s){
@@ -274,9 +227,6 @@
 			 document.addEventListener('mousemove', resetTimer);
 			 document.addEventListener('keydown', resetTimer);
 			$(document).ready(function() {
-				setTimeout(function() {
-					getQR();
-				}, 10000);
 				$('#restartBT').click(function(event) {
 					var userHtml = '<div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">Đang về trang chủ. Vui lòng đợi trong giây lát...<span class="msg_time_send">'+ str_time + '</span></div><div class="img_cont_msg"><img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="rounded-circle user_img_msg"></div></div>';
 					$("#messageFormeight").append(userHtml);
@@ -293,35 +243,6 @@
 					} else {
 						$(this).val($(this).data('lastValid') || '');
 					}
-				});
-
-				// $('#SDD').on('input', function() {
-				// 	var value = $(this).val();
-				// 	var cleanValue = value.replace(/[^0-9]/g, ''); 
-				// 	if (cleanValue.length > 12) {
-				// 		cleanValue = cleanValue.substring(0, 12); 
-				// 	}
-				// 	$(this).val(cleanValue); 
-				// });
-	
-				$("#messageArea").on("click", function(event) {
-					if (batdau === false){
-						batdau = true;
-						var botHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" 	class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Bạn muốn thực hiện loại dịch vụ công nào?<br><div class="khuchuabtn"><button id="cancuocbtn">Dịch vụ công căn cước</button><button id="cutrubtn">Dịch vụ công cư trú</button></div>Hoặc nếu bạn có bất kỳ thắc mắc nào có thể nhập vào khung bên dưới. <span class="msg_time">' + str_time + '</span></div>';
-						$("#messageFormeight").append($.parseHTML(botHtml)); 
-						
-
-					}
-				});
-				$(document).on("click", "#cancuocbtn", function(event) {
-					$("#text").val("Dịch vụ công căn cước");
-					$("#messageArea").submit();
-					$(".khuchuabtn").remove();
-				});
-				$(document).on("click", "#cutrubtn", function(event) {
-					$("#text").val("Dịch vụ công cư trú");
-					$("#messageArea").submit();
-					$(".khuchuabtn").remove(); 
 				});
 				$("#messageArea").on("submit", function(event) {
 					var rawText = $("#text").val();
@@ -350,100 +271,6 @@
 								$("#messageFormeight").append($.parseHTML(botHtml)); 
 								scrollToBottom();
 							}
-							else if(data.includes("Dịch vụ công phù hợp là Cấp, quản lý thẻ căn cước ---") && data.includes("cấp lại")){
-								var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer"> Vui lòng đợi trong giây lát! <span class="msg_time">' + str_time + '</span></div></div>';
-								$("#messageFormeight").append($.parseHTML(Html));
-								scrollToBottom();
-								$("#messageArea input").css("opacity","0.5");
-								$("#messageArea input").prop("disabled",true);
-								document.getElementById("videoct").style.visibility = 'hidden';
-								document.getElementById('img-div-id').style.visibility = 'visible';	
-								$.ajax({
-									url:"/chon_dvc_caplai",
-									success:function(response){
-										if (response === "lỗi"){
-											showPopup("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại")
-											redirectToRoute();
-										} else {
-										document.getElementById('anhhuongdanscan').src = "static\\templates\\hoanthanh.gif";
-										setTimeout(function() {
-											document.getElementById('img-div-id').style.visibility = 'hidden';
-											document.getElementById('anhhuongdanscan').src = "static\\templates\\loading.gif";
-											document.getElementById("videoct").style.visibility = "visible";
-											$("#messageArea input").css("opacity","1");
-											$("#messageArea input").prop("disabled",false);}, 5000);
-										var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer"> Đã gửi yêu cầu cấp lại căn cước thành công. Mời bạn ra quầy để làm thủ tục kế tiếp. <span class="msg_time">' + str_time + '</span></div></div>';
-										$("#messageFormeight").append($.parseHTML(Html));
-										var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Bạn còn cần hỗ trợ gì không? Nếu không xin hãy bấm nút mũi tên để thoát tài khoản <span class="msg_time">' + str_time + '</span></div></div>';
-										$("#messageFormeight").append($.parseHTML(Html));	
-										$("#messageArea input").css("opacity","0.5");
-										$("#messageArea input").prop("disabled",false);
-										scrollToBottom();
-																								
-										}}
-									})
-							}
-							else if(data === "Dịch vụ công phù hợp là Cấp, quản lý thẻ căn cước --- xác nhận số"){
-								var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">'+ data + ' Vui lòng đợi trong giây lát <span class="msg_time">' + str_time + '</span></div></div>';
-								$("#messageFormeight").append($.parseHTML(Html));
-								scrollToBottom();
-								$("#messageArea input").css("opacity","0.5");
-								$("#messageArea input").prop("disabled",true);	
-								document.getElementById("videoct").style.visibility = 'hidden';
-								document.getElementById('img-div-id').style.visibility = 'visible';	
-								$.ajax({
-									url:"/chon_dvc_xacminh",
-									success:function(response){
-										if (response === "lỗi"){
-											showPopup("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại")
-											redirectToRoute();
-										} else {
-										document.getElementById('anhhuongdanscan').src = "static\\templates\\hoanthanh.gif";
-										setTimeout(function() {
-											document.getElementById('img-div-id').style.visibility = 'hidden';
-											document.getElementById('anhhuongdanscan').src = "static\\templates\\loading.gif";
-											document.getElementById("videoct").style.visibility = "visible";
-											$("#messageArea input").css("opacity","1");
-											$("#messageArea input").prop("disabled",false);}, 5000);
-										var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer"> Đã hoàn thành gửi yêu cầu xác minh số căn cước. Mời bạn ra quầy để làm thủ tục kế tiếp.<span class="msg_time">' + str_time + '</span></div></div>';
-										$("#messageFormeight").append($.parseHTML(Html));
-										var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Bạn còn cần hỗ trợ gì không? Nếu không xin hãy bấm nút mũi tên để thoát tài khoản<span class="msg_time">' + str_time + '</span></div></div>';
-										$("#messageFormeight").append($.parseHTML(Html));
-										scrollToBottom();
-										$("#messageArea input").css("opacity","1");
-										$("#messageArea input").prop("disabled",false);	
-										}}
-									})
-							}
-							else if(data.includes("Dịch vụ công phù hợp là Cấp, quản lý thẻ căn cước ---") && data.includes("cấp đổi")){
-								var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">'+ data + ' Vui lòng đợi trong giây lát! <span class="msg_time">' + str_time + '</span></div></div>';
-								$("#messageFormeight").append($.parseHTML(Html));
-								$("#messageArea input").css("opacity","0.5");
-								$("#messageArea input").prop("disabled",true);
-								document.getElementById("videoct").style.visibility = 'hidden';
-								document.getElementById('img-div-id').style.visibility = 'visible';		
-								$.ajax({
-									url:"/chon_dvc_doithe",
-									success:function(response){
-										if (response === "lỗi"){
-											showPopup("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại")
-											redirectToRoute();
-										} else {
-										document.getElementById('anhhuongdanscan').src = "static\\templates\\hoanthanh.gif";
-										setTimeout(function() {
-											document.getElementById('img-div-id').style.visibility = 'hidden';
-											document.getElementById('anhhuongdanscan').src = "static\\templates\\loading.gif";
-											document.getElementById("videoct").style.visibility = "visible";}, 5000);
-										var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer"> Đã hoàn thành gửi yêu cầu đổi thẻ căn cước. Mời bạn ra quầy để làm thủ tục kế tiếp. Bấm phím mũi tên ở góc trái để thoát tài khoản <span class="msg_time">' + str_time + '</span></div></div>';
-										$("#messageFormeight").append($.parseHTML(Html));
-										var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer"> Bạn còn cần hỗ trợ gì không? Nếu không xin hãy bấm nút mũi tên để thoát tài khoản<span class="msg_time">' + str_time + '</span></div></div>';
-										$("#messageFormeight").append($.parseHTML(Html));
-										scrollToBottom();
-										history_conversation.append(response)
-										}}
-									})
-								
-							}
 							else if(data.includes("Dịch vụ công phù hợp là Đăng ký, quản lý cư trú --- ") && data.includes("xác minh")){
 								document.getElementById('anhhuongdanscan').src = "static\\templates\\huongdanky.gif";
 								var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer"> "Dịch vụ công phù hợp với bạn là Xác minh cư trú.<br>Dịch vụ công này yêu cầu bạn chuẩn bị:<br>- Phiếu CT01 (sẽ được in sau khi bạn hoàn thành khai thông tin).<br>Để hoàn thành hồ sơ bạn cần điền đầy đủ thông tin yêu cầu vào phiếu CT01 theo Thông tư số 66/2023/TT-BCA <br>Vui lòng chờ trong giây lát để hệ thống tải lên thông tin của bạn."<span class="msg_time">' + str_time + '</span></div></div>';
@@ -455,7 +282,7 @@
 									url:"/laythongtin",
 									success:function(response){
 										if (response.hasOwnProperty("messageER")){
-											showPopup("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại")
+											showPopup("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại", 5)
 											redirectToRoute();
 										} else{
 										$('#formcutru').load('/static/xacminhct.html', function() {
@@ -476,8 +303,6 @@
 												if (i===response["Số thành viên trong hộ"]-1){
 													break;
 												}
-												print(response["Họ, chữ đệm, tên người " + thutung])
-												print(response["Số ĐDCN/CMND người " + thutung])
 												$('#add-row').click();
 											}
 											const truongHopSelect = document.getElementById("truonghop");
@@ -497,7 +322,7 @@
 												}
 											});
 										});
-										$("#formcutru").css("visibility","visible");
+										$("#formcutru").css("display","block");
 										$("#videoct").css("visibility","hidden");
 										var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Vui lòng kiểm tra kỹ các thông tin của bạn tại bảng bên cạnh. Nếu không có gì cần thay đổi, hãy ấn nút XÁC NHẬN để tiếp tục." <span class="msg_time">' + str_time + '</span></div></div>';
 										$("#messageFormeight").append($.parseHTML(Html));
@@ -521,7 +346,7 @@
 									url:"/laythongtin",
 									success:function(response){
 										if (response.hasOwnProperty("messageER")){
-											showPopup("Lỗi khi lấy thông tin. Ứng dụng sẽ khởi động lại")
+											showPopup("Lỗi khi lấy thông tin. Ứng dụng sẽ khởi động lại", 5)
 											redirectToRoute();
 										} else{
 										$('#formcutru').load('/static/tachho.html', function() {
@@ -532,14 +357,26 @@
 											$('#chuho-dk-tachho').val(response["Họ và tên chủ hộ"]);
 											$('#qhChuho-dk-tachho').val(response["Quan hệ với chủ hộ"]);
 											$('#cccdChuho-dk-tachho').val(response["Số CMND/CCCD/ĐDCN"]);
+											$('#add-row-tachho').click();
+											for (i=1;i<response["Số thành viên trong hộ"];i++){
+												let thutu = i.toString();
+												let thutung = (i+1).toString();
+												$("#hoten-tb-"+thutu+"-tachho").val(response["Họ, chữ đệm, tên người " + thutung]);
+												$("#cccd-tb-"+thutu+"-tachho").val(response["Số ĐDCN/CMND người " + thutung]);
+												$("#gioitinh-tb-"+thutu+"-tachho").val(response["Giới tính người " + thutung]).change();
+												if (i===response["Số thành viên trong hộ"]-1){
+													break;
+												}
+												$('#add-row-tachho').click();
+											}
 										});
-										$("#formcutru").css("visibility","visible");
+										$("#formcutru").css("display","block");
 										$("#videoct").css("visibility","hidden");
 										var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Hãy nhập các thông tin vào mẫu phiếu. Nếu bạn có thắc mắc về việc nhập phiếu có thể giao tiếp với tôi. <span class="msg_time">' + str_time + '</span></div></div>';
 										$("#messageFormeight").append($.parseHTML(Html));
 										scrollToBottom();	
-										$("#messageArea input").css("opacity","0.5");
-										$("#messageArea input").prop("disabled",true);	
+										$("#messageArea input").css("opacity","1");
+										$("#messageArea input").prop("disabled",false);
 										}}
 									})
 								
@@ -553,17 +390,76 @@
 								// $("#messageArea input").prop("disabled",true);
 								
 							}
-							else if(data.includes("Một số dịch vụ công hay được tiếp nhận")){
-								function tachChuoiGiua(chuoiGoc, chuoiBatDau, chuoiKetThuc) {
-									const regex = new RegExp(chuoiBatDau + "(.*?)" + chuoiKetThuc);
-									const ketQua = regex.exec(chuoiGoc);
-									return ketQua ? ketQua[1] : null;
-								}
-								const dvc1 = tachChuoiGiua(data, "Dịch vụ 1: ", "---");
-								const dvc2 = tachChuoiGiua(data, "Dịch vụ 2: ", "<br>");
-								var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Một số dịch vụ công hay được tiếp nhận:<br><div class="khuchuabtn"><button id="dvc1btn">'+dvc1+'</button><br><button id="dvc2btn">'+dvc2+'</button></div><span class="msg_time">' + str_time + '</span></div></div>';
-								$("#messageFormeight").append($.parseHTML(Html));
+							else if(data.includes("Dịch vụ công phù hợp là Cấp, quản lý thẻ căn cước --- cấp mới")){
+								botnoi("Vui lòng chờ trong giây lát để hệ thống kiểm tra thông tin của bạn.");
 								scrollToBottom();
+								$("#messageArea input").css("opacity","0.5");
+								$("#messageArea input").prop("disabled",true);
+								$.ajax({
+									url:"/laythongtin",
+									success:function(response){
+										if (response["Họ tên"]==="oioioi"){
+											showPopup("Lỗi khi thực hiện dịch vụ. Ứng dụng sẽ khởi động lại", 5)
+											redirectToRoute();
+										}
+										$("#messageArea input").css("opacity","1");
+										$("#messageArea input").prop("disabled",false);
+										if ($("#nutContainer").length) {
+											$("#nutContainer").remove();
+										}
+										botnoi('Danh sách các thành viên trong hộ, chọn thành viên bạn muốn cấp căn cước. Lưu ý bạn chỉ có thể khai báo cấp căn cước cho bản thân hoặc cho con bạn. Nếu thành viên không có trong danh sách, hãy chọn "KHÁC" để nhập thủ công')
+										botnoi('Sau khi chọn thành viên, hãy nhập Số điện thoại của bạn và chọn Lý do cấp tại bảng bên trái. Nếu bạn chọn cấp cho con, hãy nhập các thông tin còn thiếu tương ứng.')
+										botnoi('<div id="nutContainer"></div>');
+										var nutContainer = $("#nutContainer");
+										for (var i = 1; i <= response["Số thành viên trong hộ"]; i++) {
+											let so = i.toString();
+											if (kiemTraTuoi(response["Số định danh người"], response["Số ĐDCN/CMND người " + so]) === "hợp lệ" || response["Số định danh người"] === response["Số ĐDCN/CMND người " + so]){
+											var nut = $("<button>").text(response["Họ, chữ đệm, tên người " + so]);
+											nut.click(function() {
+												$("#formcancuoc").css("display","block");
+												$("#formcutru").css("display","none");
+												$("#videoct").css("visibility","hidden");
+												$('#formcancuoc').load('/static/capmoicancuoc.html', function() {
+													$('#txtFULLNAME_NDN').val(response["Họ tên"]);
+													$('#txtBIRTHDATE_NDN').val(response["Ngày sinh"]);
+													$('#txtIDENTIFY_NUMBER_NDN').val(response["Số định danh người"]);
+													$('#cboCityAddNCC').val(response["Tỉnh thành phố đăng ký trú"]);
+													$('#cboDistrictAddNCC').val(response["Quận huyện đăng ký trú"]);
+													$('#cboVillageAddNCC').val(response["Phường xã đăng ký trú"]);
+													if (response["Số định danh người"] === response["Số ĐDCN/CMND người " + so]){
+														$('#divCheck_NDN').css("display","none");
+													} else {
+														$('#divCheck_NDN').css("display","block");
+														$('#txtFULLNAME_NCC').val(response["Họ, chữ đệm, tên người " + so]);
+														$('#txtIDENTIFY_NUMBER_NCC').val(response["Số ĐDCN/CMND người " + so]);
+														if (response["Số ĐDCN/CMND người " + so][3]==='0' || response["Số ĐDCN/CMND người " + so][3]==='2'){
+															$('#cboRELATIONSHIP_WITH_NDN').val("Cha")
+														} else {
+															$('#cboRELATIONSHIP_WITH_NDN').val("Mẹ")
+														}
+													}
+												});
+											});
+											nutContainer.append(nut); 
+										}}
+										var nutkhac = $("<button>").text("KHÁC");
+										nutkhac.click(function() {
+											$("#formcancuoc").css("display","block");
+											$("#formcutru").css("display","none");
+											$("#videoct").css("visibility","hidden");
+											$('#formcancuoc').load('/static/capmoicancuoc.html', function() {
+											$('#txtFULLNAME_NDN').val(response["Họ tên"]);
+											$('#txtBIRTHDATE_NDN').val(response["Ngày sinh"]);
+											$('#txtIDENTIFY_NUMBER_NDN').val(response["Số định danh người"]);
+											$('#cboCityAddNCC').val(response["Tỉnh thành phố đăng ký trú"]);
+											$('#cboDistrictAddNCC').val(response["Quận huyện đăng ký trú"]);
+											$('#cboVillageAddNCC').val(response["Phường xã đăng ký trú"]);
+											$('#divCheck_NDN').css("display","block");											
+											});
+										});
+										nutContainer.append(nutkhac);
+									}
+								})
 							}
 							else if(data.includes("Vui lòng chờ trong giây lát để hệ thống tải lên thông tin của bạn")){
 								var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">'+ data+'  <span class="msg_time">' + str_time + '</span></div></div>';
@@ -597,13 +493,11 @@
 						setTimeout(function() {
 							$("#background-layout").css("visibility", "visible");
 							$("#process-area").css("visibility", "visible");
-						},5000)
-						showPopup("Để tiếp tục thực hiện dịch vụ công, bạn vui lòng đăng nhập vào hệ thống bằng cách quét mã QR trên ứng dụng VNeID!")
+						},3000)
+						getQR();
+						showPopup("Để tiếp tục thực hiện dịch vụ công. Trước hết hãy đăng nhập VNeID trên điện thoại, sau đó quét mã QR trên màn hình. Nếu gặp vấn đề khi đăng nhập, hãy liên hệ với cán bộ công an để được hỗ trợ!", 3)
 						const ytVideo = document.getElementById('yt-vid');
 						ytVideo.style.opacity = 0;
-						$.ajax({
-									url:"/restartBrowser",
-						})
 					}
 				});
 				$(document).on("click", "#huybtn", function(event) {
@@ -611,105 +505,17 @@
 					$("#messageArea").submit();
 					$(".khuchuabtn").remove(); 
 				});
-				$(document).on("click", "#dvc1btn", function(event) {
-					const dvc1 = document.getElementById("dvc1btn").innerText;
-					$("#text").val(dvc1);
+				$(document).on("click", "#quit-btn", function(event) {
+					$("#text").val("Huỷ");
 					$("#messageArea").submit();
-					$(".khuchuabtn").remove(); 
+					$("#formcutru").css("display", "none");
+					$("#formcancuoc").css("display", "none");
+					$("#videoct").css("visibility", "visible")
 				});
-				$(document).on("click", "#dvc2btn", function(event) {
-					const dvc2 = document.getElementById("dvc2btn").innerText;
-					$("#text").val(dvc2);
-					$("#messageArea").submit();
-					$(".khuchuabtn").remove(); 
-				});
-				// $('#LoginSubmit').click(function(event) {
-				// 	var user = $('#SDD').val();
-				// 	var pass = $('#password-field').val();
-				// 		event.preventDefault();
-				// 		$.ajax({
-				// 			url: '/post-login',
-				// 			type: 'POST',
-				// 			data: { userID: user,
-				// 					userPass: pass },
-				// 			success:function(response){
-				// 				$("#OTP-area").css("visibility", "visible"); 
-				// 			},
-				// 			error: function(error) {
-				// 				console.log(error);
-				// 			}
-				// 		});
-						
-
-				// 	});
-
-		
-				$("#otp-form").on("submit",function(even){
-					even.preventDefault();
-					var otp='';
-					$('.otp-digit').each(function(){
-						otp += $(this).val();
-					});
-					$.ajax({
-						url:"/otp-check",
-						type:"POST",
-						data:{otp:otp},
-						success:function(){
-							$("#digit-1").val("");
-							$("#digit-2").val("");
-							$("#digit-3").val("");
-							$("#digit-4").val("");
-							$("#digit-5").val("");
-							$("#digit-6").val("");						
-						}
-							
-						})
-
-					})
-
-				
-				
-				$('.digit-group').find('input').each(function() {
-					$(this).attr('maxlength', 1);
-					$(this).on('keyup', function(e) {
-						var parent = $($(this).parent());	
-						if(e.keyCode === 8 || e.keyCode === 37) {
-							var prev = parent.find('input#' + $(this).data('previous'));
-							if(prev.length) {
-								$(prev).select();
-							}
-						} 
-						else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
-							var next = parent.find('input#' + $(this).data('next'));
-							if(next.length) {
-								$(next).select();
-							} 
-							else {
-								if(parent.data('autosubmit')) {
-									parent.submit();
-								}
-							}
-						}
-					});
-					// $.ajax({
-					// 	url: '/check_status',
-					// 	success: function(response) {
-					// 		if (response.includes("--")){ 
-					// 				// $('.login-title').html(response);
-
-					// 		$("#process-area").hide();
-					// 		var response = response.split('--')[1].trim()
-					// 		var LoginSuccessedHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer"> Xin chào ' + response +'! Bạn đã đăng nhập thành công <span class="msg_time">' + str_time + '</span></div></div>';
-					// 		$("#messageFormeight").append($.parseHTML(LoginSuccessedHtml));
-					// 		$("#select-panel").css("visibility","visible");
-
-					// 		}
-					// 		else{
-					// 			$('.login-title').html("Chưa thành công");
-					// 		}
-					// 	}
-							
-					// }); 
+				$(document).on("click", "#khongcobtn", function(event) {
+					var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer"> Hãy liên hệ với cán bộ công an để được giải đáp về Tài khoản định danh điện tử.<span class="msg_time">' + str_time + '</span></div></div>';
+					$("#messageFormeight").append($.parseHTML(Html));
+					scrollToBottom();
 				});
 			});
 						
@@ -745,19 +551,8 @@
 				messageDiv.scrollTop = messageDiv.scrollHeight; 
 			}
 
-			// Call this function whenever new content is added to the div
 			
-
-			// Call this function whenever new content is added to the div
-
-			// Code form cư trú
-			
-		
-		
-
-
 		</script>
 
-        
     </body>
 </html>

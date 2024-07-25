@@ -1,0 +1,375 @@
+<meta charset="UTF-8">
+<section id="thongtinnguoikekhai">
+    <h4 ><b>THÔNG TIN NGƯỜI KÊ KHAI</b></h4>
+
+    <div class="body"> 
+        <div class="row"> 
+         <div class="col-sm-6 col-xs-12"> 
+          <div class="form-group"> 
+           <div class="label-text">
+            Họ, chữ đệm và tên
+            <span class="red">*</span>
+           </div> 
+           <div class="table marb0"> 
+            <div class="cell"> 
+             <input id="txtFULLNAME_NDN" name="txtFULLNAME_NDN" class="form-control" disabled=""> 
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="col-sm-6 col-xs-12"> 
+          <div class="form-group"> 
+           <div class="label-text">
+            Ngày, tháng, năm sinh
+            <span class="red">*</span>
+           </div> 
+           <div class="select-custom"> 
+            <div class="input-icon-right"> 
+             <input type="text" class="form-control datepicker" id="txtBIRTHDATE_NDN" data-provide="datepicker" autocomplete="off" data-date-format="dd/mm/yyyy" disabled=""> 
+             <span class="icon -ap icon-calendar22"></span> 
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="row" style="display: none;"> 
+         <div class="col-sm-6 col-xs-12"> 
+          <div class="form-group"> 
+           <div class="label-text">
+            Giới tính
+            <span class="red">*</span>
+           </div> 
+           <div class="select-custom"> 
+            <select class="form-control select2-hidden-accessible" id="cboGENDER_ID_NDN" name="cboGENDER_ID_NDN" disabled="" data-select2-id="cboGENDER_ID_NDN" tabindex="-1" aria-hidden="true"><option value="1" data-select2-id="1">Chưa có thông tin</option><option value="2" data-select2-id="2">Nam</option><option value="3" data-select2-id="3">Nữ</option><option value="4" data-select2-id="4">Khác</option></select><span class="select2 select2-container select2-container--default select2-container--disabled" dir="ltr" data-select2-id="7" style="width: auto;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-labelledby="select2-cboGENDER_ID_NDN-container"><span class="select2-selection__rendered" id="select2-cboGENDER_ID_NDN-container" role="textbox" aria-readonly="true" title="Nam"><span class="select2-selection__clear" data-select2-id="169">×</span>Nam</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="row"> 
+         <div class="col-sm-6 col-xs-12"> 
+          <div class="form-group"> 
+           <div class="label-text">
+            Số định danh cá nhân
+            <span class="red">*</span>
+           </div> 
+           <input id="txtIDENTIFY_NUMBER_NDN" name="txtIDENTIFY_NUMBER_NDN" class="form-control" maxlength="12" disabled=""> 
+          </div> 
+         </div> 
+         <div class="col-sm-6 col-xs-12"> 
+          <div class="form-group"> 
+           <div class="label-text">
+            Số điện thoại
+            <span class="red">*</span>
+           </div> 
+           <input id="txtPHONE_NUMBER_NDN" name="txtPHONE_NUMBER_NDN" class="form-control" maxlength="10"> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="row"> 
+         <div class="col-sm-12 col-xs-12"> 
+          
+         </div> 
+        </div> 
+       </div>
+
+    
+</section>
+
+<section id="thongtinnguoicancapcancuoc">
+    <h4 ><b>THÔNG TIN NGƯỜI CẦN CẤP CĂN CƯỚC</b></h4>
+    <div class="body"> 
+        <div id="divCheck_NDN"> 
+            <div class="row"> 
+             <div class="col-sm-6 col-xs-12"> 
+              <div class="form-group"> 
+               <div class="label-text">
+                Họ, chữ đệm và tên
+                <span class="red">*</span>
+               </div> 
+               <div class="table marb0"> 
+                <div class="cell"> 
+                 <input id="txtFULLNAME_NCC" name="txtFULLNAME_NCC" class="form-control" onkeyup="chk_value_change();" maxlength="150"> 
+                </div> 
+               </div> 
+              </div> 
+             </div> 
+             <div class="col-sm-6 col-xs-12"> 
+              <div class="form-group"> 
+               <div class="label-text">
+                Ngày, tháng, năm sinh
+                <span class="red">*</span>
+               </div> 
+               <div class="select-custom"> 
+                <div class="input-icon-right"> 
+                 <input type="text" class="form-control datepicker" onkeyup="chk_value_change();" id="txtBIRTHDATE_NCC" data-provide="datepicker" autocomplete="off" data-date-format="dd/mm/yyyy" inputmode="numeric"> 
+                 <span class="icon -ap icon-calendar22"></span> 
+                </div> 
+               </div> 
+              </div> 
+             </div> 
+            </div> 
+            <div class="row"> 
+             <div class="col-sm-6 col-xs-12"> 
+              <div class="form-group"> 
+               <div class="label-text">
+                Số định danh cá nhân
+                <span class="red">*</span>
+               </div> 
+               <input id="txtIDENTIFY_NUMBER_NCC" name="txtIDENTIFY_NUMBER_NCC" class="form-control" onkeyup="chk_value_change();" maxlength="12"> 
+              </div> 
+             </div> 
+            </div> 
+            <div class="row"> 
+            </div> 
+            <div class="row"> 
+             <div class="group-buttons center" id="divBtnChkCitizen"> 
+              <div class="actions right marb20"> 
+               <button class="btn btn-main" id="btnCheckCD" onclick="checkInfCD()"> Kiểm tra thông tin trong CSDL Quốc Gia về Dân cư </button> 
+              </div> 
+             </div> 
+            </div> 
+           </div>
+        <div id="divNoiCuTru"> 
+         <div class="row padb15" style="margin-bottom: 2%;"> 
+          <div class="col-sm-3 col-xs-12"> 
+           <div class="item marb10"> 
+            <div class="check-action"> 
+             <input type="radio" class="check" value="1" name="radDiaChi" id="chkNoiThuongTru" disabled=""> 
+             <span class="name">Nơi thường trú</span> 
+            </div> 
+           </div> 
+          </div> 
+          <div class="col-sm-3 col-xs-12"> 
+           <div class="item marb10"> 
+            <div class="check-action"> 
+             <input type="radio" class="check" value="2" name="radDiaChi" id="chkNoiTamTru" disabled=""> 
+             <span class="name">Nơi tạm trú</span> 
+            </div> 
+           </div> 
+          </div> 
+          <div class="col-sm-6 col-xs-12"> 
+           <div class="item marb10"> 
+            <div class="check-action"> 
+             <input type="radio" class="check" value="3" name="radDiaChi" id="chkNoiOHienTai" disabled=""> 
+             <span class="name">Nơi ở hiện nay</span> 
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="row"> 
+          <div class="col-sm-4 col-xs-12"> 
+           <div class="form-group"> 
+            <div class="label-text">
+             Tỉnh/ Thành phố
+            </div> 
+            <div class="select-custom"> 
+             <input class="form-control" id="cboCityAddNCC" name="cboCityAddNCC" disabled="disable" type="text"> 
+            </div> 
+           </div> 
+          </div> 
+          <div class="col-sm-4 col-xs-12"> 
+           <div class="form-group"> 
+            <div class="label-text">
+             Quận/ Huyện
+            </div> 
+            <div class="select-custom"> 
+             <input class="form-control" id="cboDistrictAddNCC" name="cboDistrictAddNCC" disabled="disable" type="text"> 
+            </div> 
+           </div> 
+          </div> 
+          <div class="col-sm-4 col-xs-12"> 
+           <div class="form-group"> 
+            <div class="label-text">
+             Phường/ Xã
+            </div> 
+            <div class="select-custom"> 
+             <input class="form-control" id="cboVillageAddNCC" name="cboVillageAddNCC" disabled="disable" type="text">
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+       </div>
+</section>
+
+<section id="hinhthucap">
+    <h4 ><b>LÝ DO CẤP CĂN CƯỚC</b></h4>
+    <div class="body" data-select2-id="196"> 
+        <div class="row"> 
+         <div class="col-sm-12 col-xs-12"> 
+          <div class="form-group"> 
+           <div class="label-text">
+            Lý do cấp
+            <span class="red">*</span>
+           </div> 
+           <div class="select-custom"> 
+            <select class="form-control select2-hidden-accessible" id="cboLyDoCap" name="cboLyDoCap" data-select2-id="cboLyDoCap" tabindex="-1" aria-hidden="true"><option value="01" data-select2-id="91">Cấp thẻ căn cước lần đầu</option><option value="02" data-select2-id="92">Cấp thẻ căn cước chuyển từ CMND 9 số</option><option value="03" data-select2-id="93">Cấp thẻ căn cước chuyển từ CMND 12 số</option><option value="17" data-select2-id="94">Cấp thẻ căn cước chuyển từ CCCD mã vạch</option><option value="19" data-select2-id="95">Cấp thẻ căn cước chuyển từ CCCD gắn chíp</option></select>
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+        
+        <div id="divTichHop" style="display: none;"> 
+         <div class="row"> 
+          <div class="col-sm-9 col-xs-12"> 
+           <div class="form-group"> 
+            <div class="label-text">
+             Tích hợp thông tin vào thẻ căn cước
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="row"> 
+          <div class="check-action padl15 padb15"> 
+           <input type="checkbox" class="check" id="chkTichHopBHXH"> 
+           <span class="name fw5">Bảo hiểm xã hội</span> 
+          </div> 
+         </div> 
+         <div class="label-text marb0">
+          Mã số bảo hiểm xã hội 
+          <span class="fw4 italic">(bắt buộc nhập khi tích hợp thông tin trong thẻ căn cước)</span> 
+         </div> 
+         <div class="row"> 
+          <div class="col-sm-6 col-xs-12"> 
+           <div class="form-group"> 
+            <input id="txtMaSoBHXH" name="txtMaSoBHXH" class="form-control"> 
+           </div> 
+          </div> 
+          <div class="col-sm-6 col-xs-12 mart15 padb10"> 
+           <a href="https://baohiemxahoi.gov.vn/tracuu/Pages/tra-cuu-ho-gia-dinh.aspx" target="_blank"> <span class="italic underline">Tra cứu mã số bảo hiểm xã hội tại đây</span> </a> 
+          </div> 
+         </div> 
+         <div class="row"> 
+          <div class="check-action padl15 padb15"> 
+           <input type="checkbox" class="check" id="chkTichHopBHYT"> 
+           <span class="name fw5">Bảo hiểm y tế</span> 
+          </div> 
+         </div> 
+         <div class="row"> 
+          <div class="col-sm-6 col-xs-12"> 
+           <div class="form-group"> 
+            <div class="label-text">
+             Mã số thẻ BHYT 
+             <span class="fw4 italic">(bắt buộc nhập khi tích hợp thông tin trong thẻ căn cước)</span> 
+            </div> 
+            <input id="txtMaSoBHYT" name="txtMaSoBHYT" class="form-control"> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="row"> 
+          <div class="check-action padl15 padb15"> 
+           <input type="checkbox" class="check" id="chkTichHopGPLX"> 
+           <span class="name fw5">Giấy phép lái xe</span> 
+          </div> 
+         </div> 
+         <div class="row"> 
+          <div class="col-sm-6 col-xs-12"> 
+           <div class="form-group"> 
+            <div class="label-text">
+             Số giấy phép lái xe 
+             <span class="fw4 italic">(bắt buộc nhập khi tích hợp thông tin trong thẻ căn cước)</span> 
+            </div> 
+            <input id="txtSoGPLX" name="txtSoGPLX" class="form-control"> 
+           </div> 
+          </div> 
+          <div class="col-sm-6 col-xs-12"> 
+           <div class="form-group"> 
+            <div class="label-text">
+             Hạng 
+            </div> 
+            <input id="txtHangGPLX" name="txtHangGPLX" class="form-control"> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="row" style="display: none;"> 
+         <p class="padl15 marb10 fw4 italic">* Trường hợp cần tích hợp thêm các giấy tờ khác theo quy định, công dân vui lòng mang theo giấy tờ bản gốc và căn cước gắn chíp đến cơ quan công an gần nhất để thực hiện thủ tục thích hợp</p> 
+        </div> 
+       </div>
+</section>
+    
+
+<div class="button-containter">
+<button id="confirm-btn-capcc">XÁC NHẬN</button>
+<button id="quit-btn">HỦY</button>
+</div>
+
+<script>
+    document.getElementById('confirm-btn-capcc').addEventListener('click', function() {
+        let sdt = document.getElementById("txtPHONE_NUMBER_NDN").value;
+        let truonghop;
+        var tencancap = "";
+        var ngaysinhcancap = "";
+        var gioitinhcancap = "";
+        var sodinhdanhcancap = "";
+        var quanhecancap = "";
+        let sodinhdanh = document.getElementById("txtIDENTIFY_NUMBER_NDN").value;
+        var kiemtradd = document.getElementById("txtIDENTIFY_NUMBER_NCC");
+        if (kiemtradd.value.trim() !== "") {
+            truonghop = "Cấp hộ";
+            tencancap = document.getElementById("txtFULLNAME_NCC").value;
+            ngaysinhcancap = document.getElementById("txtBIRTHDATE_NCC").value;
+            sodinhdanhcancap = document.getElementById("txtIDENTIFY_NUMBER_NCC").value;
+            if (sodinhdanhcancap[3] === '0' || sodinhdanhcancap[3] === '2'){
+                gioitinhcancap = "Nam";
+            } else {
+                gioitinhcancap = "Nữ";
+            }
+        } else {
+            truonghop = "Tự cấp";
+            ngaysinhcancap = document.getElementById("txtBIRTHDATE_NDN").value;
+        }
+        var lydo = document.querySelector("#cboLyDoCap option:checked").textContent;
+        if (sodinhdanh[3] === '0' || sodinhdanh[3] === '2'){
+                quanhecancap = "Cha";
+            } else {
+                quanhecancap = "Mẹ";
+            }
+		document.getElementById("videoct").style.visibility = "hidden";
+        document.getElementById('anhhuongdanscan').src = "static\\templates\\loading.gif";
+        $("#formcancuoc").css("display", "none");
+		$("#messageArea input").css("opacity","0.5");
+		$("#messageArea input").prop("disabled",true);
+        document.getElementById('img-div-id').style.display = 'block';
+        fetch('/capmoicancuoc', { 
+			method: 'POST',
+			headers: {
+			'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(sdt +";;"+truonghop+";;"+tencancap+";;"+ngaysinhcancap+";;"+gioitinhcancap+";;"+sodinhdanhcancap+";;"+quanhecancap+";;"+lydo)
+        })
+        .then(response => response.json())
+		.then(data => {
+            if (data.message === "thanhcong"){
+                setTimeout(function() {
+                    document.getElementById('img-div-id').style.display = 'none';
+                    document.getElementById('anhhuongdanscan').src = "static\\templates\\loading.gif";
+                    document.getElementById("videoct").style.visibility = "visible";
+                    $("#messageArea input").css("opacity","1");
+                    $("#messageArea input").prop("disabled",false);}, 5000);	
+                var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Hoàn thành gửi hồ sơ lên hệ thống. Mời bạn ra quầy để thực hiện các thủ tục tiếp theo.<span class="msg_time">' + str_time + '</span></div></div>';
+                $("#messageFormeight").append($.parseHTML(Html));
+                document.getElementById('anhhuongdanscan').src = "static\\templates\\hoanthanh.gif";
+                scrollToBottom();
+            }
+            else if (data.message === "oioioi"){
+                showPopup("Lỗi khi lấy thông tin. Ứng dụng sẽ khởi động lại", 5)
+				redirectToRoute();
+            }
+            else {
+                showPopup(`${data.message}`, 8)
+                setTimeout(function() {
+                    $("#formcancuoc").css("display","block");
+                    $("#videoct").css("visibility","hidden");
+                    document.getElementById('img-div-id').style.display = 'none';
+                    var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Hãy kiểm tra thật kỹ lại các thông tin của bạn khai tại bảng bên cạnh. Sau khi đã chắc chắn thì ấn nút XÁC NHẬN để tiếp tục." <span class="msg_time">' + str_time + '</span></div></div>';
+                    $("#messageFormeight").append($.parseHTML(Html));
+                    scrollToBottom();
+                    $("#messageArea input").css("opacity","1");
+                    $("#messageArea input").prop("disabled",false);}, 8000);
+            }           
+        });
+    });
+
+
+</script>
