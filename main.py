@@ -70,7 +70,7 @@ def get_news(url="https://vtcnews.vn/rss/thoi-su.rss"):
     feed = feedparser.parse(url)
     return feed.entries
 
-os.environ['GOOGLE_API_KEY'] = ""
+os.environ['GOOGLE_API_KEY'] = "AIzaSyAC-rdW69rGANmTJQZGL1bpKgMrleWYb5s"
 genai.configure(api_key = os.environ['GOOGLE_API_KEY'])
 model = genai.GenerativeModel('gemini-1.5-flash-latest',   #gemini-1.5-flash-latest
 safety_settings=threads_safe,
@@ -342,8 +342,9 @@ def capcancuoct14():
     result = {
         'message': kq,
     }
-    if (kq == "thanhcong"):
+    if (kq == "thanhcong" or ("Thông tin công dân hợp lệ" in kq) or ("Nộp hồ sơ thành công" in kq) or ("Cập nhật thành công" in kq)):
         VneID.ChonngaycapCC()
+        result["message"] = "thanhcong"
         hab = send_messageG("Đã thực hiện xong dịch vụ công này. Quay về trạng thái tìm dịch vụ công lúc bắt đầu")
     return jsonify(result)
 

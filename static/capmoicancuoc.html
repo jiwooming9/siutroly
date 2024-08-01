@@ -325,7 +325,7 @@
             } else {
                 quanhecancap = "Mẹ";
             }
-		document.getElementById("videoct").style.visibility = "hidden";
+		document.getElementById("videoct").style.display = "none";
         document.getElementById('anhhuongdanscan').src = "static\\templates\\loading.gif";
         $("#formcancuoc").css("display", "none");
 		$("#messageArea input").css("opacity","0.5");
@@ -340,11 +340,11 @@
         })
         .then(response => response.json())
 		.then(data => {
-            if (data.message === "thanhcong"){
+            if ((data.message === "thanhcong") || (data.message.includes("thành công")) ){
                 setTimeout(function() {
                     document.getElementById('img-div-id').style.display = 'none';
                     document.getElementById('anhhuongdanscan').src = "static\\templates\\loading.gif";
-                    document.getElementById("videoct").style.visibility = "visible";
+                    document.getElementById("videoct").style.display = "block";
                     $("#messageArea input").css("opacity","1");
                     $("#messageArea input").prop("disabled",false);}, 5000);	
                 var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Hoàn thành gửi hồ sơ lên hệ thống. Mời bạn ra quầy để thực hiện các thủ tục tiếp theo.<span class="msg_time">' + str_time + '</span></div></div>';
@@ -360,7 +360,7 @@
                 showPopup(`${data.message}`, 8)
                 setTimeout(function() {
                     $("#formcancuoc").css("display","block");
-                    $("#videoct").css("visibility","hidden");
+                    $("#videoct").css("display","none");
                     document.getElementById('img-div-id').style.display = 'none';
                     var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Hãy kiểm tra thật kỹ lại các thông tin của bạn khai tại bảng bên cạnh. Sau khi đã chắc chắn thì ấn nút XÁC NHẬN để tiếp tục." <span class="msg_time">' + str_time + '</span></div></div>';
                     $("#messageFormeight").append($.parseHTML(Html));

@@ -323,7 +323,7 @@
 											});
 										});
 										$("#formcutru").css("display","block");
-										$("#videoct").css("visibility","hidden");
+										$("#videoct").css("display","none");
 										var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Vui lòng kiểm tra kỹ các thông tin của bạn tại bảng bên cạnh. Nếu không có gì cần thay đổi, hãy ấn nút XÁC NHẬN để tiếp tục." <span class="msg_time">' + str_time + '</span></div></div>';
 										$("#messageFormeight").append($.parseHTML(Html));
 										scrollToBottom();
@@ -371,7 +371,7 @@
 											}
 										});
 										$("#formcutru").css("display","block");
-										$("#videoct").css("visibility","hidden");
+										$("#videoct").css("display","none");
 										var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">Hãy nhập các thông tin vào mẫu phiếu. Nếu bạn có thắc mắc về việc nhập phiếu có thể giao tiếp với tôi. <span class="msg_time">' + str_time + '</span></div></div>';
 										$("#messageFormeight").append($.parseHTML(Html));
 										scrollToBottom();	
@@ -418,7 +418,7 @@
 											nut.click(function() {
 												$("#formcancuoc").css("display","block");
 												$("#formcutru").css("display","none");
-												$("#videoct").css("visibility","hidden");
+												$("#videoct").css("display","none");
 												$('#formcancuoc').load('/static/capmoicancuoc.html', function() {
 													$('#txtFULLNAME_NDN').val(response["Họ tên"]);
 													$('#txtBIRTHDATE_NDN').val(response["Ngày sinh"]);
@@ -446,7 +446,7 @@
 										nutkhac.click(function() {
 											$("#formcancuoc").css("display","block");
 											$("#formcutru").css("display","none");
-											$("#videoct").css("visibility","hidden");
+											$("#videoct").css("display","none");
 											$('#formcancuoc').load('/static/capmoicancuoc.html', function() {
 											$('#txtFULLNAME_NDN').val(response["Họ tên"]);
 											$('#txtBIRTHDATE_NDN').val(response["Ngày sinh"]);
@@ -510,7 +510,7 @@
 					$("#messageArea").submit();
 					$("#formcutru").css("display", "none");
 					$("#formcancuoc").css("display", "none");
-					$("#videoct").css("visibility", "visible")
+					$("#videoct").css("display", "none")
 				});
 				$(document).on("click", "#khongcobtn", function(event) {
 					var Html = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer"> Hãy liên hệ với cán bộ công an để được giải đáp về Tài khoản định danh điện tử.<span class="msg_time">' + str_time + '</span></div></div>';
