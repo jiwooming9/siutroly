@@ -70,7 +70,7 @@ def get_news(url="https://vtcnews.vn/rss/thoi-su.rss"):
     feed = feedparser.parse(url)
     return feed.entries
 
-os.environ['GOOGLE_API_KEY'] = "AIzaSyAC-rdW69rGANmTJQZGL1bpKgMrleWYb5s"
+os.environ['GOOGLE_API_KEY'] = ""
 genai.configure(api_key = os.environ['GOOGLE_API_KEY'])
 model = genai.GenerativeModel('gemini-1.5-flash-latest',   #gemini-1.5-flash-latest
 safety_settings=threads_safe,
