@@ -52,7 +52,7 @@ class VNeIDPage:
         self.CT_infor = {}
         self.login_suc = False
         playwright = sync_playwright().start()
-        self.browser = playwright.firefox.launch(headless=True)
+        self.browser = playwright.firefox.launch(headless=False)
         self.context = self.browser.new_context(ignore_https_errors=True, no_viewport=True)
         self.page = self.context.new_page()
         self.page.set_default_timeout(10000)

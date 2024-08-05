@@ -333,6 +333,10 @@ def capcancuoct14():
     msg = request.get_json()
     key = ["Số điện thoại", "Trường hợp", "Người cần họ và tên", "Người cần ngày sinh", "Người cần giới tính", "Người cần số định danh", "Quan hệ với người khai", "Lý do cấp"]
     hoso = dict(zip(key,msg.split(";;")))
+    hoso["Địa chỉ cụ thể trú"] = nguoi["Địa chỉ cụ thể trú"]
+    hoso["Quận huyện đăng ký trú"] = nguoi["Quận huyện đăng ký trú"]
+    hoso["Phường xã đăng ký trú"] = nguoi["Phường xã đăng ký trú"]
+    hoso["Tỉnh thành phố đăng ký trú"] = nguoi["Tỉnh thành phố đăng ký trú"]
     print(hoso)
     tuoi = timtuoi(hoso["Người cần ngày sinh"])
     if (tuoi > 13):

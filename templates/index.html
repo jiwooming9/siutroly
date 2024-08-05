@@ -428,6 +428,7 @@
 													$('#cboVillageAddNCC').val(response["Phường xã đăng ký trú"]);
 													if (response["Số định danh người"] === response["Số ĐDCN/CMND người " + so]){
 														$('#divCheck_NDN').css("display","none");
+														$('#cboLyDoCap').val("Cấp thẻ căn cước chuyển từ CCCD gắn chíp")
 													} else {
 														$('#divCheck_NDN').css("display","block");
 														$('#txtFULLNAME_NCC').val(response["Họ, chữ đệm, tên người " + so]);
