@@ -34,6 +34,11 @@ Phần mềm trợ lý ảo hỗ trợ người dân giải đáp thắc mắc v
 - Chọn XÁC NHẬN, sau đó quét mã QR bằng ứng dụng VNeID, làm theo hướng dẫn để gửi hồ sơ.
 ![Đăng nhập](https://i.imgur.com/DmiunIA.png)
 
+### Thực hiện dịch vụ công cư trú
+- Sau khi xác định được dịch vụ công, người dân tự nhập các trường thông tin còn thiếu.
+- Chuẩn bị sẵn sàng máy in và máy scan, chương trình sẽ in cho người dùng phiếu CT01 với thông tin người dùng đã khai.
+- Sau khi người dùng kiểm tra thông tin và ký tên, đặt các loại giấy tờ vào máy scan để gửi lên hệ thống.
+- Đợi hiện mã hồ sơ tức là đã hoàn thành.
 ### Điều khiển bằng giọng nói
 - Chọn biểu tượng mic để bắt đầu nói
 ![Bật mic](https://i.imgur.com/qRwLDNM.png)
