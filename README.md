@@ -1,5 +1,5 @@
 # Hướng dẫn sử dụng phần mềm Trợ lý ảo
-Nếu gặp lỗi phần mềm, vui lòng liên hệ Nguyễn Ngọc Anh - Zalo: 0359.996.643 để được hướng dẫn, giải đáp.
+Phần mềm vẫn đang trong giải đoạn phát triển nên sẽ không tránh khỏi một số lỗi. Vui lòng tham gia nhóm Zalo Cộng đồng https://zalo.me/g/iaqbrs581 để được hỗ trợ, hướng dẫn.
 ## 📝 Mục lục
 - [Giới thiệu](#giới-thiệu)
 - [Yêu cầu hệ thống](#yêu-cầu-hệ-thống)
